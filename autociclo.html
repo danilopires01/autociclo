@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoCiclo — Marketplace de excedente automotivo</title>
+<style>
+:root {
+  --red: #C8102E;
+  --red-dark: #9E0C24;
+  --black: #0A0A0A;
+  --white: #FFFFFF;
+  --off-white: #F5F1EA;
+  --gray: #6B6B6B;
+  --gray-light: #E5E1DA;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  background: var(--off-white);
+  color: var(--black);
+  line-height: 1.6;
+}
+
+/* NAVBAR */
+.navbar {
+  background: var(--black);
+  color: var(--white);
+  padding: 16px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 3px solid var(--red);
+}
+.logo {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.logo-mark {
+  width: 32px;
+  height: 32px;
+  background: var(--red);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+.logo span.dot { color: var(--red); }
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--white);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px 0;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+.nav-links a:hover, .nav-links a.active {
+  border-bottom-color: var(--red);
+}
+.btn-area-cliente {
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-area-cliente:hover { background: var(--red-dark); }
+
+/* SEÇÕES */
+.section { display: none; padding: 60px 40px; max-width: 1200px; margin: 0 auto; }
+.section.active { display: block; animation: fadeIn 0.5s ease-out; }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Reveal on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* HERO */
+.hero {
+  background:
+    linear-gradient(135deg, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.75) 50%, rgba(158,12,36,0.55) 100%),
+    url('https://images.unsplash.com/photo-1487754180451-c456f719a1fc?auto=format&fit=crop&w=1600&q=80');
+  background-size: cover;
+  background-position: center;
+  color: var(--white);
+  padding: 100px 40px 90px;
+  margin: -60px -40px 60px -40px;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  right: -100px;
+  top: -100px;
+  width: 400px;
+  height: 400px;
+  background: var(--red);
+  opacity: 0.15;
+  border-radius: 50%;
+  animation: pulseCircle 6s ease-in-out infinite;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  left: -80px;
+  bottom: -80px;
+  width: 260px;
+  height: 260px;
+  border: 2px solid rgba(200,16,46,0.25);
+  border-radius: 50%;
+  animation: pulseCircle 8s ease-in-out infinite reverse;
+}
+@keyframes pulseCircle {
+  0%, 100% { transform: scale(1); opacity: 0.15; }
+  50% { transform: scale(1.15); opacity: 0.3; }
+}
+.hero-brand {
+  font-size: 72px;
+  font-weight: 900;
+  letter-spacing: -2px;
+  line-height: 1;
+  margin-bottom: 24px;
+  position: relative;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out 0.1s forwards;
+}
+.hero-brand span { color: var(--red); }
+.hero h1 {
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  max-width: 700px;
+  position: relative;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out 0.35s forwards;
+}
+.hero h1 span { color: var(--red); }
+.hero p {
+  font-size: 17px;
+  max-width: 600px;
+  color: #DDD;
+  margin-bottom: 32px;
+  position: relative;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out 0.55s forwards;
+}
+.hero-cta {
+  display: flex;
+  gap: 16px;
+  position: relative;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out 0.75s forwards;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.btn-primary {
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-primary:hover { background: var(--red-dark); }
+.btn-secondary {
+  background: transparent;
+  color: var(--white);
+  border: 2px solid var(--white);
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-secondary:hover { background: var(--white); color: var(--black); }
+
+/* BLOCOS DE CONTEÚDO */
+.block-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--black);
+}
+.block-subtitle {
+  color: var(--gray);
+  font-size: 16px;
+  margin-bottom: 40px;
+}
+.block { margin-bottom: 60px; }
+
+/* PROCESSO E2E */
+.processo {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+.processo-step {
+  background: var(--white);
+  padding: 24px 20px;
+  border-radius: 8px;
+  border-left: 4px solid var(--red);
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.processo-step:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+}
+.processo-step .num {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--red);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.processo-step h4 { font-size: 14px; margin-bottom: 6px; }
+.processo-step p { font-size: 13px; color: var(--gray); }
+
+/* PRA QUEM SERVE */
+.publico {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.publico-card {
+  background: var(--white);
+  padding: 32px;
+  border-radius: 8px;
+  border-top: 4px solid var(--red);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.publico-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.08);
+}
+.publico-card h3 { font-size: 20px; margin-bottom: 12px; }
+.publico-card ul { list-style: none; margin-top: 16px; }
+.publico-card ul li {
+  padding: 8px 0;
+  font-size: 14px;
+  color: var(--gray);
+  padding-left: 20px;
+  position: relative;
+}
+.publico-card ul li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--red);
+  font-weight: bold;
+}
+
+/* VANTAGENS */
+.vantagens {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.vantagem-card {
+  background: var(--white);
+  padding: 28px;
+  border-radius: 8px;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.vantagem-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.08);
+}
+.vantagem-card:hover .icone {
+  transform: rotate(360deg);
+  background: var(--red-dark);
+}
+.vantagem-card .icone {
+  width: 44px;
+  height: 44px;
+  background: var(--red);
+  color: var(--white);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 16px;
+  font-weight: bold;
+  transition: transform 0.6s ease, background 0.3s ease;
+}
+.vantagem-card h4 { font-size: 16px; margin-bottom: 8px; }
+.vantagem-card p { font-size: 14px; color: var(--gray); }
+
+/* PLANOS */
+.planos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.plano-card {
+  background: var(--white);
+  padding: 32px 28px;
+  border-radius: 8px;
+  border: 2px solid var(--gray-light);
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.plano-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.1);
+  border-color: var(--red);
+}
+.plano-card.destaque {
+  border-color: var(--red);
+  transform: scale(1.02);
+  box-shadow: 0 8px 20px rgba(200,16,46,0.15);
+}
+.plano-card.destaque:hover {
+  transform: scale(1.02) translateY(-8px);
+}
+.plano-card.destaque::before {
+  content: 'Mais popular';
+  position: absolute;
+  top: -12px;
+  right: 20px;
+  background: var(--red);
+  color: var(--white);
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.plano-card h3 { font-size: 18px; margin-bottom: 8px; }
+.plano-card .preco {
+  font-size: 36px;
+  font-weight: 800;
+  margin: 16px 0;
+}
+.plano-card .preco small { font-size: 14px; color: var(--gray); font-weight: 400; }
+.plano-card ul { list-style: none; margin: 20px 0; }
+.plano-card ul li {
+  padding: 8px 0;
+  font-size: 14px;
+  border-bottom: 1px solid var(--gray-light);
+}
+.plano-card .btn-plano {
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.plano-card.destaque .btn-plano { background: var(--red); }
+
+/* ANÚNCIOS */
+.anuncios-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.anuncio-card {
+  background: var(--white);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.anuncio-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.1);
+}
+.anuncio-card:hover .anuncio-img::after {
+  transform: scale(1.1);
+}
+.anuncio-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 60%, rgba(200,16,46,0.15) 100%);
+  transition: transform 0.5s ease;
+}
+.anuncio-img {
+  height: 180px;
+  background: var(--gray-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray);
+  font-size: 14px;
+  position: relative;
+}
+.anuncio-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--red);
+  color: var(--white);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.anuncio-body { padding: 20px; }
+.anuncio-body h4 { font-size: 15px; margin-bottom: 8px; }
+.anuncio-meta { font-size: 12px; color: var(--gray); margin-bottom: 12px; }
+.anuncio-preco {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--red);
+}
+.anuncio-verificado {
+  display: inline-block;
+  font-size: 11px;
+  color: #2A7A2A;
+  background: #E8F5E8;
+  padding: 3px 8px;
+  border-radius: 3px;
+  margin-top: 8px;
+}
+
+/* SOBRE */
+.sobre-content { max-width: 800px; }
+.sobre-content p { font-size: 16px; margin-bottom: 20px; color: #2A2A2A; }
+.sobre-valores {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+.valor-item {
+  background: var(--white);
+  padding: 24px;
+  border-radius: 8px;
+  border-left: 4px solid var(--red);
+}
+.valor-item h4 { font-size: 16px; margin-bottom: 8px; }
+.valor-item p { font-size: 14px; color: var(--gray); }
+
+/* CONTATO */
+.contato-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+.contato-info h3 { font-size: 20px; margin-bottom: 16px; }
+.contato-info p { margin-bottom: 12px; font-size: 15px; }
+.contato-info .redes {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+.rede-social {
+  width: 40px;
+  height: 40px;
+  background: var(--black);
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-weight: 700;
+}
+.rede-social:hover { background: var(--red); }
+.contato-form {
+  background: var(--white);
+  padding: 32px;
+  border-radius: 8px;
+}
+.contato-form input, .contato-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid var(--gray-light);
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+}
+.contato-form textarea { resize: vertical; min-height: 100px; }
+.contato-form button {
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  padding: 14px 32px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* MODAL LOGIN/CADASTRO */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: var(--white);
+  padding: 40px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 420px;
+  position: relative;
+}
+.modal-close {
+  position: absolute;
+  top: 12px; right: 16px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--gray);
+}
+.modal h2 { margin-bottom: 8px; font-size: 22px; }
+.modal p { color: var(--gray); font-size: 14px; margin-bottom: 20px; }
+.modal input, .modal select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid var(--gray-light);
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+}
+.modal button.btn-submit {
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  padding: 14px;
+  width: 100%;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+}
+.modal-tabs {
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--gray-light);
+}
+.modal-tab {
+  flex: 1;
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--gray);
+  border-bottom: 2px solid transparent;
+}
+.modal-tab.active {
+  color: var(--red);
+  border-bottom-color: var(--red);
+}
+.modal-link {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--gray);
+}
+.modal-link a { color: var(--red); text-decoration: none; cursor: pointer; }
+
+/* ÁREA DO CLIENTE */
+.area-cliente {
+  background: var(--off-white);
+  padding: 40px;
+  border-radius: 8px;
+}
+.area-cliente-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--gray-light);
+}
+.area-cliente-header h2 { color: var(--black); }
+.area-cliente-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.stat-card {
+  background: var(--white);
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+.stat-card .valor { font-size: 28px; font-weight: 700; color: var(--red); }
+.stat-card .label { font-size: 12px; color: var(--gray); text-transform: uppercase; }
+.area-cliente-menu {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.menu-item {
+  background: var(--white);
+  border: 1px solid var(--gray-light);
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.menu-item.active { background: var(--black); color: var(--white); border-color: var(--black); }
+
+/* SCROLL TOP */
+.scroll-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 48px;
+  height: 48px;
+  background: var(--red);
+  color: var(--white);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(200,16,46,0.4);
+  z-index: 99;
+  transition: background 0.2s, transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+}
+.scroll-top:hover {
+  background: var(--red-dark);
+  transform: translateY(-4px);
+}
+.scroll-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* FOOTER */
+footer {
+  background: var(--black);
+  color: var(--white);
+  padding: 40px;
+  margin-top: 80px;
+  text-align: center;
+}
+footer p { font-size: 13px; opacity: 0.7; }
+footer .divider { color: var(--red); margin: 0 8px; }
+
+/* RESPONSIVIDADE */
+@media (max-width: 768px) {
+  .navbar { padding: 12px 16px; }
+  .nav-links { display: none; }
+  .hero { padding: 40px 20px; margin: -60px -40px 40px -40px; }
+  .hero h1 { font-size: 32px; }
+  .processo { grid-template-columns: 1fr; }
+  .publico, .vantagens, .planos, .anuncios-grid { grid-template-columns: 1fr; }
+  .contato-grid, .sobre-valores { grid-template-columns: 1fr; }
+  .section { padding: 40px 20px; }
+  .area-cliente-stats { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo">
+    <div class="logo-mark">A</div>
+    Auto<span class="dot">Ciclo</span>
+  </div>
+  <ul class="nav-links">
+    <li><a onclick="showSection('home')" class="active" id="link-home">AutoCiclo</a></li>
+    <li><a onclick="showSection('anuncios')" id="link-anuncios">Anúncios</a></li>
+    <li><a onclick="showSection('sobre')" id="link-sobre">Sobre</a></li>
+    <li><a onclick="showSection('contato')" id="link-contato">Contato</a></li>
+  </ul>
+  <button class="btn-area-cliente" onclick="openLoginModal()">Área do cliente</button>
+</nav>
+
+<!-- SEÇÃO HOME -->
+<section class="section active" id="home">
+  <div class="hero">
+    <div class="hero-brand">Auto<span>Ciclo</span></div>
+    <h1>Excedente de fábrica virou <span>oportunidade</span>.</h1>
+    <p>Conectamos estamparias, injetoras e fornecedores automotivos que geram peça excedente com distribuidores, oficinas e exportadores prontos para comprar.</p>
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="openLoginModal('fornecedor')">Sou fornecedor</button>
+      <button class="btn-secondary" onclick="openLoginModal('comprador')">Sou comprador</button>
+    </div>
+  </div>
+
+  <div class="block reveal">
+    <h2 class="block-title">O que a AutoCiclo resolve</h2>
+    <p class="block-subtitle">Peça nova sobrando no chão de fábrica é dinheiro parado. A AutoCiclo transforma esse estoque em faturamento.</p>
+  </div>
+
+  <div class="block reveal">
+    <h2 class="block-title">Como funciona</h2>
+    <p class="block-subtitle">Processo simples, curadoria rigorosa. Do cadastro do lote à venda final.</p>
+    <div class="processo">
+      <div class="processo-step">
+        <div class="num">01</div>
+        <h4>Cadastro do lote</h4>
+        <p>Fornecedor publica peça, quantidade e nota fiscal.</p>
+      </div>
+      <div class="processo-step">
+        <div class="num">02</div>
+        <h4>Curadoria</h4>
+        <p>Nossa equipe verifica origem, CNPJ e documentação.</p>
+      </div>
+      <div class="processo-step">
+        <div class="num">03</div>
+        <h4>Publicação</h4>
+        <p>Anúncio entra no catálogo com selo de verificado.</p>
+      </div>
+      <div class="processo-step">
+        <div class="num">04</div>
+        <h4>Negociação</h4>
+        <p>Comprador entra em contato direto com o fornecedor.</p>
+      </div>
+      <div class="processo-step">
+        <div class="num">05</div>
+        <h4>Fechamento</h4>
+        <p>Venda confirmada, avaliação registrada, ciclo fechado.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="block reveal">
+    <h2 class="block-title">Para quem serve</h2>
+    <div class="publico">
+      <div class="publico-card">
+        <h3>Fornecedores</h3>
+        <p>Empresas que geram peça excedente e querem lucrar com o que hoje é custo.</p>
+        <ul>
+          <li>Estamparias e ferramentarias</li>
+          <li>Injetoras de plástico e borracha</li>
+          <li>Fornecedores tier-2 e tier-3</li>
+          <li>Distribuidores com estoque parado</li>
+        </ul>
+      </div>
+      <div class="publico-card">
+        <h3>Compradores</h3>
+        <p>Empresas que precisam de peça nova com origem confiável e preço competitivo.</p>
+        <ul>
+          <li>Distribuidores de aftermarket</li>
+          <li>Oficinas de médio e grande porte</li>
+          <li>Exportadores de autopeças</li>
+          <li>Recondicionadores e retíficas</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="block reveal">
+    <h2 class="block-title">Por que AutoCiclo</h2>
+    <div class="vantagens">
+      <div class="vantagem-card">
+        <div class="icone">✓</div>
+        <h4>Fornecedor verificado</h4>
+        <p>Toda empresa listada passa por checagem de CNPJ e nota fiscal antes de anunciar.</p>
+      </div>
+      <div class="vantagem-card">
+        <div class="icone">★</div>
+        <h4>Foco em automotivo</h4>
+        <p>Diferente de plataformas genéricas de excedente, entendemos código de peça e aplicação veicular.</p>
+      </div>
+      <div class="vantagem-card">
+        <div class="icone">↻</div>
+        <h4>Ciclo completo</h4>
+        <p>Do anúncio à avaliação pós-venda, acompanhamos toda a transação para gerar confiança.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="block reveal">
+    <h2 class="block-title">Planos</h2>
+    <p class="block-subtitle">Cadastro gratuito para todos. Assinatura libera acesso completo aos contatos e busca avançada.</p>
+    <div class="planos">
+      <div class="plano-card">
+        <h3>Gratuito</h3>
+        <div class="preco">R$ 0<small>/mês</small></div>
+        <ul>
+          <li>Cadastro na plataforma</li>
+          <li>Publicar até 3 anúncios</li>
+          <li>Ver 5 contatos por mês</li>
+          <li>Suporte por e-mail</li>
+        </ul>
+        <button class="btn-plano">Começar grátis</button>
+      </div>
+      <div class="plano-card destaque">
+        <h3>Profissional</h3>
+        <div class="preco">R$ 197<small>/mês</small></div>
+        <ul>
+          <li>Anúncios ilimitados</li>
+          <li>Contatos ilimitados</li>
+          <li>Selo de verificado</li>
+          <li>Suporte prioritário</li>
+        </ul>
+        <button class="btn-plano">Assinar</button>
+      </div>
+      <div class="plano-card">
+        <h3>Empresarial</h3>
+        <div class="preco">R$ 497<small>/mês</small></div>
+        <ul>
+          <li>Tudo do Profissional</li>
+          <li>Agente de sucesso dedicado</li>
+          <li>Notificações de novos lotes</li>
+          <li>Relatórios personalizados</li>
+        </ul>
+        <button class="btn-plano">Falar com vendas</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="block reveal">
+    <h2 class="block-title">Fale com a gente</h2>
+    <p class="block-subtitle">Nossa equipe está pronta para ajudar você a começar.</p>
+    <div class="contato-info">
+      <p><strong>E-mail:</strong> contato@autociclo.com.br</p>
+      <p><strong>WhatsApp:</strong> (11) 9XXXX-XXXX</p>
+      <p><strong>Localização:</strong> Santo André, SP</p>
+      <div class="redes">
+        <a href="#" class="rede-social">in</a>
+        <a href="#" class="rede-social">IG</a>
+        <a href="#" class="rede-social">f</a>
+        <a href="#" class="rede-social">TT</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEÇÃO ANÚNCIOS -->
+<section class="section" id="anuncios">
+  <h2 class="block-title">Anúncios recentes</h2>
+  <p class="block-subtitle">Lotes de excedente disponíveis. Cadastre-se para ver detalhes e contato.</p>
+  <div class="anuncios-grid">
+
+    <div class="anuncio-card">
+      <div class="anuncio-img">
+        <span class="anuncio-badge">Verificado</span>
+        Foto do lote
+      </div>
+      <div class="anuncio-body">
+        <h4>Pastilha de freio dianteira — Linha VW/Fiat</h4>
+        <div class="anuncio-meta">Estamparia, ABC Paulista · 2.400 unidades</div>
+        <div class="anuncio-preco">R$ 32/un</div>
+        <div class="anuncio-verificado">Fornecedor verificado</div>
+      </div>
+    </div>
+
+    <div class="anuncio-card">
+      <div class="anuncio-img">
+        <span class="anuncio-badge">Novo</span>
+        Foto do lote
+      </div>
+      <div class="anuncio-body">
+        <h4>Coxim de motor injetado — Chevrolet Onix</h4>
+        <div class="anuncio-meta">Injetora, Diadema · 850 unidades</div>
+        <div class="anuncio-preco">R$ 48/un</div>
+        <div class="anuncio-verificado">Fornecedor verificado</div>
+      </div>
+    </div>
+
+    <div class="anuncio-card">
+      <div class="anuncio-img">
+        <span class="anuncio-badge">Verificado</span>
+        Foto do lote
+      </div>
+      <div class="anuncio-body">
+        <h4>Chicote elétrico — Renault Kwid/Sandero</h4>
+        <div class="anuncio-meta">Tier-2, São Bernardo · 1.200 unidades</div>
+        <div class="anuncio-preco">R$ 78/un</div>
+        <div class="anuncio-verificado">Fornecedor verificado</div>
+      </div>
+    </div>
+
+    <div class="anuncio-card">
+      <div class="anuncio-img">
+        <span class="anuncio-badge">Excedente</span>
+        Foto do lote
+      </div>
+      <div class="anuncio-body">
+        <h4>Coifa de homocinética — Ford Ka/EcoSport</h4>
+        <div class="anuncio-meta">Injetora, Osasco · 3.500 unidades</div>
+        <div class="anuncio-preco">R$ 12/un</div>
+        <div class="anuncio-verificado">Fornecedor verificado</div>
+      </div>
+    </div>
+
+    <div class="anuncio-card">
+      <div class="anuncio-img">
+        <span class="anuncio-badge">Novo</span>
+        Foto do lote
+      </div>
+      <div class="anuncio-body">
+        <h4>Bucha de suspensão — Toyota Corolla/Etios</h4>
+        <div class="anuncio-meta">Estamparia, Guarulhos · 600 unidades</div>
+        <div class="anuncio-preco">R$ 24/un</div>
+        <div class="anuncio-verificado">Fornecedor verificado</div>
+      </div>
+    </div>
+
+    <div class="anuncio-card">
+      <div class="anuncio-img">
+        <span class="anuncio-badge">Verificado</span>
+        Foto do lote
+      </div>
+      <div class="anuncio-body">
+        <h4>Parafuso especial — Aplicação universal</h4>
+        <div class="anuncio-meta">Tier-3, Mauá · 15.000 unidades</div>
+        <div class="anuncio-preco">R$ 1,80/un</div>
+        <div class="anuncio-verificado">Fornecedor verificado</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SEÇÃO SOBRE -->
+<section class="section" id="sobre">
+  <h2 class="block-title">Sobre a AutoCiclo</h2>
+  <div class="sobre-content">
+    <p><strong>Objetivo</strong></p>
+    <p>Ser o principal canal do Brasil para excedente automotivo, transformando estoque parado em oportunidade de negócio para toda a cadeia — do fornecedor tier-3 ao exportador.</p>
+
+    <p><strong>Missão</strong></p>
+    <p>Reduzir desperdício industrial e gerar valor para empresas do setor automotivo, criando um marketplace confiável, especializado e acessível para compra e venda de peças excedentes de produção.</p>
+
+    <div class="sobre-valores">
+      <div class="valor-item">
+        <h4>Transparência</h4>
+        <p>Toda transação começa com verificação de origem e nota fiscal. Sem informação escondida.</p>
+      </div>
+      <div class="valor-item">
+        <h4>Especialização</h4>
+        <p>Foco exclusivo em automotivo. Entendemos código, aplicação e a cadeia produtiva.</p>
+      </div>
+      <div class="valor-item">
+        <h4>Sustentabilidade</h4>
+        <p>Cada lote reaproveitado é uma peça a menos indo para sucata. Economia circular na prática.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEÇÃO CONTATO -->
+<section class="section" id="contato">
+  <h2 class="block-title">Contato</h2>
+  <p class="block-subtitle">Tem uma dúvida, sugestão ou quer entender melhor como funciona? Fale com a gente.</p>
+  <div class="contato-grid">
+    <div class="contato-info">
+      <h3>Onde nos encontrar</h3>
+      <p><strong>E-mail:</strong> contato@autociclo.com.br</p>
+      <p><strong>Comercial:</strong> comercial@autociclo.com.br</p>
+      <p><strong>WhatsApp:</strong> (11) 9XXXX-XXXX</p>
+      <p><strong>Localização:</strong> Santo André, SP</p>
+      <p><strong>Horário:</strong> Segunda a sexta, 9h às 18h</p>
+      <div class="redes">
+        <a href="#" class="rede-social">in</a>
+        <a href="#" class="rede-social">IG</a>
+        <a href="#" class="rede-social">f</a>
+        <a href="#" class="rede-social">TT</a>
+      </div>
+    </div>
+    <form class="contato-form" onsubmit="event.preventDefault(); alert('Mensagem enviada. Retornaremos em breve.');">
+      <h3 style="margin-bottom: 16px;">Envie sua mensagem</h3>
+      <input type="text" placeholder="Nome" required>
+      <input type="email" placeholder="E-mail" required>
+      <input type="text" placeholder="Empresa">
+      <textarea placeholder="Mensagem" required></textarea>
+      <button type="submit">Enviar mensagem</button>
+    </form>
+  </div>
+</section>
+
+<!-- SEÇÃO ÁREA DO CLIENTE -->
+<section class="section" id="area-cliente">
+  <div class="area-cliente">
+    <div class="area-cliente-header">
+      <div>
+        <h2>Olá, <span id="user-name">Fornecedor</span></h2>
+        <p style="color: var(--gray); font-size: 14px;">Bem-vindo à sua área. Gerencie seus anúncios e contatos.</p>
+      </div>
+      <button class="btn-primary" onclick="logout()">Sair</button>
+    </div>
+
+    <div class="area-cliente-stats">
+      <div class="stat-card">
+        <div class="valor">4</div>
+        <div class="label">Anúncios ativos</div>
+      </div>
+      <div class="stat-card">
+        <div class="valor">12</div>
+        <div class="label">Contatos recebidos</div>
+      </div>
+      <div class="stat-card">
+        <div class="valor">2</div>
+        <div class="label">Vendas fechadas</div>
+      </div>
+      <div class="stat-card">
+        <div class="valor">R$ 8.4k</div>
+        <div class="label">Faturamento no mês</div>
+      </div>
+    </div>
+
+    <div class="area-cliente-menu">
+      <button class="menu-item active">Meus anúncios</button>
+      <button class="menu-item">Mensagens</button>
+      <button class="menu-item">Perfil da empresa</button>
+      <button class="menu-item">Plano</button>
+    </div>
+
+    <div style="background: var(--white); padding: 24px; border-radius: 8px;">
+      <p style="color: var(--gray);">Seus anúncios ativos aparecem aqui. Clique em "Novo anúncio" para publicar um lote.</p>
+      <button class="btn-primary" style="margin-top: 16px;">+ Novo anúncio</button>
+    </div>
+  </div>
+</section>
+
+<!-- MODAL LOGIN/CADASTRO -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeLoginModal()">×</button>
+    <div class="modal-tabs">
+      <div class="modal-tab active" onclick="switchTab('login', this)">Entrar</div>
+      <div class="modal-tab" onclick="switchTab('cadastro', this)">Cadastrar</div>
+    </div>
+    <div id="tab-login">
+      <h2>Bem-vindo de volta</h2>
+      <p>Acesse sua área de cliente.</p>
+      <input type="email" placeholder="E-mail">
+      <input type="password" placeholder="Senha">
+      <button class="btn-submit" onclick="doLogin()">Entrar</button>
+      <div class="modal-link">Esqueceu a senha? <a>Recuperar</a></div>
+    </div>
+    <div id="tab-cadastro" style="display: none;">
+      <h2>Crie sua conta</h2>
+      <p>Rápido, gratuito e sem compromisso.</p>
+      <select id="tipo-usuario">
+        <option value="fornecedor">Sou fornecedor</option>
+        <option value="comprador">Sou comprador</option>
+      </select>
+      <input type="text" placeholder="Nome da empresa">
+      <input type="text" placeholder="CNPJ">
+      <input type="email" placeholder="E-mail">
+      <input type="password" placeholder="Senha">
+      <button class="btn-submit" onclick="doRegister()">Cadastrar gratuitamente</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCROLL TOP -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 AutoCiclo <span class="divider">|</span> Marketplace de excedente automotivo <span class="divider">|</span> Santo André, SP</p>
+</footer>
+
+<script>
+// Navegação entre abas
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const link = document.getElementById('link-' + id);
+  if (link) link.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Modal login/cadastro
+function openLoginModal(tipo) {
+  document.getElementById('loginModal').classList.add('active');
+  if (tipo === 'fornecedor' || tipo === 'comprador') {
+    switchTab('cadastro', document.querySelectorAll('.modal-tab')[1]);
+    document.getElementById('tipo-usuario').value = tipo;
+  }
+}
+function closeLoginModal() {
+  document.getElementById('loginModal').classList.remove('active');
+}
+function switchTab(tab, el) {
+  document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-login').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('tab-cadastro').style.display = tab === 'cadastro' ? 'block' : 'none';
+}
+function doLogin() {
+  closeLoginModal();
+  document.getElementById('user-name').textContent = 'Cliente';
+  showSection('area-cliente');
+}
+function doRegister() {
+  const tipo = document.getElementById('tipo-usuario').value;
+  closeLoginModal();
+  document.getElementById('user-name').textContent = tipo === 'fornecedor' ? 'Fornecedor' : 'Comprador';
+  showSection('area-cliente');
+}
+function logout() {
+  showSection('home');
+}
+
+// Botão scroll top
+window.addEventListener('scroll', function() {
+  const btn = document.getElementById('scrollTop');
+  if (window.scrollY > 300) {
+    btn.classList.add('visible');
+  } else {
+    btn.classList.remove('visible');
+  }
+});
+
+// Reveal on scroll
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+function attachReveal() {
+  document.querySelectorAll('.reveal').forEach(el => {
+    el.classList.remove('visible');
+    revealObserver.observe(el);
+  });
+}
+attachReveal();
+
+// Re-anexa ao trocar de aba
+const originalShowSection = showSection;
+showSection = function(id) {
+  originalShowSection(id);
+  setTimeout(attachReveal, 100);
+};
+</script>
+</body>
+</html>
