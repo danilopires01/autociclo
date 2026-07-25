@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AutoCiclo — Marketplace de excedente automotivo</title>
+<title>ReCircula Auto — Marketplace de excedente automotivo</title>
 <style>
 :root {
   --red: #C8102E;
@@ -108,12 +108,12 @@ body {
 /* HERO */
 .hero {
   background:
-    linear-gradient(135deg, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.75) 50%, rgba(158,12,36,0.55) 100%),
-    url('https://images.unsplash.com/photo-1487754180451-c456f719a1fc?auto=format&fit=crop&w=1600&q=80');
+    linear-gradient(135deg, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.78) 50%, rgba(158,12,36,0.6) 100%),
+    url('https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=1600&q=80');
   background-size: cover;
   background-position: center;
   color: var(--white);
-  padding: 100px 40px 90px;
+  padding: 90px 40px 80px;
   margin: -60px -40px 60px -40px;
   text-align: left;
   position: relative;
@@ -147,11 +147,11 @@ body {
   50% { transform: scale(1.15); opacity: 0.3; }
 }
 .hero-brand {
-  font-size: 72px;
+  font-size: 60px;
   font-weight: 900;
   letter-spacing: -2px;
   line-height: 1;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   position: relative;
   opacity: 0;
   animation: fadeInUp 0.8s ease-out 0.1s forwards;
@@ -456,6 +456,163 @@ body {
   margin-top: 8px;
 }
 
+/* FILTROS DE ANÚNCIOS */
+.filtros-anuncios {
+  background: var(--white);
+  padding: 24px;
+  border-radius: 8px;
+  margin-bottom: 32px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr auto;
+  gap: 12px;
+  align-items: end;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.filtro-grupo { display: flex; flex-direction: column; gap: 6px; }
+.filtro-grupo label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray);
+  text-transform: uppercase;
+}
+.filtro-grupo input, .filtro-grupo select {
+  padding: 10px 12px;
+  border: 1px solid var(--gray-light);
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+  background: var(--white);
+}
+.filtro-grupo input:focus, .filtro-grupo select:focus {
+  outline: none;
+  border-color: var(--red);
+}
+.btn-filtrar {
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  height: 40px;
+  transition: background 0.2s;
+}
+.btn-filtrar:hover { background: var(--red); }
+.filtros-resultado {
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: var(--gray);
+}
+.filtros-resultado strong { color: var(--black); }
+
+/* ANÚNCIO CARD - imagens de peça */
+.anuncio-img {
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray);
+  font-size: 14px;
+  position: relative;
+}
+.anuncio-img.pastilha { background-image: url('https://images.unsplash.com/photo-1632823469850-1b7b1e8b7e2e?auto=format&fit=crop&w=600&q=70'); }
+.anuncio-img.coxim { background-image: url('https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=600&q=70'); }
+.anuncio-img.chicote { background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=70'); }
+.anuncio-img.coifa { background-image: url('https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=600&q=70'); }
+.anuncio-img.bucha { background-image: url('https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=600&q=70'); }
+.anuncio-img.parafuso { background-image: url('https://images.unsplash.com/photo-1609205780778-a294cef44b98?auto=format&fit=crop&w=600&q=70'); }
+
+/* MODAL DE DETALHES DE ANÚNCIO */
+.modal-detalhe .modal {
+  max-width: 720px;
+  padding: 0;
+  overflow: hidden;
+}
+.detalhe-img {
+  height: 280px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.detalhe-img .badge-topo {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: var(--red);
+  color: var(--white);
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.detalhe-body { padding: 32px; }
+.detalhe-body h2 {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+.detalhe-body .meta-info {
+  color: var(--gray);
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+.detalhe-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 20px 0;
+  padding: 20px 0;
+  border-top: 1px solid var(--gray-light);
+  border-bottom: 1px solid var(--gray-light);
+}
+.detalhe-item { }
+.detalhe-item .label {
+  font-size: 11px;
+  color: var(--gray);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.detalhe-item .valor {
+  font-size: 15px;
+  color: var(--black);
+  font-weight: 500;
+}
+.detalhe-preco {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--gray-light);
+}
+.detalhe-preco .preco-valor {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--red);
+}
+.detalhe-preco .preco-valor small { font-size: 14px; color: var(--gray); font-weight: 400; }
+.detalhe-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+.detalhe-actions button {
+  flex: 1;
+  padding: 14px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+  border: none;
+}
+.btn-contato-fornecedor { background: var(--red); color: var(--white); }
+.btn-contato-fornecedor:hover { background: var(--red-dark); }
+.btn-salvar { background: var(--white); color: var(--black); border: 1px solid var(--gray-light) !important; }
+.btn-salvar:hover { background: var(--off-white); }
+
 /* SOBRE */
 .sobre-content { max-width: 800px; }
 .sobre-content p { font-size: 16px; margin-bottom: 20px; color: #2A2A2A; }
@@ -711,11 +868,11 @@ footer .divider { color: var(--red); margin: 0 8px; }
 <!-- NAVBAR -->
 <nav class="navbar">
   <div class="logo">
-    <div class="logo-mark">A</div>
-    Auto<span class="dot">Ciclo</span>
+    <div class="logo-mark">R</div>
+    ReCircula<span class="dot">Auto</span>
   </div>
   <ul class="nav-links">
-    <li><a onclick="showSection('home')" class="active" id="link-home">AutoCiclo</a></li>
+    <li><a onclick="showSection('home')" class="active" id="link-home">Início</a></li>
     <li><a onclick="showSection('anuncios')" id="link-anuncios">Anúncios</a></li>
     <li><a onclick="showSection('sobre')" id="link-sobre">Sobre</a></li>
     <li><a onclick="showSection('contato')" id="link-contato">Contato</a></li>
@@ -726,7 +883,7 @@ footer .divider { color: var(--red); margin: 0 8px; }
 <!-- SEÇÃO HOME -->
 <section class="section active" id="home">
   <div class="hero">
-    <div class="hero-brand">Auto<span>Ciclo</span></div>
+    <div class="hero-brand">ReCircula<span> Auto</span></div>
     <h1>Excedente de fábrica virou <span>oportunidade</span>.</h1>
     <p>Conectamos estamparias, injetoras e fornecedores automotivos que geram peça excedente com distribuidores, oficinas e exportadores prontos para comprar.</p>
     <div class="hero-cta">
@@ -736,8 +893,8 @@ footer .divider { color: var(--red); margin: 0 8px; }
   </div>
 
   <div class="block reveal">
-    <h2 class="block-title">O que a AutoCiclo resolve</h2>
-    <p class="block-subtitle">Peça nova sobrando no chão de fábrica é dinheiro parado. A AutoCiclo transforma esse estoque em faturamento.</p>
+    <h2 class="block-title">O que a ReCircula Auto resolve</h2>
+    <p class="block-subtitle">Peça nova sobrando no chão de fábrica é dinheiro parado. A ReCircula Auto transforma esse estoque em faturamento.</p>
   </div>
 
   <div class="block reveal">
@@ -799,7 +956,7 @@ footer .divider { color: var(--red); margin: 0 8px; }
   </div>
 
   <div class="block reveal">
-    <h2 class="block-title">Por que AutoCiclo</h2>
+    <h2 class="block-title">Por que ReCircula Auto</h2>
     <div class="vantagens">
       <div class="vantagem-card">
         <div class="icone">✓</div>
@@ -863,7 +1020,7 @@ footer .divider { color: var(--red); margin: 0 8px; }
     <h2 class="block-title">Fale com a gente</h2>
     <p class="block-subtitle">Nossa equipe está pronta para ajudar você a começar.</p>
     <div class="contato-info">
-      <p><strong>E-mail:</strong> contato@autociclo.com.br</p>
+      <p><strong>E-mail:</strong> contato@recircula.com.br</p>
       <p><strong>WhatsApp:</strong> (11) 9XXXX-XXXX</p>
       <p><strong>Localização:</strong> Santo André, SP</p>
       <div class="redes">
@@ -879,82 +1036,118 @@ footer .divider { color: var(--red); margin: 0 8px; }
 <!-- SEÇÃO ANÚNCIOS -->
 <section class="section" id="anuncios">
   <h2 class="block-title">Anúncios recentes</h2>
-  <p class="block-subtitle">Lotes de excedente disponíveis. Cadastre-se para ver detalhes e contato.</p>
-  <div class="anuncios-grid">
+  <p class="block-subtitle">Lotes de excedente disponíveis. Clique para ver detalhes e entrar em contato com o fornecedor.</p>
 
-    <div class="anuncio-card">
-      <div class="anuncio-img">
+  <div class="filtros-anuncios">
+    <div class="filtro-grupo">
+      <label>Buscar peça</label>
+      <input type="text" id="filtro-busca" placeholder="Ex: pastilha, coxim, chicote..." oninput="filtrarAnuncios()">
+    </div>
+    <div class="filtro-grupo">
+      <label>Categoria</label>
+      <select id="filtro-categoria" onchange="filtrarAnuncios()">
+        <option value="">Todas</option>
+        <option value="freios">Freios</option>
+        <option value="motor">Motor</option>
+        <option value="eletrica">Elétrica</option>
+        <option value="suspensao">Suspensão</option>
+        <option value="fixacao">Fixação</option>
+      </select>
+    </div>
+    <div class="filtro-grupo">
+      <label>Localização</label>
+      <select id="filtro-local" onchange="filtrarAnuncios()">
+        <option value="">Todas</option>
+        <option value="abc">ABC Paulista</option>
+        <option value="grande-sp">Grande SP</option>
+        <option value="interior">Interior SP</option>
+      </select>
+    </div>
+    <div class="filtro-grupo">
+      <label>Ordenar por</label>
+      <select id="filtro-ordem" onchange="filtrarAnuncios()">
+        <option value="recentes">Mais recentes</option>
+        <option value="menor-preco">Menor preço</option>
+        <option value="maior-preco">Maior preço</option>
+        <option value="maior-qtd">Maior quantidade</option>
+      </select>
+    </div>
+    <button class="btn-filtrar" onclick="limparFiltros()">Limpar</button>
+  </div>
+
+  <div class="filtros-resultado">
+    Exibindo <strong id="total-anuncios">6</strong> anúncios
+  </div>
+
+  <div class="anuncios-grid" id="anuncios-grid">
+
+    <div class="anuncio-card" data-categoria="freios" data-local="abc" data-preco="32" data-qtd="2400" onclick="abrirDetalhe(0)">
+      <div class="anuncio-img pastilha">
         <span class="anuncio-badge">Verificado</span>
-        Foto do lote
       </div>
       <div class="anuncio-body">
         <h4>Pastilha de freio dianteira — Linha VW/Fiat</h4>
-        <div class="anuncio-meta">Estamparia, ABC Paulista · 2.400 unidades</div>
+        <div class="anuncio-meta">Estamparia · ABC Paulista · 2.400 unidades</div>
         <div class="anuncio-preco">R$ 32/un</div>
         <div class="anuncio-verificado">Fornecedor verificado</div>
       </div>
     </div>
 
-    <div class="anuncio-card">
-      <div class="anuncio-img">
+    <div class="anuncio-card" data-categoria="motor" data-local="abc" data-preco="48" data-qtd="850" onclick="abrirDetalhe(1)">
+      <div class="anuncio-img coxim">
         <span class="anuncio-badge">Novo</span>
-        Foto do lote
       </div>
       <div class="anuncio-body">
         <h4>Coxim de motor injetado — Chevrolet Onix</h4>
-        <div class="anuncio-meta">Injetora, Diadema · 850 unidades</div>
+        <div class="anuncio-meta">Injetora · Diadema · 850 unidades</div>
         <div class="anuncio-preco">R$ 48/un</div>
         <div class="anuncio-verificado">Fornecedor verificado</div>
       </div>
     </div>
 
-    <div class="anuncio-card">
-      <div class="anuncio-img">
+    <div class="anuncio-card" data-categoria="eletrica" data-local="abc" data-preco="78" data-qtd="1200" onclick="abrirDetalhe(2)">
+      <div class="anuncio-img chicote">
         <span class="anuncio-badge">Verificado</span>
-        Foto do lote
       </div>
       <div class="anuncio-body">
         <h4>Chicote elétrico — Renault Kwid/Sandero</h4>
-        <div class="anuncio-meta">Tier-2, São Bernardo · 1.200 unidades</div>
+        <div class="anuncio-meta">Tier-2 · São Bernardo · 1.200 unidades</div>
         <div class="anuncio-preco">R$ 78/un</div>
         <div class="anuncio-verificado">Fornecedor verificado</div>
       </div>
     </div>
 
-    <div class="anuncio-card">
-      <div class="anuncio-img">
+    <div class="anuncio-card" data-categoria="motor" data-local="grande-sp" data-preco="12" data-qtd="3500" onclick="abrirDetalhe(3)">
+      <div class="anuncio-img coifa">
         <span class="anuncio-badge">Excedente</span>
-        Foto do lote
       </div>
       <div class="anuncio-body">
         <h4>Coifa de homocinética — Ford Ka/EcoSport</h4>
-        <div class="anuncio-meta">Injetora, Osasco · 3.500 unidades</div>
+        <div class="anuncio-meta">Injetora · Osasco · 3.500 unidades</div>
         <div class="anuncio-preco">R$ 12/un</div>
         <div class="anuncio-verificado">Fornecedor verificado</div>
       </div>
     </div>
 
-    <div class="anuncio-card">
-      <div class="anuncio-img">
+    <div class="anuncio-card" data-categoria="suspensao" data-local="grande-sp" data-preco="24" data-qtd="600" onclick="abrirDetalhe(4)">
+      <div class="anuncio-img bucha">
         <span class="anuncio-badge">Novo</span>
-        Foto do lote
       </div>
       <div class="anuncio-body">
         <h4>Bucha de suspensão — Toyota Corolla/Etios</h4>
-        <div class="anuncio-meta">Estamparia, Guarulhos · 600 unidades</div>
+        <div class="anuncio-meta">Estamparia · Guarulhos · 600 unidades</div>
         <div class="anuncio-preco">R$ 24/un</div>
         <div class="anuncio-verificado">Fornecedor verificado</div>
       </div>
     </div>
 
-    <div class="anuncio-card">
-      <div class="anuncio-img">
+    <div class="anuncio-card" data-categoria="fixacao" data-local="abc" data-preco="1.80" data-qtd="15000" onclick="abrirDetalhe(5)">
+      <div class="anuncio-img parafuso">
         <span class="anuncio-badge">Verificado</span>
-        Foto do lote
       </div>
       <div class="anuncio-body">
         <h4>Parafuso especial — Aplicação universal</h4>
-        <div class="anuncio-meta">Tier-3, Mauá · 15.000 unidades</div>
+        <div class="anuncio-meta">Tier-3 · Mauá · 15.000 unidades</div>
         <div class="anuncio-preco">R$ 1,80/un</div>
         <div class="anuncio-verificado">Fornecedor verificado</div>
       </div>
@@ -963,9 +1156,70 @@ footer .divider { color: var(--red); margin: 0 8px; }
   </div>
 </section>
 
+<!-- MODAL DE DETALHES DO ANÚNCIO -->
+<div class="modal-overlay modal-detalhe" id="detalheModal">
+  <div class="modal">
+    <button class="modal-close" onclick="fecharDetalhe()" style="color: white; z-index: 10;">×</button>
+    <div class="detalhe-img" id="detalhe-img">
+      <span class="badge-topo" id="detalhe-badge">Verificado</span>
+    </div>
+    <div class="detalhe-body">
+      <h2 id="detalhe-titulo">Nome da peça</h2>
+      <p class="meta-info" id="detalhe-meta">Fornecedor · Localização</p>
+
+      <p id="detalhe-desc" style="color: #444; font-size: 14px; line-height: 1.6;">
+        Descrição detalhada do lote e condição da peça.
+      </p>
+
+      <div class="detalhe-grid">
+        <div class="detalhe-item">
+          <div class="label">Quantidade disponível</div>
+          <div class="valor" id="detalhe-qtd">-</div>
+        </div>
+        <div class="detalhe-item">
+          <div class="label">Aplicação veicular</div>
+          <div class="valor" id="detalhe-aplic">-</div>
+        </div>
+        <div class="detalhe-item">
+          <div class="label">Motivo do excedente</div>
+          <div class="valor" id="detalhe-motivo">-</div>
+        </div>
+        <div class="detalhe-item">
+          <div class="label">Nota fiscal</div>
+          <div class="valor" id="detalhe-nf">Disponível</div>
+        </div>
+        <div class="detalhe-item">
+          <div class="label">Fornecedor</div>
+          <div class="valor" id="detalhe-fornec">-</div>
+        </div>
+        <div class="detalhe-item">
+          <div class="label">Condição</div>
+          <div class="valor">Peça nova, embalada</div>
+        </div>
+      </div>
+
+      <div class="detalhe-preco">
+        <div>
+          <div style="font-size: 12px; color: var(--gray); text-transform: uppercase; font-weight: 600;">Preço unitário</div>
+          <div class="preco-valor" id="detalhe-preco">R$ 0<small>/un</small></div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-size: 12px; color: var(--gray); text-transform: uppercase; font-weight: 600;">Valor total do lote</div>
+          <div style="font-size: 18px; font-weight: 600;" id="detalhe-total">R$ 0</div>
+        </div>
+      </div>
+
+      <div class="detalhe-actions">
+        <button class="btn-contato-fornecedor" onclick="alert('Faça cadastro para ver os contatos do fornecedor.')">Ver contato do fornecedor</button>
+        <button class="btn-salvar" onclick="alert('Anúncio salvo!')">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- SEÇÃO SOBRE -->
 <section class="section" id="sobre">
-  <h2 class="block-title">Sobre a AutoCiclo</h2>
+  <h2 class="block-title">Sobre a ReCircula Auto</h2>
   <div class="sobre-content">
     <p><strong>Objetivo</strong></p>
     <p>Ser o principal canal do Brasil para excedente automotivo, transformando estoque parado em oportunidade de negócio para toda a cadeia — do fornecedor tier-3 ao exportador.</p>
@@ -988,6 +1242,46 @@ footer .divider { color: var(--red); margin: 0 8px; }
       </div>
     </div>
   </div>
+
+  <div class="block reveal" style="margin-top: 60px;">
+    <h2 class="block-title">Nossos planos</h2>
+    <p class="block-subtitle">Cadastro gratuito para todos. Assinatura libera acesso completo aos contatos e busca avançada.</p>
+    <div class="planos">
+      <div class="plano-card">
+        <h3>Gratuito</h3>
+        <div class="preco">R$ 0<small>/mês</small></div>
+        <ul>
+          <li>Cadastro na plataforma</li>
+          <li>Publicar até 3 anúncios</li>
+          <li>Ver 5 contatos por mês</li>
+          <li>Suporte por e-mail</li>
+        </ul>
+        <button class="btn-plano">Começar grátis</button>
+      </div>
+      <div class="plano-card destaque">
+        <h3>Profissional</h3>
+        <div class="preco">R$ 197<small>/mês</small></div>
+        <ul>
+          <li>Anúncios ilimitados</li>
+          <li>Contatos ilimitados</li>
+          <li>Selo de verificado</li>
+          <li>Suporte prioritário</li>
+        </ul>
+        <button class="btn-plano">Assinar</button>
+      </div>
+      <div class="plano-card">
+        <h3>Empresarial</h3>
+        <div class="preco">R$ 497<small>/mês</small></div>
+        <ul>
+          <li>Tudo do Profissional</li>
+          <li>Agente de sucesso dedicado</li>
+          <li>Notificações de novos lotes</li>
+          <li>Relatórios personalizados</li>
+        </ul>
+        <button class="btn-plano">Falar com vendas</button>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- SEÇÃO CONTATO -->
@@ -997,8 +1291,8 @@ footer .divider { color: var(--red); margin: 0 8px; }
   <div class="contato-grid">
     <div class="contato-info">
       <h3>Onde nos encontrar</h3>
-      <p><strong>E-mail:</strong> contato@autociclo.com.br</p>
-      <p><strong>Comercial:</strong> comercial@autociclo.com.br</p>
+      <p><strong>E-mail:</strong> contato@recircula.com.br</p>
+      <p><strong>Comercial:</strong> comercial@recircula.com.br</p>
       <p><strong>WhatsApp:</strong> (11) 9XXXX-XXXX</p>
       <p><strong>Localização:</strong> Santo André, SP</p>
       <p><strong>Horário:</strong> Segunda a sexta, 9h às 18h</p>
@@ -1097,11 +1391,11 @@ footer .divider { color: var(--red); margin: 0 8px; }
 </div>
 
 <!-- SCROLL TOP -->
-<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+<button class="scroll-top" id="scrollTop" onclick="scrollToTopSuave()">↑</button>
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2026 AutoCiclo <span class="divider">|</span> Marketplace de excedente automotivo <span class="divider">|</span> Santo André, SP</p>
+  <p>© 2026 ReCircula Auto <span class="divider">|</span> Marketplace de excedente automotivo <span class="divider">|</span> Santo André, SP</p>
 </footer>
 
 <script>
@@ -1147,6 +1441,29 @@ function logout() {
   showSection('home');
 }
 
+// Scroll top customizado (mais lento e suave)
+function scrollToTopSuave() {
+  const start = window.scrollY;
+  const duration = 1600; // 1.6 segundos (mais devagar)
+  const startTime = performance.now();
+
+  // Easing suave (ease-in-out)
+  function easeInOutQuad(t) {
+    return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  }
+
+  function step(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = easeInOutQuad(progress);
+    window.scrollTo(0, start * (1 - eased));
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    }
+  }
+  requestAnimationFrame(step);
+}
+
 // Botão scroll top
 window.addEventListener('scroll', function() {
   const btn = document.getElementById('scrollTop');
@@ -1156,6 +1473,176 @@ window.addEventListener('scroll', function() {
     btn.classList.remove('visible');
   }
 });
+
+// FILTROS DE ANÚNCIOS
+function filtrarAnuncios() {
+  const busca = document.getElementById('filtro-busca').value.toLowerCase();
+  const categoria = document.getElementById('filtro-categoria').value;
+  const local = document.getElementById('filtro-local').value;
+  const ordem = document.getElementById('filtro-ordem').value;
+
+  const grid = document.getElementById('anuncios-grid');
+  let cards = Array.from(grid.querySelectorAll('.anuncio-card'));
+  let visiveis = 0;
+
+  cards.forEach(card => {
+    const texto = card.querySelector('h4').textContent.toLowerCase() + ' ' + card.querySelector('.anuncio-meta').textContent.toLowerCase();
+    const catMatch = !categoria || card.dataset.categoria === categoria;
+    const localMatch = !local || card.dataset.local === local;
+    const buscaMatch = !busca || texto.includes(busca);
+
+    if (catMatch && localMatch && buscaMatch) {
+      card.style.display = '';
+      visiveis++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  // Ordenar cards visíveis
+  const cardsVisiveis = cards.filter(c => c.style.display !== 'none');
+  cardsVisiveis.sort((a, b) => {
+    if (ordem === 'menor-preco') return parseFloat(a.dataset.preco) - parseFloat(b.dataset.preco);
+    if (ordem === 'maior-preco') return parseFloat(b.dataset.preco) - parseFloat(a.dataset.preco);
+    if (ordem === 'maior-qtd') return parseInt(b.dataset.qtd) - parseInt(a.dataset.qtd);
+    return 0;
+  });
+  cardsVisiveis.forEach(c => grid.appendChild(c));
+
+  document.getElementById('total-anuncios').textContent = visiveis;
+}
+
+function limparFiltros() {
+  document.getElementById('filtro-busca').value = '';
+  document.getElementById('filtro-categoria').value = '';
+  document.getElementById('filtro-local').value = '';
+  document.getElementById('filtro-ordem').value = 'recentes';
+  filtrarAnuncios();
+}
+
+// DADOS DE ANÚNCIOS PARA MODAL DE DETALHES
+const anunciosData = [
+  {
+    titulo: 'Pastilha de freio dianteira — Linha VW/Fiat',
+    badge: 'Verificado',
+    img: 'pastilha',
+    meta: 'Estamparia · ABC Paulista · Publicado há 3 dias',
+    desc: 'Lote de pastilhas de freio dianteiras compatíveis com linha VW Gol/Voyage e Fiat Uno/Mobi. Peças novas, embaladas individualmente, com composição semi-metálica. Excedente de produção por revisão de programa da montadora.',
+    qtd: '2.400 unidades',
+    aplic: 'VW Gol G5/G6, Voyage, Fiat Uno, Mobi',
+    motivo: 'Revisão de programa da montadora',
+    nf: 'Sim, com origem rastreável',
+    fornec: 'Estamparia Metaltek Ltda (verificado)',
+    preco: 32,
+    unidades: 2400
+  },
+  {
+    titulo: 'Coxim de motor injetado — Chevrolet Onix',
+    badge: 'Novo',
+    img: 'coxim',
+    meta: 'Injetora · Diadema · Publicado há 1 dia',
+    desc: 'Coxins de motor em borracha vulcanizada com estrutura metálica, produzidos para linha GM Onix/Prisma. Lote fechado, disponível para retirada imediata.',
+    qtd: '850 unidades',
+    aplic: 'Chevrolet Onix, Prisma (2017-2023)',
+    motivo: 'Cancelamento de pedido do tier-1',
+    nf: 'Sim',
+    fornec: 'Injetora RubberPro (verificado)',
+    preco: 48,
+    unidades: 850
+  },
+  {
+    titulo: 'Chicote elétrico — Renault Kwid/Sandero',
+    badge: 'Verificado',
+    img: 'chicote',
+    meta: 'Tier-2 · São Bernardo · Publicado há 5 dias',
+    desc: 'Chicote elétrico completo do painel de instrumentos, com conectores originais Molex. Compatível com Renault Kwid e Sandero na versão 1.0 SCe.',
+    qtd: '1.200 unidades',
+    aplic: 'Renault Kwid, Sandero 1.0 SCe',
+    motivo: 'Fim de linha do modelo',
+    nf: 'Sim',
+    fornec: 'ElétricaBR Componentes (verificado)',
+    preco: 78,
+    unidades: 1200
+  },
+  {
+    titulo: 'Coifa de homocinética — Ford Ka/EcoSport',
+    badge: 'Excedente',
+    img: 'coifa',
+    meta: 'Injetora · Osasco · Publicado há 1 semana',
+    desc: 'Coifas de homocinética em elastômero termoplástico, aplicação universal para Ford Ka e EcoSport. Alta durabilidade e resistência a óleo.',
+    qtd: '3.500 unidades',
+    aplic: 'Ford Ka, EcoSport, Fiesta',
+    motivo: 'Excedente de produção',
+    nf: 'Sim',
+    fornec: 'PlastAuto Injetados (verificado)',
+    preco: 12,
+    unidades: 3500
+  },
+  {
+    titulo: 'Bucha de suspensão — Toyota Corolla/Etios',
+    badge: 'Novo',
+    img: 'bucha',
+    meta: 'Estamparia · Guarulhos · Publicado há 2 dias',
+    desc: 'Buchas de suspensão traseira em borracha reforçada com núcleo metálico. Aplicação para linha Toyota Corolla e Etios.',
+    qtd: '600 unidades',
+    aplic: 'Toyota Corolla (2015+), Etios',
+    motivo: 'Ajuste de estoque de segurança',
+    nf: 'Sim',
+    fornec: 'SuspenTech (verificado)',
+    preco: 24,
+    unidades: 600
+  },
+  {
+    titulo: 'Parafuso especial — Aplicação universal',
+    badge: 'Verificado',
+    img: 'parafuso',
+    meta: 'Tier-3 · Mauá · Publicado há 4 dias',
+    desc: 'Parafusos especiais M8x30 com cabeça sextavada, tratamento térmico e revestimento em zinco. Aplicação universal em componentes automotivos.',
+    qtd: '15.000 unidades',
+    aplic: 'Universal (M8x30, classe 8.8)',
+    motivo: 'Sobra de lote de exportação cancelado',
+    nf: 'Sim',
+    fornec: 'ParafusaBR Indústria (verificado)',
+    preco: 1.80,
+    unidades: 15000
+  }
+];
+
+function abrirDetalhe(index) {
+  const a = anunciosData[index];
+  const modal = document.getElementById('detalheModal');
+  const img = document.getElementById('detalhe-img');
+
+  img.className = 'detalhe-img ' + a.img;
+  const bgUrls = {
+    pastilha: 'https://images.unsplash.com/photo-1632823469850-1b7b1e8b7e2e?auto=format&fit=crop&w=1200&q=80',
+    coxim: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=1200&q=80',
+    chicote: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1200&q=80',
+    coifa: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=1200&q=80',
+    bucha: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1200&q=80',
+    parafuso: 'https://images.unsplash.com/photo-1609205780778-a294cef44b98?auto=format&fit=crop&w=1200&q=80'
+  };
+  img.style.backgroundImage = `url('${bgUrls[a.img]}')`;
+
+  document.getElementById('detalhe-badge').textContent = a.badge;
+  document.getElementById('detalhe-titulo').textContent = a.titulo;
+  document.getElementById('detalhe-meta').textContent = a.meta;
+  document.getElementById('detalhe-desc').textContent = a.desc;
+  document.getElementById('detalhe-qtd').textContent = a.qtd;
+  document.getElementById('detalhe-aplic').textContent = a.aplic;
+  document.getElementById('detalhe-motivo').textContent = a.motivo;
+  document.getElementById('detalhe-nf').textContent = a.nf;
+  document.getElementById('detalhe-fornec').textContent = a.fornec;
+  document.getElementById('detalhe-preco').innerHTML = 'R$ ' + a.preco.toFixed(2).replace('.', ',') + '<small>/un</small>';
+  const total = (a.preco * a.unidades).toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  document.getElementById('detalhe-total').textContent = 'R$ ' + total;
+
+  modal.classList.add('active');
+}
+
+function fecharDetalhe() {
+  document.getElementById('detalheModal').classList.remove('active');
+}
 
 // Reveal on scroll
 const revealObserver = new IntersectionObserver((entries) => {
