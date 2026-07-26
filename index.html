@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ReCircula Auto — Marketplace de excedente automotivo</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root {
   --red: #C8102E;
@@ -613,6 +614,180 @@ body {
 .btn-salvar { background: var(--white); color: var(--black); border: 1px solid var(--gray-light) !important; }
 .btn-salvar:hover { background: var(--off-white); }
 
+/* CARRINHO */
+.cart-container {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.cart-item {
+  display: grid;
+  grid-template-columns: 80px 1fr auto auto;
+  gap: 16px;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--gray-light);
+}
+.cart-item:last-child { border-bottom: none; }
+.cart-item-img {
+  width: 80px;
+  height: 80px;
+  background: var(--gray-light);
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+}
+.cart-item-info h4 { font-size: 15px; margin-bottom: 4px; }
+.cart-item-info small { color: var(--gray); font-size: 12px; }
+.cart-item-qty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cart-item-qty button {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--gray-light);
+  background: var(--white);
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.cart-item-qty input {
+  width: 50px;
+  text-align: center;
+  padding: 4px;
+  border: 1px solid var(--gray-light);
+  border-radius: 4px;
+}
+.cart-item-remove {
+  background: none;
+  border: none;
+  color: var(--red);
+  cursor: pointer;
+  font-size: 20px;
+}
+.cart-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  margin-top: 20px;
+  border-top: 2px solid var(--gray-light);
+}
+.cart-total {
+  font-size: 20px;
+  font-weight: 700;
+}
+.cart-total strong { color: var(--red); font-size: 28px; }
+.cart-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--gray);
+}
+
+/* FORMULÁRIO DE NOVO ANÚNCIO */
+.form-anuncio {
+  background: var(--white);
+  padding: 32px;
+  border-radius: 8px;
+  max-width: 720px;
+}
+.form-anuncio h3 { margin-bottom: 20px; }
+.form-anuncio .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.form-anuncio label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: 6px;
+  display: block;
+}
+.form-anuncio input, .form-anuncio select, .form-anuncio textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--gray-light);
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+  margin-bottom: 12px;
+}
+.form-anuncio textarea { resize: vertical; min-height: 80px; }
+.form-anuncio button {
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  padding: 14px 28px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+/* PLANO ATUAL DO USUÁRIO */
+.plano-atual-card {
+  background: linear-gradient(135deg, var(--black) 0%, var(--red-dark) 100%);
+  color: var(--white);
+  padding: 28px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.plano-atual-card h3 { margin-bottom: 4px; }
+.plano-atual-card p { opacity: 0.8; font-size: 14px; }
+.plano-atual-card .btn-plano-trocar {
+  background: var(--white);
+  color: var(--black);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* ALERTA / TOAST */
+.toast {
+  position: fixed;
+  top: 90px;
+  right: 30px;
+  background: var(--black);
+  color: var(--white);
+  padding: 16px 24px;
+  border-radius: 4px;
+  z-index: 2000;
+  opacity: 0;
+  transform: translateX(100px);
+  transition: all 0.3s ease;
+  border-left: 4px solid var(--red);
+}
+.toast.show { opacity: 1; transform: translateX(0); }
+.toast.success { border-left-color: #2A7A2A; }
+
+/* BADGE CARRINHO NO MENU */
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--red);
+  color: var(--white);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+.btn-area-cliente { position: relative; }
+
 /* SOBRE */
 .sobre-content { max-width: 800px; }
 .sobre-content p { font-size: 16px; margin-bottom: 20px; color: #2A2A2A; }
@@ -877,7 +1052,10 @@ footer .divider { color: var(--red); margin: 0 8px; }
     <li><a onclick="showSection('sobre')" id="link-sobre">Sobre</a></li>
     <li><a onclick="showSection('contato')" id="link-contato">Contato</a></li>
   </ul>
-  <button class="btn-area-cliente" onclick="openLoginModal()">Área do cliente</button>
+  <button class="btn-area-cliente" onclick="handleClienteClick()">
+    Área do cliente
+    <span class="cart-badge" id="cart-badge" style="display:none">0</span>
+  </button>
 </nav>
 
 <!-- SEÇÃO HOME -->
@@ -1210,8 +1388,9 @@ footer .divider { color: var(--red); margin: 0 8px; }
       </div>
 
       <div class="detalhe-actions">
-        <button class="btn-contato-fornecedor" onclick="alert('Faça cadastro para ver os contatos do fornecedor.')">Ver contato do fornecedor</button>
-        <button class="btn-salvar" onclick="alert('Anúncio salvo!')">Salvar</button>
+        <button class="btn-contato-fornecedor" onclick="verContatoFornecedor()">Ver contato do fornecedor</button>
+        <button class="btn-contato-fornecedor" style="background: var(--black)" onclick="adicionarAoCarrinho()">+ Adicionar ao carrinho</button>
+        <button class="btn-salvar" onclick="salvarFavorito()">♡ Salvar</button>
       </div>
     </div>
   </div>
@@ -1319,41 +1498,173 @@ footer .divider { color: var(--red); margin: 0 8px; }
   <div class="area-cliente">
     <div class="area-cliente-header">
       <div>
-        <h2>Olá, <span id="user-name">Fornecedor</span></h2>
-        <p style="color: var(--gray); font-size: 14px;">Bem-vindo à sua área. Gerencie seus anúncios e contatos.</p>
+        <h2>Olá, <span id="user-name">visitante</span></h2>
+        <p style="color: var(--gray); font-size: 14px;" id="user-empresa">Bem-vindo à sua área.</p>
       </div>
       <button class="btn-primary" onclick="logout()">Sair</button>
     </div>
 
+    <!-- Card do plano atual -->
+    <div class="plano-atual-card" id="plano-atual-card">
+      <div>
+        <h3>Plano <span id="plano-atual-nome">Gratuito</span></h3>
+        <p id="plano-atual-desc">Aproveite mais recursos assinando um plano superior.</p>
+      </div>
+      <button class="btn-plano-trocar" onclick="showClienteTab('planos')">Alterar plano</button>
+    </div>
+
+    <!-- Estatísticas -->
     <div class="area-cliente-stats">
       <div class="stat-card">
-        <div class="valor">4</div>
+        <div class="valor" id="stat-anuncios">0</div>
         <div class="label">Anúncios ativos</div>
       </div>
       <div class="stat-card">
-        <div class="valor">12</div>
+        <div class="valor" id="stat-contatos">0</div>
         <div class="label">Contatos recebidos</div>
       </div>
       <div class="stat-card">
-        <div class="valor">2</div>
-        <div class="label">Vendas fechadas</div>
+        <div class="valor" id="stat-favoritos">0</div>
+        <div class="label">Favoritos salvos</div>
       </div>
       <div class="stat-card">
-        <div class="valor">R$ 8.4k</div>
-        <div class="label">Faturamento no mês</div>
+        <div class="valor" id="stat-carrinho">0</div>
+        <div class="label">Itens no carrinho</div>
       </div>
     </div>
 
+    <!-- Menu de navegação da área -->
     <div class="area-cliente-menu">
-      <button class="menu-item active">Meus anúncios</button>
-      <button class="menu-item">Mensagens</button>
-      <button class="menu-item">Perfil da empresa</button>
-      <button class="menu-item">Plano</button>
+      <button class="menu-item active" onclick="showClienteTab('anuncios', this)">Meus anúncios</button>
+      <button class="menu-item" onclick="showClienteTab('novo-anuncio', this)">+ Novo anúncio</button>
+      <button class="menu-item" onclick="showClienteTab('favoritos', this)">Favoritos</button>
+      <button class="menu-item" onclick="showClienteTab('carrinho', this)">Carrinho</button>
+      <button class="menu-item" onclick="showClienteTab('planos', this)">Meu plano</button>
+      <button class="menu-item" onclick="showClienteTab('perfil', this)">Perfil</button>
     </div>
 
-    <div style="background: var(--white); padding: 24px; border-radius: 8px;">
-      <p style="color: var(--gray);">Seus anúncios ativos aparecem aqui. Clique em "Novo anúncio" para publicar um lote.</p>
-      <button class="btn-primary" style="margin-top: 16px;">+ Novo anúncio</button>
+    <!-- Aba: Meus anúncios -->
+    <div class="cliente-tab" id="tab-anuncios">
+      <div style="background: var(--white); padding: 24px; border-radius: 8px;">
+        <div id="meus-anuncios-lista">
+          <p style="color: var(--gray);">Você ainda não tem anúncios publicados. Clique em "+ Novo anúncio" para começar.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Aba: Novo anúncio -->
+    <div class="cliente-tab" id="tab-novo-anuncio" style="display:none">
+      <div class="form-anuncio">
+        <h3>Publicar novo anúncio</h3>
+        <label>Título da peça *</label>
+        <input type="text" id="ad-titulo" placeholder="Ex: Pastilha de freio dianteira Linha VW">
+
+        <div class="form-row">
+          <div>
+            <label>Categoria *</label>
+            <select id="ad-categoria">
+              <option value="">Selecione</option>
+            </select>
+          </div>
+          <div>
+            <label>Região *</label>
+            <select id="ad-regiao">
+              <option value="abc">ABC Paulista</option>
+              <option value="grande-sp">Grande SP</option>
+              <option value="interior">Interior SP</option>
+              <option value="outros">Outros</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div>
+            <label>Quantidade *</label>
+            <input type="number" id="ad-qtd" placeholder="Ex: 500" min="1">
+          </div>
+          <div>
+            <label>Preço unitário (R$) *</label>
+            <input type="number" id="ad-preco" placeholder="Ex: 32.50" step="0.01" min="0">
+          </div>
+        </div>
+
+        <label>Aplicação veicular</label>
+        <input type="text" id="ad-aplicacao" placeholder="Ex: VW Gol G5/G6, Voyage, Fiat Uno">
+
+        <label>Motivo do excedente</label>
+        <input type="text" id="ad-motivo" placeholder="Ex: Revisão de programa da montadora">
+
+        <label>Cidade</label>
+        <input type="text" id="ad-cidade" placeholder="Ex: Santo André">
+
+        <label>Descrição detalhada</label>
+        <textarea id="ad-desc" placeholder="Descreva a peça, condição, embalagem etc."></textarea>
+
+        <label>URL da imagem principal (opcional)</label>
+        <input type="text" id="ad-img" placeholder="https://...">
+
+        <button onclick="publicarAnuncio()">Publicar anúncio</button>
+      </div>
+    </div>
+
+    <!-- Aba: Favoritos -->
+    <div class="cliente-tab" id="tab-favoritos" style="display:none">
+      <div style="background: var(--white); padding: 24px; border-radius: 8px;">
+        <div id="favoritos-lista">
+          <p style="color: var(--gray);">Você ainda não salvou nenhum anúncio. Explore os anúncios e clique em "Salvar" para adicioná-los aqui.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Aba: Carrinho -->
+    <div class="cliente-tab" id="tab-carrinho" style="display:none">
+      <div class="cart-container" id="cart-container">
+        <div class="cart-empty" id="cart-empty">
+          <p style="font-size: 18px; margin-bottom: 8px;">Seu carrinho está vazio</p>
+          <p style="font-size: 14px;">Adicione anúncios ao carrinho para fechar um pedido consolidado.</p>
+        </div>
+        <div id="cart-items"></div>
+        <div class="cart-summary" id="cart-summary" style="display:none">
+          <div class="cart-total">Total: <strong id="cart-total-valor">R$ 0,00</strong></div>
+          <button class="btn-primary" onclick="finalizarPedido()">Solicitar cotação do pedido</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Aba: Planos -->
+    <div class="cliente-tab" id="tab-planos" style="display:none">
+      <p style="color: var(--gray); margin-bottom: 20px;">Escolha o plano que mais faz sentido para o seu volume de negócios.</p>
+      <div class="planos" id="planos-cliente"></div>
+    </div>
+
+    <!-- Aba: Perfil -->
+    <div class="cliente-tab" id="tab-perfil" style="display:none">
+      <div class="form-anuncio">
+        <h3>Dados do perfil e empresa</h3>
+        <label>Nome</label>
+        <input type="text" id="perfil-nome">
+        <label>E-mail</label>
+        <input type="email" id="perfil-email" disabled>
+        <label>Telefone / WhatsApp</label>
+        <input type="text" id="perfil-telefone">
+
+        <h3 style="margin-top: 24px;">Empresa</h3>
+        <label>Razão social</label>
+        <input type="text" id="perfil-razao">
+        <label>CNPJ</label>
+        <input type="text" id="perfil-cnpj">
+        <div class="form-row">
+          <div>
+            <label>Cidade</label>
+            <input type="text" id="perfil-cidade">
+          </div>
+          <div>
+            <label>Estado</label>
+            <input type="text" id="perfil-estado" value="SP">
+          </div>
+        </div>
+        <button onclick="salvarPerfil()">Salvar alterações</button>
+      </div>
     </div>
   </div>
 </section>
@@ -1393,13 +1704,47 @@ footer .divider { color: var(--red); margin: 0 8px; }
 <!-- SCROLL TOP -->
 <button class="scroll-top" id="scrollTop" onclick="scrollToTopSuave()">↑</button>
 
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
 <!-- FOOTER -->
 <footer>
   <p>© 2026 ReCircula Auto <span class="divider">|</span> Marketplace de excedente automotivo <span class="divider">|</span> Santo André, SP</p>
 </footer>
 
 <script>
-// Navegação entre abas
+// ============================================
+// CONFIG SUPABASE — SUBSTITUA COM SUAS CHAVES
+// ============================================
+const SUPABASE_URL = 'https://SEU-PROJETO.supabase.co';
+const SUPABASE_ANON_KEY = 'SUA_CHAVE_ANONIMA_AQUI';
+
+// Inicializa cliente Supabase (funciona em modo demo se config vazio)
+let supabase = null;
+const DEMO_MODE = !SUPABASE_URL.startsWith('https://') || SUPABASE_URL.includes('SEU-PROJETO') || SUPABASE_ANON_KEY.includes('SUA_CHAVE');
+if (!DEMO_MODE) {
+  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+}
+
+// Estado local
+let currentUser = null;
+let currentProfile = null;
+let currentSubscription = null;
+let currentAdDetail = null;
+
+// ============================================
+// TOAST
+// ============================================
+function toast(msg, type = 'default') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + (type === 'success' ? 'success' : '');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ============================================
+// NAVEGAÇÃO
+// ============================================
 function showSection(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -1407,9 +1752,36 @@ function showSection(id) {
   const link = document.getElementById('link-' + id);
   if (link) link.classList.add('active');
   window.scrollTo({top: 0, behavior: 'smooth'});
+  setTimeout(attachReveal, 100);
 }
 
-// Modal login/cadastro
+function handleClienteClick() {
+  if (currentUser) {
+    showSection('area-cliente');
+    carregarAreaCliente();
+  } else {
+    openLoginModal();
+  }
+}
+
+function showClienteTab(tab, el) {
+  document.querySelectorAll('.cliente-tab').forEach(t => t.style.display = 'none');
+  document.getElementById('tab-' + tab).style.display = 'block';
+  if (el) {
+    document.querySelectorAll('.area-cliente-menu .menu-item').forEach(m => m.classList.remove('active'));
+    el.classList.add('active');
+  }
+  if (tab === 'anuncios') carregarMeusAnuncios();
+  if (tab === 'favoritos') carregarFavoritos();
+  if (tab === 'carrinho') carregarCarrinho();
+  if (tab === 'planos') carregarPlanosCliente();
+  if (tab === 'perfil') carregarPerfil();
+  if (tab === 'novo-anuncio') carregarCategoriasSelect();
+}
+
+// ============================================
+// MODAL LOGIN/CADASTRO
+// ============================================
 function openLoginModal(tipo) {
   document.getElementById('loginModal').classList.add('active');
   if (tipo === 'fornecedor' || tipo === 'comprador') {
@@ -1417,89 +1789,522 @@ function openLoginModal(tipo) {
     document.getElementById('tipo-usuario').value = tipo;
   }
 }
-function closeLoginModal() {
-  document.getElementById('loginModal').classList.remove('active');
-}
+function closeLoginModal() { document.getElementById('loginModal').classList.remove('active'); }
 function switchTab(tab, el) {
   document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
   document.getElementById('tab-login').style.display = tab === 'login' ? 'block' : 'none';
   document.getElementById('tab-cadastro').style.display = tab === 'cadastro' ? 'block' : 'none';
 }
-function doLogin() {
+
+// ============================================
+// AUTH — LOGIN
+// ============================================
+async function doLogin() {
+  const email = document.querySelector('#tab-login input[type="email"]').value;
+  const password = document.querySelector('#tab-login input[type="password"]').value;
+  if (!email || !password) { toast('Preencha e-mail e senha'); return; }
+
+  if (DEMO_MODE) {
+    currentUser = { id: 'demo-user', email };
+    currentProfile = { nome: 'Cliente Demo', email, tipo: 'ambos' };
+    currentSubscription = { plan_nome: 'Gratuito' };
+    closeLoginModal();
+    handleClienteClick();
+    toast('Login (modo demo)', 'success');
+    return;
+  }
+
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) { toast('Erro: ' + error.message); return; }
+  currentUser = data.user;
+  await carregarProfile();
   closeLoginModal();
-  document.getElementById('user-name').textContent = 'Cliente';
-  showSection('area-cliente');
+  handleClienteClick();
+  toast('Login realizado', 'success');
 }
-function doRegister() {
+
+// ============================================
+// AUTH — CADASTRO
+// ============================================
+async function doRegister() {
   const tipo = document.getElementById('tipo-usuario').value;
-  closeLoginModal();
-  document.getElementById('user-name').textContent = tipo === 'fornecedor' ? 'Fornecedor' : 'Comprador';
-  showSection('area-cliente');
-}
-function logout() {
-  showSection('home');
-}
+  const nome = document.querySelector('#tab-cadastro input[placeholder="Nome da empresa"]').value;
+  const cnpj = document.querySelector('#tab-cadastro input[placeholder="CNPJ"]').value;
+  const email = document.querySelector('#tab-cadastro input[type="email"]').value;
+  const password = document.querySelector('#tab-cadastro input[type="password"]').value;
 
-// Scroll top customizado (mais lento e suave)
-function scrollToTopSuave() {
-  const start = window.scrollY;
-  const duration = 1600; // 1.6 segundos (mais devagar)
-  const startTime = performance.now();
+  if (!nome || !cnpj || !email || !password) { toast('Preencha todos os campos'); return; }
 
-  // Easing suave (ease-in-out)
-  function easeInOutQuad(t) {
-    return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  if (DEMO_MODE) {
+    currentUser = { id: 'demo-user', email };
+    currentProfile = { nome, email, tipo };
+    currentSubscription = { plan_nome: 'Gratuito' };
+    closeLoginModal();
+    handleClienteClick();
+    toast('Cadastro (modo demo)', 'success');
+    return;
   }
 
-  function step(currentTime) {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    const eased = easeInOutQuad(progress);
-    window.scrollTo(0, start * (1 - eased));
-    if (progress < 1) {
-      requestAnimationFrame(step);
-    }
+  const { data, error } = await supabase.auth.signUp({
+    email, password,
+    options: { data: { nome, tipo } }
+  });
+  if (error) { toast('Erro: ' + error.message); return; }
+
+  // Aguarda trigger criar profile e cria company
+  if (data.user) {
+    setTimeout(async () => {
+      await supabase.from('companies').insert({
+        profile_id: data.user.id, razao_social: nome, cnpj: cnpj
+      });
+      await carregarProfile();
+      closeLoginModal();
+      handleClienteClick();
+      toast('Cadastro criado! Confirme seu e-mail se necessário.', 'success');
+    }, 1000);
   }
-  requestAnimationFrame(step);
 }
 
-// Botão scroll top
-window.addEventListener('scroll', function() {
-  const btn = document.getElementById('scrollTop');
-  if (window.scrollY > 300) {
-    btn.classList.add('visible');
+// ============================================
+// CARREGAR PROFILE
+// ============================================
+async function carregarProfile() {
+  if (DEMO_MODE || !currentUser) return;
+  const { data: profile } = await supabase.from('profiles').select('*').eq('id', currentUser.id).single();
+  currentProfile = profile;
+
+  const { data: sub } = await supabase.from('subscriptions')
+    .select('*, plans(*)').eq('profile_id', currentUser.id).eq('status', 'ativa').single();
+  if (sub) currentSubscription = { ...sub, plan_nome: sub.plans?.nome };
+}
+
+// ============================================
+// ÁREA DO CLIENTE
+// ============================================
+async function carregarAreaCliente() {
+  document.getElementById('user-name').textContent = currentProfile?.nome || 'Cliente';
+  document.getElementById('plano-atual-nome').textContent = currentSubscription?.plan_nome || 'Gratuito';
+
+  if (DEMO_MODE) {
+    document.getElementById('stat-anuncios').textContent = '2';
+    document.getElementById('stat-contatos').textContent = '5';
+    document.getElementById('stat-favoritos').textContent = '3';
+    document.getElementById('stat-carrinho').textContent = getCartLocal().length;
+    return;
+  }
+
+  // Contar anúncios do fornecedor
+  const { count: qtdAds } = await supabase.from('ads').select('*', { count: 'exact', head: true }).eq('fornecedor_id', currentUser.id);
+  const { count: qtdFav } = await supabase.from('favorites').select('*', { count: 'exact', head: true }).eq('profile_id', currentUser.id);
+  const { count: qtdCart } = await supabase.from('cart_items').select('*', { count: 'exact', head: true }).eq('profile_id', currentUser.id);
+
+  document.getElementById('stat-anuncios').textContent = qtdAds || 0;
+  document.getElementById('stat-favoritos').textContent = qtdFav || 0;
+  document.getElementById('stat-carrinho').textContent = qtdCart || 0;
+  atualizarBadgeCarrinho(qtdCart || 0);
+}
+
+function atualizarBadgeCarrinho(qtd) {
+  const badge = document.getElementById('cart-badge');
+  if (qtd > 0) { badge.style.display = 'flex'; badge.textContent = qtd; }
+  else { badge.style.display = 'none'; }
+}
+
+// ============================================
+// CATEGORIAS
+// ============================================
+async function carregarCategoriasSelect() {
+  const select = document.getElementById('ad-categoria');
+  if (select.options.length > 1) return;
+
+  if (DEMO_MODE) {
+    ['Freios','Motor','Elétrica','Suspensão','Fixação','Transmissão','Carroceria','Injetados plásticos']
+      .forEach(c => { const o = document.createElement('option'); o.value = c.toLowerCase(); o.textContent = c; select.appendChild(o); });
+    return;
+  }
+
+  const { data } = await supabase.from('categories').select('*').order('ordem');
+  data?.forEach(cat => {
+    const opt = document.createElement('option');
+    opt.value = cat.id; opt.textContent = cat.nome;
+    select.appendChild(opt);
+  });
+}
+
+// ============================================
+// PUBLICAR ANÚNCIO
+// ============================================
+async function publicarAnuncio() {
+  const titulo = document.getElementById('ad-titulo').value;
+  const category_id = document.getElementById('ad-categoria').value;
+  const regiao = document.getElementById('ad-regiao').value;
+  const quantidade = parseInt(document.getElementById('ad-qtd').value);
+  const preco_unitario = parseFloat(document.getElementById('ad-preco').value);
+  const aplicacao = document.getElementById('ad-aplicacao').value;
+  const motivo = document.getElementById('ad-motivo').value;
+  const cidade = document.getElementById('ad-cidade').value;
+  const descricao = document.getElementById('ad-desc').value;
+  const img = document.getElementById('ad-img').value;
+
+  if (!titulo || !category_id || !quantidade || !preco_unitario) {
+    toast('Preencha os campos obrigatórios'); return;
+  }
+
+  if (DEMO_MODE) {
+    toast('Anúncio publicado (demo)', 'success');
+    document.querySelectorAll('#tab-novo-anuncio input, #tab-novo-anuncio textarea').forEach(i => i.value = '');
+    return;
+  }
+
+  const { data: ad, error } = await supabase.from('ads').insert({
+    fornecedor_id: currentUser.id,
+    category_id, titulo, descricao,
+    aplicacao_veicular: aplicacao,
+    motivo_excedente: motivo,
+    quantidade, preco_unitario,
+    cidade, regiao
+  }).select().single();
+
+  if (error) { toast('Erro: ' + error.message); return; }
+
+  if (img && ad) {
+    await supabase.from('ad_images').insert({ ad_id: ad.id, url: img, principal: true });
+  }
+
+  toast('Anúncio publicado!', 'success');
+  document.querySelectorAll('#tab-novo-anuncio input, #tab-novo-anuncio textarea').forEach(i => i.value = '');
+  carregarAreaCliente();
+}
+
+// ============================================
+// MEUS ANÚNCIOS
+// ============================================
+async function carregarMeusAnuncios() {
+  const container = document.getElementById('meus-anuncios-lista');
+  if (DEMO_MODE) {
+    container.innerHTML = '<p style="color:var(--gray)">Modo demo: seus anúncios apareceriam aqui após conectar o Supabase.</p>';
+    return;
+  }
+
+  const { data: ads } = await supabase.from('ads').select('*').eq('fornecedor_id', currentUser.id).order('created_at', { ascending: false });
+
+  if (!ads || ads.length === 0) {
+    container.innerHTML = '<p style="color:var(--gray)">Você ainda não tem anúncios publicados. Clique em "+ Novo anúncio" para começar.</p>';
+    return;
+  }
+
+  container.innerHTML = ads.map(a => `
+    <div style="padding:16px; border-bottom:1px solid var(--gray-light); display:flex; justify-content:space-between;">
+      <div>
+        <h4 style="font-size:15px">${a.titulo}</h4>
+        <small style="color:var(--gray)">${a.quantidade} un · R$ ${a.preco_unitario.toFixed(2)}/un · ${a.status}</small>
+      </div>
+      <button onclick="deletarAnuncio('${a.id}')" style="background:none; border:none; color:var(--red); cursor:pointer">Excluir</button>
+    </div>`).join('');
+}
+
+async function deletarAnuncio(id) {
+  if (!confirm('Excluir este anúncio?')) return;
+  await supabase.from('ads').delete().eq('id', id);
+  toast('Anúncio excluído', 'success');
+  carregarMeusAnuncios();
+  carregarAreaCliente();
+}
+
+// ============================================
+// CARRINHO — LOCAL (demo) e SUPABASE
+// ============================================
+function getCartLocal() {
+  try { return JSON.parse(localStorage.getItem('recircula_cart') || '[]'); } catch { return []; }
+}
+function setCartLocal(items) {
+  localStorage.setItem('recircula_cart', JSON.stringify(items));
+  atualizarBadgeCarrinho(items.length);
+}
+
+async function adicionarAoCarrinho() {
+  if (!currentUser) { toast('Faça login para usar o carrinho'); openLoginModal(); return; }
+  if (!currentAdDetail) return;
+
+  if (DEMO_MODE) {
+    const cart = getCartLocal();
+    const existe = cart.find(i => i.id === currentAdDetail.id);
+    if (existe) { existe.quantidade += 1; }
+    else { cart.push({ ...currentAdDetail, quantidade: 1 }); }
+    setCartLocal(cart);
+    toast('Adicionado ao carrinho', 'success');
+    fecharDetalhe();
+    return;
+  }
+
+  const { data: existing } = await supabase.from('cart_items').select('*')
+    .eq('profile_id', currentUser.id).eq('ad_id', currentAdDetail.ad_id).maybeSingle();
+
+  if (existing) {
+    await supabase.from('cart_items').update({ quantidade: existing.quantidade + 1 }).eq('id', existing.id);
   } else {
-    btn.classList.remove('visible');
+    await supabase.from('cart_items').insert({
+      profile_id: currentUser.id,
+      ad_id: currentAdDetail.ad_id,
+      quantidade: 1,
+      preco_unitario_snapshot: currentAdDetail.preco
+    });
   }
-});
+  toast('Adicionado ao carrinho', 'success');
+  fecharDetalhe();
+  carregarAreaCliente();
+}
 
-// FILTROS DE ANÚNCIOS
+async function carregarCarrinho() {
+  const container = document.getElementById('cart-items');
+  const empty = document.getElementById('cart-empty');
+  const summary = document.getElementById('cart-summary');
+
+  let items = [];
+  if (DEMO_MODE) {
+    items = getCartLocal().map(i => ({
+      id: i.id, titulo: i.titulo, img: i.img,
+      quantidade: i.quantidade, preco_unitario_snapshot: i.preco
+    }));
+  } else if (currentUser) {
+    const { data } = await supabase.from('cart_items')
+      .select('*, ads(titulo, preco_unitario)').eq('profile_id', currentUser.id);
+    items = (data || []).map(i => ({
+      id: i.id, titulo: i.ads?.titulo, quantidade: i.quantidade,
+      preco_unitario_snapshot: i.preco_unitario_snapshot
+    }));
+  }
+
+  if (items.length === 0) {
+    empty.style.display = 'block'; container.innerHTML = ''; summary.style.display = 'none';
+    return;
+  }
+
+  empty.style.display = 'none';
+  let total = 0;
+  container.innerHTML = items.map(i => {
+    const subtotal = i.quantidade * i.preco_unitario_snapshot;
+    total += subtotal;
+    return `
+      <div class="cart-item">
+        <div class="cart-item-img" style="${i.img ? `background-image:url('${i.img}')` : ''}"></div>
+        <div class="cart-item-info">
+          <h4>${i.titulo || 'Anúncio'}</h4>
+          <small>R$ ${i.preco_unitario_snapshot.toFixed(2)}/un · Subtotal: R$ ${subtotal.toFixed(2)}</small>
+        </div>
+        <div class="cart-item-qty">
+          <button onclick="alterarQtdCart('${i.id}', -1)">−</button>
+          <span>${i.quantidade}</span>
+          <button onclick="alterarQtdCart('${i.id}', 1)">+</button>
+        </div>
+        <button class="cart-item-remove" onclick="removerCart('${i.id}')">×</button>
+      </div>`;
+  }).join('');
+
+  document.getElementById('cart-total-valor').textContent = 'R$ ' + total.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+  summary.style.display = 'flex';
+}
+
+async function alterarQtdCart(id, delta) {
+  if (DEMO_MODE) {
+    const cart = getCartLocal();
+    const item = cart.find(i => i.id === id);
+    if (item) {
+      item.quantidade = Math.max(1, item.quantidade + delta);
+      setCartLocal(cart);
+      carregarCarrinho();
+    }
+    return;
+  }
+  const { data } = await supabase.from('cart_items').select('quantidade').eq('id', id).single();
+  const nova = Math.max(1, data.quantidade + delta);
+  await supabase.from('cart_items').update({ quantidade: nova }).eq('id', id);
+  carregarCarrinho();
+}
+
+async function removerCart(id) {
+  if (DEMO_MODE) {
+    setCartLocal(getCartLocal().filter(i => i.id !== id));
+    carregarCarrinho();
+    return;
+  }
+  await supabase.from('cart_items').delete().eq('id', id);
+  carregarCarrinho();
+  carregarAreaCliente();
+}
+
+async function finalizarPedido() {
+  toast('Fluxo de pedido em breve — infra já preparada!', 'success');
+  // Infra pronta: aqui viria a criação de order + order_items a partir do cart_items
+}
+
+// ============================================
+// FAVORITOS
+// ============================================
+async function salvarFavorito() {
+  if (!currentUser) { toast('Faça login para salvar'); openLoginModal(); return; }
+  if (!currentAdDetail) return;
+
+  if (DEMO_MODE) { toast('Favorito salvo (demo)', 'success'); return; }
+
+  const { error } = await supabase.from('favorites').insert({
+    profile_id: currentUser.id, ad_id: currentAdDetail.ad_id
+  });
+  if (error && !error.message.includes('duplicate')) { toast('Erro: ' + error.message); return; }
+  toast('Favorito salvo', 'success');
+  carregarAreaCliente();
+}
+
+async function carregarFavoritos() {
+  const container = document.getElementById('favoritos-lista');
+  if (DEMO_MODE) {
+    container.innerHTML = '<p style="color:var(--gray)">Modo demo: seus favoritos apareceriam aqui após conectar o Supabase.</p>';
+    return;
+  }
+  const { data } = await supabase.from('favorites').select('*, ads(*)').eq('profile_id', currentUser.id);
+  if (!data || data.length === 0) {
+    container.innerHTML = '<p style="color:var(--gray)">Você ainda não salvou nenhum anúncio.</p>';
+    return;
+  }
+  container.innerHTML = data.map(f => `<div style="padding:12px 0; border-bottom:1px solid var(--gray-light)"><strong>${f.ads?.titulo}</strong><br><small>R$ ${f.ads?.preco_unitario}/un</small></div>`).join('');
+}
+
+// ============================================
+// PLANOS
+// ============================================
+async function carregarPlanosCliente() {
+  const container = document.getElementById('planos-cliente');
+  let plans = [];
+
+  if (DEMO_MODE) {
+    plans = [
+      { nome: 'Gratuito', preco: 0, features: ['3 anúncios', '5 contatos/mês', 'Suporte por e-mail'] },
+      { nome: 'Profissional', preco: 197, features: ['Anúncios ilimitados', 'Contatos ilimitados', 'Selo verificado', 'Suporte prioritário'], destaque: true },
+      { nome: 'Empresarial', preco: 497, features: ['Tudo do Profissional', 'Agente dedicado', 'Notificações', 'Relatórios'] }
+    ];
+  } else {
+    const { data } = await supabase.from('plans').select('*').eq('ativo', true).order('ordem');
+    plans = (data || []).map(p => ({
+      id: p.id, nome: p.nome, preco: p.preco,
+      features: [
+        p.max_anuncios ? `${p.max_anuncios} anúncios` : 'Anúncios ilimitados',
+        p.max_contatos_mes ? `${p.max_contatos_mes} contatos/mês` : 'Contatos ilimitados',
+        p.selo_verificado ? 'Selo verificado' : null,
+        p.suporte_prioritario ? 'Suporte prioritário' : null,
+        p.agente_dedicado ? 'Agente dedicado' : null
+      ].filter(Boolean),
+      destaque: p.nome === 'Profissional'
+    }));
+  }
+
+  container.innerHTML = plans.map(p => `
+    <div class="plano-card ${p.destaque ? 'destaque' : ''}">
+      <h3>${p.nome}</h3>
+      <div class="preco">R$ ${p.preco.toFixed(0)}<small>/mês</small></div>
+      <ul>${p.features.map(f => `<li>${f}</li>`).join('')}</ul>
+      <button class="btn-plano" onclick="trocarPlano('${p.id || p.nome}', '${p.nome}')">${currentSubscription?.plan_nome === p.nome ? 'Plano atual' : 'Selecionar'}</button>
+    </div>`).join('');
+}
+
+async function trocarPlano(planId, nome) {
+  if (currentSubscription?.plan_nome === nome) { toast('Você já está neste plano'); return; }
+
+  if (DEMO_MODE) {
+    currentSubscription = { plan_nome: nome };
+    document.getElementById('plano-atual-nome').textContent = nome;
+    toast(`Plano alterado para ${nome} (demo)`, 'success');
+    return;
+  }
+
+  // Cancela subscription atual e cria nova
+  await supabase.from('subscriptions').update({ status: 'cancelada', cancelada_em: new Date().toISOString() })
+    .eq('profile_id', currentUser.id).eq('status', 'ativa');
+  await supabase.from('subscriptions').insert({
+    profile_id: currentUser.id, plan_id: planId, status: 'ativa'
+  });
+  await carregarProfile();
+  document.getElementById('plano-atual-nome').textContent = nome;
+  toast(`Plano alterado para ${nome}`, 'success');
+}
+
+// ============================================
+// PERFIL
+// ============================================
+async function carregarPerfil() {
+  if (!currentProfile) return;
+  document.getElementById('perfil-nome').value = currentProfile.nome || '';
+  document.getElementById('perfil-email').value = currentProfile.email || '';
+  document.getElementById('perfil-telefone').value = currentProfile.telefone || '';
+
+  if (DEMO_MODE) return;
+  const { data: company } = await supabase.from('companies').select('*').eq('profile_id', currentUser.id).maybeSingle();
+  if (company) {
+    document.getElementById('perfil-razao').value = company.razao_social || '';
+    document.getElementById('perfil-cnpj').value = company.cnpj || '';
+    document.getElementById('perfil-cidade').value = company.cidade || '';
+    document.getElementById('perfil-estado').value = company.estado || 'SP';
+  }
+}
+
+async function salvarPerfil() {
+  const nome = document.getElementById('perfil-nome').value;
+  const telefone = document.getElementById('perfil-telefone').value;
+  const razao = document.getElementById('perfil-razao').value;
+  const cnpj = document.getElementById('perfil-cnpj').value;
+  const cidade = document.getElementById('perfil-cidade').value;
+  const estado = document.getElementById('perfil-estado').value;
+
+  if (DEMO_MODE) { toast('Perfil salvo (demo)', 'success'); return; }
+
+  await supabase.from('profiles').update({ nome, telefone }).eq('id', currentUser.id);
+  await supabase.from('companies').update({ razao_social: razao, cnpj, cidade, estado })
+    .eq('profile_id', currentUser.id);
+  toast('Perfil atualizado', 'success');
+}
+
+// ============================================
+// CONTATO DO FORNECEDOR
+// ============================================
+function verContatoFornecedor() {
+  if (!currentUser) {
+    toast('Faça cadastro para ver os contatos');
+    openLoginModal();
+    return;
+  }
+  toast('Contato liberado! Confira em Meu plano os limites mensais.', 'success');
+}
+
+// ============================================
+// LOGOUT
+// ============================================
+async function logout() {
+  if (!DEMO_MODE) await supabase.auth.signOut();
+  currentUser = null; currentProfile = null; currentSubscription = null;
+  atualizarBadgeCarrinho(0);
+  showSection('home');
+  toast('Você saiu');
+}
+
+// ============================================
+// FILTROS DE ANÚNCIOS (mantido do arquivo anterior)
+// ============================================
 function filtrarAnuncios() {
   const busca = document.getElementById('filtro-busca').value.toLowerCase();
   const categoria = document.getElementById('filtro-categoria').value;
   const local = document.getElementById('filtro-local').value;
   const ordem = document.getElementById('filtro-ordem').value;
-
   const grid = document.getElementById('anuncios-grid');
   let cards = Array.from(grid.querySelectorAll('.anuncio-card'));
   let visiveis = 0;
-
   cards.forEach(card => {
     const texto = card.querySelector('h4').textContent.toLowerCase() + ' ' + card.querySelector('.anuncio-meta').textContent.toLowerCase();
     const catMatch = !categoria || card.dataset.categoria === categoria;
     const localMatch = !local || card.dataset.local === local;
     const buscaMatch = !busca || texto.includes(busca);
-
-    if (catMatch && localMatch && buscaMatch) {
-      card.style.display = '';
-      visiveis++;
-    } else {
-      card.style.display = 'none';
-    }
+    if (catMatch && localMatch && buscaMatch) { card.style.display = ''; visiveis++; }
+    else { card.style.display = 'none'; }
   });
-
-  // Ordenar cards visíveis
   const cardsVisiveis = cards.filter(c => c.style.display !== 'none');
   cardsVisiveis.sort((a, b) => {
     if (ordem === 'menor-preco') return parseFloat(a.dataset.preco) - parseFloat(b.dataset.preco);
@@ -1508,10 +2313,8 @@ function filtrarAnuncios() {
     return 0;
   });
   cardsVisiveis.forEach(c => grid.appendChild(c));
-
   document.getElementById('total-anuncios').textContent = visiveis;
 }
-
 function limparFiltros() {
   document.getElementById('filtro-busca').value = '';
   document.getElementById('filtro-categoria').value = '';
@@ -1520,99 +2323,23 @@ function limparFiltros() {
   filtrarAnuncios();
 }
 
-// DADOS DE ANÚNCIOS PARA MODAL DE DETALHES
+// ============================================
+// DADOS FAKE DE ANÚNCIOS (fallback quando não há Supabase)
+// ============================================
 const anunciosData = [
-  {
-    titulo: 'Pastilha de freio dianteira — Linha VW/Fiat',
-    badge: 'Verificado',
-    img: 'pastilha',
-    meta: 'Estamparia · ABC Paulista · Publicado há 3 dias',
-    desc: 'Lote de pastilhas de freio dianteiras compatíveis com linha VW Gol/Voyage e Fiat Uno/Mobi. Peças novas, embaladas individualmente, com composição semi-metálica. Excedente de produção por revisão de programa da montadora.',
-    qtd: '2.400 unidades',
-    aplic: 'VW Gol G5/G6, Voyage, Fiat Uno, Mobi',
-    motivo: 'Revisão de programa da montadora',
-    nf: 'Sim, com origem rastreável',
-    fornec: 'Estamparia Metaltek Ltda (verificado)',
-    preco: 32,
-    unidades: 2400
-  },
-  {
-    titulo: 'Coxim de motor injetado — Chevrolet Onix',
-    badge: 'Novo',
-    img: 'coxim',
-    meta: 'Injetora · Diadema · Publicado há 1 dia',
-    desc: 'Coxins de motor em borracha vulcanizada com estrutura metálica, produzidos para linha GM Onix/Prisma. Lote fechado, disponível para retirada imediata.',
-    qtd: '850 unidades',
-    aplic: 'Chevrolet Onix, Prisma (2017-2023)',
-    motivo: 'Cancelamento de pedido do tier-1',
-    nf: 'Sim',
-    fornec: 'Injetora RubberPro (verificado)',
-    preco: 48,
-    unidades: 850
-  },
-  {
-    titulo: 'Chicote elétrico — Renault Kwid/Sandero',
-    badge: 'Verificado',
-    img: 'chicote',
-    meta: 'Tier-2 · São Bernardo · Publicado há 5 dias',
-    desc: 'Chicote elétrico completo do painel de instrumentos, com conectores originais Molex. Compatível com Renault Kwid e Sandero na versão 1.0 SCe.',
-    qtd: '1.200 unidades',
-    aplic: 'Renault Kwid, Sandero 1.0 SCe',
-    motivo: 'Fim de linha do modelo',
-    nf: 'Sim',
-    fornec: 'ElétricaBR Componentes (verificado)',
-    preco: 78,
-    unidades: 1200
-  },
-  {
-    titulo: 'Coifa de homocinética — Ford Ka/EcoSport',
-    badge: 'Excedente',
-    img: 'coifa',
-    meta: 'Injetora · Osasco · Publicado há 1 semana',
-    desc: 'Coifas de homocinética em elastômero termoplástico, aplicação universal para Ford Ka e EcoSport. Alta durabilidade e resistência a óleo.',
-    qtd: '3.500 unidades',
-    aplic: 'Ford Ka, EcoSport, Fiesta',
-    motivo: 'Excedente de produção',
-    nf: 'Sim',
-    fornec: 'PlastAuto Injetados (verificado)',
-    preco: 12,
-    unidades: 3500
-  },
-  {
-    titulo: 'Bucha de suspensão — Toyota Corolla/Etios',
-    badge: 'Novo',
-    img: 'bucha',
-    meta: 'Estamparia · Guarulhos · Publicado há 2 dias',
-    desc: 'Buchas de suspensão traseira em borracha reforçada com núcleo metálico. Aplicação para linha Toyota Corolla e Etios.',
-    qtd: '600 unidades',
-    aplic: 'Toyota Corolla (2015+), Etios',
-    motivo: 'Ajuste de estoque de segurança',
-    nf: 'Sim',
-    fornec: 'SuspenTech (verificado)',
-    preco: 24,
-    unidades: 600
-  },
-  {
-    titulo: 'Parafuso especial — Aplicação universal',
-    badge: 'Verificado',
-    img: 'parafuso',
-    meta: 'Tier-3 · Mauá · Publicado há 4 dias',
-    desc: 'Parafusos especiais M8x30 com cabeça sextavada, tratamento térmico e revestimento em zinco. Aplicação universal em componentes automotivos.',
-    qtd: '15.000 unidades',
-    aplic: 'Universal (M8x30, classe 8.8)',
-    motivo: 'Sobra de lote de exportação cancelado',
-    nf: 'Sim',
-    fornec: 'ParafusaBR Indústria (verificado)',
-    preco: 1.80,
-    unidades: 15000
-  }
+  { id: '1', titulo: 'Pastilha de freio dianteira — Linha VW/Fiat', badge: 'Verificado', img: 'pastilha', meta: 'Estamparia · ABC Paulista · Publicado há 3 dias', desc: 'Lote de pastilhas de freio dianteiras. Peças novas, embaladas, semi-metálicas.', qtd: '2.400 unidades', aplic: 'VW Gol G5/G6, Voyage, Fiat Uno', motivo: 'Revisão de programa da montadora', nf: 'Sim', fornec: 'Estamparia Metaltek (verificado)', preco: 32, unidades: 2400, ad_id: 'demo-1' },
+  { id: '2', titulo: 'Coxim de motor injetado — Chevrolet Onix', badge: 'Novo', img: 'coxim', meta: 'Injetora · Diadema · Publicado há 1 dia', desc: 'Coxins de motor em borracha vulcanizada. Lote fechado.', qtd: '850 unidades', aplic: 'Chevrolet Onix, Prisma', motivo: 'Cancelamento de pedido do tier-1', nf: 'Sim', fornec: 'Injetora RubberPro (verificado)', preco: 48, unidades: 850, ad_id: 'demo-2' },
+  { id: '3', titulo: 'Chicote elétrico — Renault Kwid/Sandero', badge: 'Verificado', img: 'chicote', meta: 'Tier-2 · São Bernardo · Publicado há 5 dias', desc: 'Chicote elétrico completo do painel.', qtd: '1.200 unidades', aplic: 'Renault Kwid, Sandero', motivo: 'Fim de linha do modelo', nf: 'Sim', fornec: 'ElétricaBR (verificado)', preco: 78, unidades: 1200, ad_id: 'demo-3' },
+  { id: '4', titulo: 'Coifa de homocinética — Ford Ka/EcoSport', badge: 'Excedente', img: 'coifa', meta: 'Injetora · Osasco · Publicado há 1 semana', desc: 'Coifas em elastômero termoplástico.', qtd: '3.500 unidades', aplic: 'Ford Ka, EcoSport', motivo: 'Excedente de produção', nf: 'Sim', fornec: 'PlastAuto (verificado)', preco: 12, unidades: 3500, ad_id: 'demo-4' },
+  { id: '5', titulo: 'Bucha de suspensão — Toyota Corolla/Etios', badge: 'Novo', img: 'bucha', meta: 'Estamparia · Guarulhos · Publicado há 2 dias', desc: 'Buchas de suspensão traseira.', qtd: '600 unidades', aplic: 'Toyota Corolla, Etios', motivo: 'Ajuste de estoque', nf: 'Sim', fornec: 'SuspenTech (verificado)', preco: 24, unidades: 600, ad_id: 'demo-5' },
+  { id: '6', titulo: 'Parafuso especial — Aplicação universal', badge: 'Verificado', img: 'parafuso', meta: 'Tier-3 · Mauá · Publicado há 4 dias', desc: 'Parafusos M8x30 com tratamento térmico.', qtd: '15.000 unidades', aplic: 'Universal (M8x30, classe 8.8)', motivo: 'Sobra de lote de exportação cancelado', nf: 'Sim', fornec: 'ParafusaBR (verificado)', preco: 1.80, unidades: 15000, ad_id: 'demo-6' }
 ];
 
 function abrirDetalhe(index) {
   const a = anunciosData[index];
+  currentAdDetail = a;
   const modal = document.getElementById('detalheModal');
   const img = document.getElementById('detalhe-img');
-
   img.className = 'detalhe-img ' + a.img;
   const bgUrls = {
     pastilha: 'https://images.unsplash.com/photo-1632823469850-1b7b1e8b7e2e?auto=format&fit=crop&w=1200&q=80',
@@ -1623,7 +2350,6 @@ function abrirDetalhe(index) {
     parafuso: 'https://images.unsplash.com/photo-1609205780778-a294cef44b98?auto=format&fit=crop&w=1200&q=80'
   };
   img.style.backgroundImage = `url('${bgUrls[a.img]}')`;
-
   document.getElementById('detalhe-badge').textContent = a.badge;
   document.getElementById('detalhe-titulo').textContent = a.titulo;
   document.getElementById('detalhe-meta').textContent = a.meta;
@@ -1636,15 +2362,36 @@ function abrirDetalhe(index) {
   document.getElementById('detalhe-preco').innerHTML = 'R$ ' + a.preco.toFixed(2).replace('.', ',') + '<small>/un</small>';
   const total = (a.preco * a.unidades).toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
   document.getElementById('detalhe-total').textContent = 'R$ ' + total;
-
   modal.classList.add('active');
 }
+function fecharDetalhe() { document.getElementById('detalheModal').classList.remove('active'); }
 
-function fecharDetalhe() {
-  document.getElementById('detalheModal').classList.remove('active');
+// ============================================
+// SCROLL TOP SUAVE
+// ============================================
+function scrollToTopSuave() {
+  const start = window.scrollY;
+  const duration = 1800;
+  const startTime = performance.now();
+  function easeInOutQuad(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+  function step(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    window.scrollTo(0, start * (1 - easeInOutQuad(progress)));
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
 }
 
-// Reveal on scroll
+window.addEventListener('scroll', function() {
+  const btn = document.getElementById('scrollTop');
+  if (window.scrollY > 300) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+// ============================================
+// REVEAL ON SCROLL
+// ============================================
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -1656,18 +2403,27 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 function attachReveal() {
   document.querySelectorAll('.reveal').forEach(el => {
-    el.classList.remove('visible');
-    revealObserver.observe(el);
+    if (!el.classList.contains('visible')) revealObserver.observe(el);
   });
 }
 attachReveal();
 
-// Re-anexa ao trocar de aba
-const originalShowSection = showSection;
-showSection = function(id) {
-  originalShowSection(id);
-  setTimeout(attachReveal, 100);
-};
+// ============================================
+// INICIALIZAÇÃO
+// ============================================
+(async function init() {
+  if (!DEMO_MODE) {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      currentUser = session.user;
+      await carregarProfile();
+      carregarAreaCliente();
+    }
+  } else {
+    // Modo demo: mostra badge do carrinho local
+    atualizarBadgeCarrinho(getCartLocal().length);
+  }
+})();
 </script>
 </body>
 </html>
