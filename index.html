@@ -1816,7 +1816,7 @@ async function doLogin() {
   }
 
   const { data, error } = await sb.auth.signInWithPassword({ email, password });
-  if (error) { toast('Erro: ' + error.message); return; }
+  if (error) { console.error('Erro ao publicar:', error); toast('Erro: ' + error.message); return; }
   currentUser = data.user;
   await carregarProfile();
   closeLoginModal();
@@ -1850,20 +1850,31 @@ async function doRegister() {
     email, password,
     options: { data: { nome, tipo } }
   });
-  if (error) { toast('Erro: ' + error.message); return; }
 
-  // Aguarda trigger criar profile e cria company
-  if (data.user) {
-    setTimeout(async () => {
-      await sb.from('companies').insert({
-        profile_id: data.user.id, razao_social: nome, cnpj: cnpj
-      });
-      await carregarProfile();
-      closeLoginModal();
-      handleClienteClick();
-      toast('Cadastro criado! Confirme seu e-mail se necessário.', 'success');
-    }, 1000);
+  if (error) { console.error(error); toast('Erro: ' + error.message); return; }
+  if (!data.user) { toast('Erro ao criar usuário'); return; }
+
+  currentUser = data.user;
+
+  // Aguarda 2s para o trigger criar profile e subscription
+  await new Promise(r => setTimeout(r, 2000));
+
+  // Cria a empresa
+  const { error: errCompany } = await sb.from('companies').insert({
+    profile_id: data.user.id,
+    razao_social: nome,
+    cnpj: cnpj
+  });
+
+  if (errCompany) {
+    console.error('Erro ao criar empresa:', errCompany);
+    toast('Conta criada, mas erro ao salvar CNPJ: ' + errCompany.message);
   }
+
+  await carregarProfile();
+  closeLoginModal();
+  handleClienteClick();
+  toast('Cadastro criado com sucesso!', 'success');
 }
 
 // ============================================
@@ -1871,9 +1882,10 @@ async function doRegister() {
 // ============================================
 async function carregarProfile() {
   if (DEMO_MODE || !currentUser) return;
-  const { data: profile } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
+  const { data: profile, error: errP } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
+  if (errP) console.error('Erro profile:', errP);
   currentProfile = profile;
-
+  console.log('Profile carregado:', profile);
   const { data: sub } = await sb.from('subscriptions')
     .select('*, plans(*)').eq('profile_id', currentUser.id).eq('status', 'ativa').single();
   if (sub) currentSubscription = { ...sub, plan_nome: sub.plans?.nome };
@@ -1966,7 +1978,7 @@ async function publicarAnuncio() {
     cidade, regiao
   }).select().single();
 
-  if (error) { toast('Erro: ' + error.message); return; }
+  if (error) { console.error('Erro ao publicar:', error); toast('Erro: ' + error.message); return; }
 
   if (img && ad) {
     await sb.from('ad_images').insert({ ad_id: ad.id, url: img, principal: true });
