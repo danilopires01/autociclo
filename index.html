@@ -1720,10 +1720,10 @@ const SUPABASE_URL = 'https://xciezpdthgexclfrqrva.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaWV6cGR0aGdleGNsZnJxcnZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUwOTEyMjQsImV4cCI6MjEwMDY2NzIyNH0.Hd44a5LEkLdkbYNOa-c5EPzDXUAblrHQD6pVOXIwPOQ';
 
 // Inicializa cliente Supabase (funciona em modo demo se config vazio)
-let supabase = null;
+let sb = null;
 const DEMO_MODE = !SUPABASE_URL.startsWith('https://') || SUPABASE_URL.includes('SEU-PROJETO') || SUPABASE_ANON_KEY.includes('SUA_CHAVE');
 if (!DEMO_MODE) {
-  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 }
 
 // Estado local
@@ -1815,7 +1815,7 @@ async function doLogin() {
     return;
   }
 
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await sb.auth.signInWithPassword({ email, password });
   if (error) { toast('Erro: ' + error.message); return; }
   currentUser = data.user;
   await carregarProfile();
@@ -1846,7 +1846,7 @@ async function doRegister() {
     return;
   }
 
-  const { data, error } = await supabase.auth.signUp({
+  const { data, error } = await sb.auth.signUp({
     email, password,
     options: { data: { nome, tipo } }
   });
@@ -1855,7 +1855,7 @@ async function doRegister() {
   // Aguarda trigger criar profile e cria company
   if (data.user) {
     setTimeout(async () => {
-      await supabase.from('companies').insert({
+      await sb.from('companies').insert({
         profile_id: data.user.id, razao_social: nome, cnpj: cnpj
       });
       await carregarProfile();
@@ -1871,10 +1871,10 @@ async function doRegister() {
 // ============================================
 async function carregarProfile() {
   if (DEMO_MODE || !currentUser) return;
-  const { data: profile } = await supabase.from('profiles').select('*').eq('id', currentUser.id).single();
+  const { data: profile } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
   currentProfile = profile;
 
-  const { data: sub } = await supabase.from('subscriptions')
+  const { data: sub } = await sb.from('subscriptions')
     .select('*, plans(*)').eq('profile_id', currentUser.id).eq('status', 'ativa').single();
   if (sub) currentSubscription = { ...sub, plan_nome: sub.plans?.nome };
 }
@@ -1895,9 +1895,9 @@ async function carregarAreaCliente() {
   }
 
   // Contar anúncios do fornecedor
-  const { count: qtdAds } = await supabase.from('ads').select('*', { count: 'exact', head: true }).eq('fornecedor_id', currentUser.id);
-  const { count: qtdFav } = await supabase.from('favorites').select('*', { count: 'exact', head: true }).eq('profile_id', currentUser.id);
-  const { count: qtdCart } = await supabase.from('cart_items').select('*', { count: 'exact', head: true }).eq('profile_id', currentUser.id);
+  const { count: qtdAds } = await sb.from('ads').select('*', { count: 'exact', head: true }).eq('fornecedor_id', currentUser.id);
+  const { count: qtdFav } = await sb.from('favorites').select('*', { count: 'exact', head: true }).eq('profile_id', currentUser.id);
+  const { count: qtdCart } = await sb.from('cart_items').select('*', { count: 'exact', head: true }).eq('profile_id', currentUser.id);
 
   document.getElementById('stat-anuncios').textContent = qtdAds || 0;
   document.getElementById('stat-favoritos').textContent = qtdFav || 0;
@@ -1924,7 +1924,7 @@ async function carregarCategoriasSelect() {
     return;
   }
 
-  const { data } = await supabase.from('categories').select('*').order('ordem');
+  const { data } = await sb.from('categories').select('*').order('ordem');
   data?.forEach(cat => {
     const opt = document.createElement('option');
     opt.value = cat.id; opt.textContent = cat.nome;
@@ -1957,7 +1957,7 @@ async function publicarAnuncio() {
     return;
   }
 
-  const { data: ad, error } = await supabase.from('ads').insert({
+  const { data: ad, error } = await sb.from('ads').insert({
     fornecedor_id: currentUser.id,
     category_id, titulo, descricao,
     aplicacao_veicular: aplicacao,
@@ -1969,7 +1969,7 @@ async function publicarAnuncio() {
   if (error) { toast('Erro: ' + error.message); return; }
 
   if (img && ad) {
-    await supabase.from('ad_images').insert({ ad_id: ad.id, url: img, principal: true });
+    await sb.from('ad_images').insert({ ad_id: ad.id, url: img, principal: true });
   }
 
   toast('Anúncio publicado!', 'success');
@@ -1987,7 +1987,7 @@ async function carregarMeusAnuncios() {
     return;
   }
 
-  const { data: ads } = await supabase.from('ads').select('*').eq('fornecedor_id', currentUser.id).order('created_at', { ascending: false });
+  const { data: ads } = await sb.from('ads').select('*').eq('fornecedor_id', currentUser.id).order('created_at', { ascending: false });
 
   if (!ads || ads.length === 0) {
     container.innerHTML = '<p style="color:var(--gray)">Você ainda não tem anúncios publicados. Clique em "+ Novo anúncio" para começar.</p>';
@@ -2006,7 +2006,7 @@ async function carregarMeusAnuncios() {
 
 async function deletarAnuncio(id) {
   if (!confirm('Excluir este anúncio?')) return;
-  await supabase.from('ads').delete().eq('id', id);
+  await sb.from('ads').delete().eq('id', id);
   toast('Anúncio excluído', 'success');
   carregarMeusAnuncios();
   carregarAreaCliente();
@@ -2038,13 +2038,13 @@ async function adicionarAoCarrinho() {
     return;
   }
 
-  const { data: existing } = await supabase.from('cart_items').select('*')
+  const { data: existing } = await sb.from('cart_items').select('*')
     .eq('profile_id', currentUser.id).eq('ad_id', currentAdDetail.ad_id).maybeSingle();
 
   if (existing) {
-    await supabase.from('cart_items').update({ quantidade: existing.quantidade + 1 }).eq('id', existing.id);
+    await sb.from('cart_items').update({ quantidade: existing.quantidade + 1 }).eq('id', existing.id);
   } else {
-    await supabase.from('cart_items').insert({
+    await sb.from('cart_items').insert({
       profile_id: currentUser.id,
       ad_id: currentAdDetail.ad_id,
       quantidade: 1,
@@ -2068,7 +2068,7 @@ async function carregarCarrinho() {
       quantidade: i.quantidade, preco_unitario_snapshot: i.preco
     }));
   } else if (currentUser) {
-    const { data } = await supabase.from('cart_items')
+    const { data } = await sb.from('cart_items')
       .select('*, ads(titulo, preco_unitario)').eq('profile_id', currentUser.id);
     items = (data || []).map(i => ({
       id: i.id, titulo: i.ads?.titulo, quantidade: i.quantidade,
@@ -2117,9 +2117,9 @@ async function alterarQtdCart(id, delta) {
     }
     return;
   }
-  const { data } = await supabase.from('cart_items').select('quantidade').eq('id', id).single();
+  const { data } = await sb.from('cart_items').select('quantidade').eq('id', id).single();
   const nova = Math.max(1, data.quantidade + delta);
-  await supabase.from('cart_items').update({ quantidade: nova }).eq('id', id);
+  await sb.from('cart_items').update({ quantidade: nova }).eq('id', id);
   carregarCarrinho();
 }
 
@@ -2129,7 +2129,7 @@ async function removerCart(id) {
     carregarCarrinho();
     return;
   }
-  await supabase.from('cart_items').delete().eq('id', id);
+  await sb.from('cart_items').delete().eq('id', id);
   carregarCarrinho();
   carregarAreaCliente();
 }
@@ -2148,7 +2148,7 @@ async function salvarFavorito() {
 
   if (DEMO_MODE) { toast('Favorito salvo (demo)', 'success'); return; }
 
-  const { error } = await supabase.from('favorites').insert({
+  const { error } = await sb.from('favorites').insert({
     profile_id: currentUser.id, ad_id: currentAdDetail.ad_id
   });
   if (error && !error.message.includes('duplicate')) { toast('Erro: ' + error.message); return; }
@@ -2162,7 +2162,7 @@ async function carregarFavoritos() {
     container.innerHTML = '<p style="color:var(--gray)">Modo demo: seus favoritos apareceriam aqui após conectar o Supabase.</p>';
     return;
   }
-  const { data } = await supabase.from('favorites').select('*, ads(*)').eq('profile_id', currentUser.id);
+  const { data } = await sb.from('favorites').select('*, ads(*)').eq('profile_id', currentUser.id);
   if (!data || data.length === 0) {
     container.innerHTML = '<p style="color:var(--gray)">Você ainda não salvou nenhum anúncio.</p>';
     return;
@@ -2184,7 +2184,7 @@ async function carregarPlanosCliente() {
       { nome: 'Empresarial', preco: 497, features: ['Tudo do Profissional', 'Agente dedicado', 'Notificações', 'Relatórios'] }
     ];
   } else {
-    const { data } = await supabase.from('plans').select('*').eq('ativo', true).order('ordem');
+    const { data } = await sb.from('plans').select('*').eq('ativo', true).order('ordem');
     plans = (data || []).map(p => ({
       id: p.id, nome: p.nome, preco: p.preco,
       features: [
@@ -2218,9 +2218,9 @@ async function trocarPlano(planId, nome) {
   }
 
   // Cancela subscription atual e cria nova
-  await supabase.from('subscriptions').update({ status: 'cancelada', cancelada_em: new Date().toISOString() })
+  await sb.from('subscriptions').update({ status: 'cancelada', cancelada_em: new Date().toISOString() })
     .eq('profile_id', currentUser.id).eq('status', 'ativa');
-  await supabase.from('subscriptions').insert({
+  await sb.from('subscriptions').insert({
     profile_id: currentUser.id, plan_id: planId, status: 'ativa'
   });
   await carregarProfile();
@@ -2238,7 +2238,7 @@ async function carregarPerfil() {
   document.getElementById('perfil-telefone').value = currentProfile.telefone || '';
 
   if (DEMO_MODE) return;
-  const { data: company } = await supabase.from('companies').select('*').eq('profile_id', currentUser.id).maybeSingle();
+  const { data: company } = await sb.from('companies').select('*').eq('profile_id', currentUser.id).maybeSingle();
   if (company) {
     document.getElementById('perfil-razao').value = company.razao_social || '';
     document.getElementById('perfil-cnpj').value = company.cnpj || '';
@@ -2257,8 +2257,8 @@ async function salvarPerfil() {
 
   if (DEMO_MODE) { toast('Perfil salvo (demo)', 'success'); return; }
 
-  await supabase.from('profiles').update({ nome, telefone }).eq('id', currentUser.id);
-  await supabase.from('companies').update({ razao_social: razao, cnpj, cidade, estado })
+  await sb.from('profiles').update({ nome, telefone }).eq('id', currentUser.id);
+  await sb.from('companies').update({ razao_social: razao, cnpj, cidade, estado })
     .eq('profile_id', currentUser.id);
   toast('Perfil atualizado', 'success');
 }
@@ -2279,7 +2279,7 @@ function verContatoFornecedor() {
 // LOGOUT
 // ============================================
 async function logout() {
-  if (!DEMO_MODE) await supabase.auth.signOut();
+  if (!DEMO_MODE) await sb.auth.signOut();
   currentUser = null; currentProfile = null; currentSubscription = null;
   atualizarBadgeCarrinho(0);
   showSection('home');
@@ -2413,7 +2413,7 @@ attachReveal();
 // ============================================
 (async function init() {
   if (!DEMO_MODE) {
-    const { data: { session } } = await supabase.auth.getSession();
+    const { data: { session } } = await sb.auth.getSession();
     if (session) {
       currentUser = session.user;
       await carregarProfile();
