@@ -787,6 +787,106 @@ body {
   font-weight: bold;
 }
 .btn-area-cliente { position: relative; }
+.btn-cart-icon {
+  position: relative;
+  background: transparent;
+  border: 2px solid var(--white);
+  color: var(--white);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.btn-cart-icon:hover { background: var(--red); border-color: var(--red); }
+
+/* WIZARD DE CADASTRO */
+.wizard-steps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding: 0 20px;
+}
+.wizard-step {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--gray-light);
+  color: var(--gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+.wizard-step.active { background: var(--red); color: var(--white); }
+.wizard-step.done { background: #2A7A2A; color: var(--white); }
+.wizard-line { flex: 1; height: 2px; background: var(--gray-light); margin: 0 8px; }
+.wizard-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding: 0 8px;
+  font-size: 11px;
+  color: var(--gray);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.wizard-labels span { flex: 1; text-align: center; }
+.wizard-content h2 { font-size: 20px; margin-bottom: 4px; }
+.wizard-content p { color: var(--gray); font-size: 13px; margin-bottom: 16px; }
+.wizard-content label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: 4px;
+  margin-top: 8px;
+}
+
+/* CONTADOR DE CARACTERES */
+.char-counter {
+  float: right;
+  font-size: 11px;
+  color: var(--gray);
+  font-weight: 500;
+  text-transform: none;
+}
+.char-counter.warning { color: #E67E00; }
+.char-counter.limit { color: var(--red); }
+
+/* PREVIEW DE IMAGENS */
+.img-preview {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid var(--gray-light);
+}
+.img-preview img { width: 100%; height: 100%; object-fit: cover; }
+.img-preview .btn-remove-img {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 0;
+  line-height: 1;
+}
 
 /* SOBRE */
 .sobre-content { max-width: 800px; }
@@ -1052,10 +1152,15 @@ footer .divider { color: var(--red); margin: 0 8px; }
     <li><a onclick="showSection('sobre')" id="link-sobre">Sobre</a></li>
     <li><a onclick="showSection('contato')" id="link-contato">Contato</a></li>
   </ul>
-  <button class="btn-area-cliente" onclick="handleClienteClick()">
-    Área do cliente
-    <span class="cart-badge" id="cart-badge" style="display:none">0</span>
-  </button>
+  <div style="display: flex; gap: 12px; align-items: center;">
+    <button class="btn-cart-icon" onclick="abrirCarrinhoTopo()" title="Meu carrinho">
+      🛒
+      <span class="cart-badge" id="cart-badge" style="display:none">0</span>
+    </button>
+    <button class="btn-area-cliente" onclick="handleClienteClick()">
+      Área do cliente
+    </button>
+  </div>
 </nav>
 
 <!-- SEÇÃO HOME -->
@@ -1065,8 +1170,8 @@ footer .divider { color: var(--red); margin: 0 8px; }
     <h1>Excedente de fábrica virou <span>oportunidade</span>.</h1>
     <p>Conectamos estamparias, injetoras e fornecedores automotivos que geram peça excedente com distribuidores, oficinas e exportadores prontos para comprar.</p>
     <div class="hero-cta">
-      <button class="btn-primary" onclick="openLoginModal('fornecedor')">Sou fornecedor</button>
-      <button class="btn-secondary" onclick="openLoginModal('comprador')">Sou comprador</button>
+      <button class="btn-primary" onclick="scrollToPublico()">Sou fornecedor</button>
+      <button class="btn-secondary" onclick="scrollToPublico()">Sou comprador</button>
     </div>
   </div>
 
@@ -1107,7 +1212,7 @@ footer .divider { color: var(--red); margin: 0 8px; }
     </div>
   </div>
 
-  <div class="block reveal">
+  <div class="block reveal" id="para-quem-serve">
     <h2 class="block-title">Para quem serve</h2>
     <div class="publico">
       <div class="publico-card">
@@ -1119,6 +1224,7 @@ footer .divider { color: var(--red); margin: 0 8px; }
           <li>Fornecedores tier-2 e tier-3</li>
           <li>Distribuidores com estoque parado</li>
         </ul>
+        <button class="btn-primary" style="margin-top: 16px; padding: 10px 20px;" onclick="openLoginModal('fornecedor')">Cadastrar como fornecedor</button>
       </div>
       <div class="publico-card">
         <h3>Compradores</h3>
@@ -1129,6 +1235,7 @@ footer .divider { color: var(--red); margin: 0 8px; }
           <li>Exportadores de autopeças</li>
           <li>Recondicionadores e retíficas</li>
         </ul>
+        <button class="btn-primary" style="margin-top: 16px; padding: 10px 20px;" onclick="openLoginModal('comprador')">Cadastrar como comprador</button>
       </div>
     </div>
   </div>
@@ -1556,18 +1663,20 @@ footer .divider { color: var(--red); margin: 0 8px; }
     <div class="cliente-tab" id="tab-novo-anuncio" style="display:none">
       <div class="form-anuncio">
         <h3>Publicar novo anúncio</h3>
-        <label>Título da peça *</label>
-        <input type="text" id="ad-titulo" placeholder="Ex: Pastilha de freio dianteira Linha VW">
+        <p style="color: var(--gray); font-size: 13px; margin-bottom: 24px;">Preencha as informações. Seu anúncio passará por aprovação antes de ser publicado.</p>
+
+        <label>1. Título * <span class="char-counter" id="cc-titulo">0/150</span></label>
+        <input type="text" id="ad-titulo" maxlength="150" placeholder="Ex: Chicote elétrico — Renault Kwid/Sandero — 2020" oninput="updateCharCount('ad-titulo','cc-titulo',150)">
 
         <div class="form-row">
           <div>
-            <label>Categoria *</label>
+            <label>2. Categoria *</label>
             <select id="ad-categoria">
               <option value="">Selecione</option>
             </select>
           </div>
           <div>
-            <label>Região *</label>
+            <label>3. Região *</label>
             <select id="ad-regiao">
               <option value="abc">ABC Paulista</option>
               <option value="grande-sp">Grande SP</option>
@@ -1579,31 +1688,45 @@ footer .divider { color: var(--red); margin: 0 8px; }
 
         <div class="form-row">
           <div>
-            <label>Quantidade *</label>
-            <input type="number" id="ad-qtd" placeholder="Ex: 500" min="1">
+            <label>4. Quantidade *</label>
+            <input type="number" id="ad-qtd" placeholder="Ex: 500" min="1" oninput="calcularValorTotal()">
           </div>
           <div>
-            <label>Preço unitário (R$) *</label>
-            <input type="number" id="ad-preco" placeholder="Ex: 32.50" step="0.01" min="0">
+            <label>5. Preço unitário (R$) *</label>
+            <input type="number" id="ad-preco" placeholder="Ex: 32.50" step="0.01" min="0" oninput="calcularValorTotal()">
           </div>
         </div>
 
-        <label>Aplicação veicular</label>
-        <input type="text" id="ad-aplicacao" placeholder="Ex: VW Gol G5/G6, Voyage, Fiat Uno">
+        <div style="background: var(--off-white); padding: 12px 16px; border-radius: 4px; margin-bottom: 16px;">
+          <strong>Valor total do lote:</strong> <span id="ad-valor-total" style="color: var(--red); font-weight: 700;">R$ 0,00</span>
+        </div>
 
-        <label>Motivo do excedente</label>
-        <input type="text" id="ad-motivo" placeholder="Ex: Revisão de programa da montadora">
+        <label>6. Aplicação veicular * <span class="char-counter" id="cc-aplicacao">0/150</span></label>
+        <input type="text" id="ad-aplicacao" maxlength="150" placeholder="Ex: VW Gol G5/G6, Voyage, Fiat Uno" oninput="updateCharCount('ad-aplicacao','cc-aplicacao',150)">
 
-        <label>Cidade</label>
-        <input type="text" id="ad-cidade" placeholder="Ex: Santo André">
+        <label>7. Motivo do excedente * <span class="char-counter" id="cc-motivo">0/150</span></label>
+        <input type="text" id="ad-motivo" maxlength="150" placeholder="Ex: Revisão de programa da montadora" oninput="updateCharCount('ad-motivo','cc-motivo',150)">
 
-        <label>Descrição detalhada</label>
-        <textarea id="ad-desc" placeholder="Descreva a peça, condição, embalagem etc."></textarea>
+        <label>8. Condição *</label>
+        <select id="ad-condicao">
+          <option value="nova">Nova</option>
+          <option value="seminova">Seminova</option>
+          <option value="usada">Usada</option>
+          <option value="fora_especificacao">Fora de especificação</option>
+        </select>
 
-        <label>URL da imagem principal (opcional)</label>
-        <input type="text" id="ad-img" placeholder="https://...">
+        <label>9. Cidade *</label>
+        <input type="text" id="ad-cidade" list="lista-cidades" placeholder="Digite para buscar. Ex: Santo André" autocomplete="off">
+        <datalist id="lista-cidades"></datalist>
 
-        <button onclick="publicarAnuncio()">Publicar anúncio</button>
+        <label>10. Descrição detalhada * <span class="char-counter" id="cc-desc">0/500</span></label>
+        <textarea id="ad-desc" maxlength="500" placeholder="Descreva a peça, condição, embalagem, prazo de retirada etc." oninput="updateCharCount('ad-desc','cc-desc',500)"></textarea>
+
+        <label>11. Fotos do lote (até 3 imagens)</label>
+        <input type="file" id="ad-imgs" accept="image/*" multiple onchange="previewImagens(event)">
+        <div id="ad-imgs-preview" style="display: flex; gap: 12px; margin: 12px 0; flex-wrap: wrap;"></div>
+
+        <button onclick="publicarAnuncio()">Enviar para aprovação</button>
       </div>
     </div>
 
@@ -1671,12 +1794,13 @@ footer .divider { color: var(--red); margin: 0 8px; }
 
 <!-- MODAL LOGIN/CADASTRO -->
 <div class="modal-overlay" id="loginModal">
-  <div class="modal">
+  <div class="modal" style="max-width: 520px;">
     <button class="modal-close" onclick="closeLoginModal()">×</button>
     <div class="modal-tabs">
       <div class="modal-tab active" onclick="switchTab('login', this)">Entrar</div>
       <div class="modal-tab" onclick="switchTab('cadastro', this)">Cadastrar</div>
     </div>
+
     <div id="tab-login">
       <h2>Bem-vindo de volta</h2>
       <p>Acesse sua área de cliente.</p>
@@ -1685,18 +1809,118 @@ footer .divider { color: var(--red); margin: 0 8px; }
       <button class="btn-submit" onclick="doLogin()">Entrar</button>
       <div class="modal-link">Esqueceu a senha? <a>Recuperar</a></div>
     </div>
+
     <div id="tab-cadastro" style="display: none;">
-      <h2>Crie sua conta</h2>
-      <p>Rápido, gratuito e sem compromisso.</p>
-      <select id="tipo-usuario">
-        <option value="fornecedor">Sou fornecedor</option>
-        <option value="comprador">Sou comprador</option>
-      </select>
-      <input type="text" placeholder="Nome da empresa">
-      <input type="text" placeholder="CNPJ">
-      <input type="email" placeholder="E-mail">
-      <input type="password" placeholder="Senha">
-      <button class="btn-submit" onclick="doRegister()">Cadastrar gratuitamente</button>
+      <!-- Barra de progresso -->
+      <div class="wizard-steps">
+        <div class="wizard-step active" id="wstep-1">1</div>
+        <div class="wizard-line"></div>
+        <div class="wizard-step" id="wstep-2">2</div>
+        <div class="wizard-line"></div>
+        <div class="wizard-step" id="wstep-3">3</div>
+      </div>
+      <div class="wizard-labels">
+        <span>Dados da conta</span>
+        <span>Contato</span>
+        <span>Acesso</span>
+      </div>
+
+      <!-- Etapa 1: Dados da conta -->
+      <div class="wizard-content" id="wcontent-1">
+        <h2>Dados da conta</h2>
+        <p>Vamos começar com quem você é.</p>
+
+        <label>Tipo *</label>
+        <select id="tipo-usuario">
+          <option value="fornecedor">Sou fornecedor</option>
+          <option value="comprador">Sou comprador</option>
+          <option value="ambos">Ambos</option>
+        </select>
+
+        <label>Pessoa *</label>
+        <select id="pessoa-tipo" onchange="toggleDocCampo()">
+          <option value="pj">Pessoa Jurídica (CNPJ)</option>
+          <option value="pf">Pessoa Física (CPF)</option>
+        </select>
+
+        <label id="label-doc">CNPJ *</label>
+        <input type="text" id="cad-doc" placeholder="00.000.000/0000-00" onblur="buscarCnpj()">
+
+        <label id="label-razao">Razão social *</label>
+        <input type="text" id="cad-razao" placeholder="Nome da empresa (será preenchido pelo CNPJ)">
+
+        <label>Nome do responsável *</label>
+        <input type="text" id="cad-nome" placeholder="Seu nome completo">
+
+        <label>CEP *</label>
+        <input type="text" id="cad-cep" placeholder="00000-000" maxlength="9" onblur="buscarCep()">
+
+        <label>Endereço *</label>
+        <input type="text" id="cad-endereco" placeholder="Rua/Av. (será preenchido pelo CEP)">
+
+        <div class="form-row">
+          <div>
+            <label>Número *</label>
+            <input type="text" id="cad-numero" placeholder="123">
+          </div>
+          <div>
+            <label>Complemento</label>
+            <input type="text" id="cad-complemento" placeholder="Sala 5">
+          </div>
+        </div>
+
+        <button class="btn-submit" onclick="wizardNext(1)">Continuar →</button>
+      </div>
+
+      <!-- Etapa 2: Contatos -->
+      <div class="wizard-content" id="wcontent-2" style="display: none;">
+        <h2>Contato e recebimento</h2>
+        <p>Como te encontramos e como você recebe.</p>
+
+        <label>Telefone / WhatsApp *</label>
+        <input type="text" id="cad-telefone" placeholder="(11) 90000-0000">
+
+        <div id="dados-bancarios-bloco">
+          <h3 style="font-size: 15px; margin-top: 16px; margin-bottom: 12px;">Dados para recebimento (fornecedores)</h3>
+          <p style="font-size: 12px; color: var(--gray); margin-bottom: 12px;">Necessário para receber os pagamentos das vendas via Mercado Pago ou Stripe.</p>
+
+          <label>Chave PIX</label>
+          <input type="text" id="cad-pix" placeholder="CPF, CNPJ, e-mail ou telefone">
+
+          <label>Banco</label>
+          <input type="text" id="cad-banco" placeholder="Ex: Itaú, Nubank, Bradesco">
+        </div>
+
+        <div style="display: flex; gap: 12px; margin-top: 16px;">
+          <button class="btn-submit" style="background: var(--gray)" onclick="wizardBack(2)">← Voltar</button>
+          <button class="btn-submit" onclick="wizardNext(2)">Continuar →</button>
+        </div>
+      </div>
+
+      <!-- Etapa 3: Acesso -->
+      <div class="wizard-content" id="wcontent-3" style="display: none;">
+        <h2>Acesso à plataforma</h2>
+        <p>Últimos dados. É rápido.</p>
+
+        <label>E-mail *</label>
+        <input type="email" id="cad-email" placeholder="seu@email.com">
+
+        <label>Senha *</label>
+        <input type="password" id="cad-senha" placeholder="Mínimo 6 caracteres">
+
+        <label>Confirmar senha *</label>
+        <input type="password" id="cad-senha2" placeholder="Repita a senha">
+
+        <label style="display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: var(--gray); margin-top: 12px;">
+          <input type="checkbox" id="cad-aceite" style="width: auto; margin: 0;">
+          <span>Aceito os Termos de Uso e a Política de Privacidade da ReCircula Auto.</span>
+        </label>
+
+        <div style="display: flex; gap: 12px; margin-top: 16px;">
+          <button class="btn-submit" style="background: var(--gray)" onclick="wizardBack(3)">← Voltar</button>
+          <button class="btn-submit" onclick="doRegister()">Criar conta</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -1716,8 +1940,8 @@ footer .divider { color: var(--red); margin: 0 8px; }
 // ============================================
 // CONFIG SUPABASE — SUBSTITUA COM SUAS CHAVES
 // ============================================
-const SUPABASE_URL = 'https://xciezpdthgexclfrqrva.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaWV6cGR0aGdleGNsZnJxcnZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUwOTEyMjQsImV4cCI6MjEwMDY2NzIyNH0.Hd44a5LEkLdkbYNOa-c5EPzDXUAblrHQD6pVOXIwPOQ';
+const SUPABASE_URL = 'https://SEU-PROJETO.supabase.co';
+const SUPABASE_ANON_KEY = 'SUA_CHAVE_ANONIMA_AQUI';
 
 // Inicializa cliente Supabase (funciona em modo demo se config vazio)
 let sb = null;
@@ -1816,7 +2040,7 @@ async function doLogin() {
   }
 
   const { data, error } = await sb.auth.signInWithPassword({ email, password });
-  if (error) { console.error('Erro ao publicar:', error); toast('Erro: ' + error.message); return; }
+  if (error) { toast('Erro: ' + error.message); return; }
   currentUser = data.user;
   await carregarProfile();
   closeLoginModal();
@@ -1829,12 +2053,26 @@ async function doLogin() {
 // ============================================
 async function doRegister() {
   const tipo = document.getElementById('tipo-usuario').value;
-  const nome = document.querySelector('#tab-cadastro input[placeholder="Nome da empresa"]').value;
-  const cnpj = document.querySelector('#tab-cadastro input[placeholder="CNPJ"]').value;
-  const email = document.querySelector('#tab-cadastro input[type="email"]').value;
-  const password = document.querySelector('#tab-cadastro input[type="password"]').value;
+  const pessoa = document.getElementById('pessoa-tipo').value;
+  const doc = document.getElementById('cad-doc').value;
+  const razao = document.getElementById('cad-razao').value;
+  const nome = document.getElementById('cad-nome').value;
+  const cep = document.getElementById('cad-cep').value;
+  const endereco = document.getElementById('cad-endereco').value;
+  const numero = document.getElementById('cad-numero').value;
+  const complemento = document.getElementById('cad-complemento').value;
+  const telefone = document.getElementById('cad-telefone').value;
+  const pix = document.getElementById('cad-pix').value;
+  const banco = document.getElementById('cad-banco').value;
+  const email = document.getElementById('cad-email').value;
+  const password = document.getElementById('cad-senha').value;
+  const password2 = document.getElementById('cad-senha2').value;
+  const aceite = document.getElementById('cad-aceite').checked;
 
-  if (!nome || !cnpj || !email || !password) { toast('Preencha todos os campos'); return; }
+  if (!email || !password) { toast('Preencha e-mail e senha'); return; }
+  if (password !== password2) { toast('As senhas não conferem'); return; }
+  if (password.length < 6) { toast('Senha muito curta (mín 6 caracteres)'); return; }
+  if (!aceite) { toast('Aceite os Termos de Uso para continuar'); return; }
 
   if (DEMO_MODE) {
     currentUser = { id: 'demo-user', email };
@@ -1842,34 +2080,35 @@ async function doRegister() {
     currentSubscription = { plan_nome: 'Gratuito' };
     closeLoginModal();
     handleClienteClick();
-    toast('Cadastro (modo demo)', 'success');
+    toast('Cadastro criado (modo demo)', 'success');
     return;
   }
 
   const { data, error } = await sb.auth.signUp({
     email, password,
-    options: { data: { nome, tipo } }
+    options: { data: { nome, tipo, telefone } }
   });
 
   if (error) { console.error(error); toast('Erro: ' + error.message); return; }
   if (!data.user) { toast('Erro ao criar usuário'); return; }
 
   currentUser = data.user;
-
-  // Aguarda 2s para o trigger criar profile e subscription
   await new Promise(r => setTimeout(r, 2000));
 
-  // Cria a empresa
+  // Cria empresa/perfil complementar
+  const enderecoCompleto = `${endereco}, ${numero}${complemento ? ' - ' + complemento : ''}`;
   const { error: errCompany } = await sb.from('companies').insert({
     profile_id: data.user.id,
-    razao_social: nome,
-    cnpj: cnpj
+    razao_social: razao || nome,
+    cnpj: doc,
+    endereco: enderecoCompleto,
+    cidade: endereco.split(',').pop()?.trim() || null
   });
 
-  if (errCompany) {
-    console.error('Erro ao criar empresa:', errCompany);
-    toast('Conta criada, mas erro ao salvar CNPJ: ' + errCompany.message);
-  }
+  if (errCompany) console.error('Erro empresa:', errCompany);
+
+  // Atualiza telefone no profile
+  await sb.from('profiles').update({ telefone }).eq('id', data.user.id);
 
   await carregarProfile();
   closeLoginModal();
@@ -1886,6 +2125,7 @@ async function carregarProfile() {
   if (errP) console.error('Erro profile:', errP);
   currentProfile = profile;
   console.log('Profile carregado:', profile);
+
   const { data: sub } = await sb.from('subscriptions')
     .select('*, plans(*)').eq('profile_id', currentUser.id).eq('status', 'ativa').single();
   if (sub) currentSubscription = { ...sub, plan_nome: sub.plans?.nome };
@@ -1948,45 +2188,67 @@ async function carregarCategoriasSelect() {
 // PUBLICAR ANÚNCIO
 // ============================================
 async function publicarAnuncio() {
-  const titulo = document.getElementById('ad-titulo').value;
+  const titulo = document.getElementById('ad-titulo').value.trim();
   const category_id = document.getElementById('ad-categoria').value;
   const regiao = document.getElementById('ad-regiao').value;
   const quantidade = parseInt(document.getElementById('ad-qtd').value);
   const preco_unitario = parseFloat(document.getElementById('ad-preco').value);
-  const aplicacao = document.getElementById('ad-aplicacao').value;
-  const motivo = document.getElementById('ad-motivo').value;
-  const cidade = document.getElementById('ad-cidade').value;
-  const descricao = document.getElementById('ad-desc').value;
-  const img = document.getElementById('ad-img').value;
+  const aplicacao = document.getElementById('ad-aplicacao').value.trim();
+  const motivo = document.getElementById('ad-motivo').value.trim();
+  const condicao = document.getElementById('ad-condicao').value;
+  const cidade = document.getElementById('ad-cidade').value.trim();
+  const descricao = document.getElementById('ad-desc').value.trim();
 
-  if (!titulo || !category_id || !quantidade || !preco_unitario) {
-    toast('Preencha os campos obrigatórios'); return;
+  if (!titulo || !category_id || !regiao || !quantidade || !preco_unitario || !aplicacao || !motivo || !cidade || !descricao) {
+    toast('Preencha todos os campos obrigatórios'); return;
   }
 
   if (DEMO_MODE) {
-    toast('Anúncio publicado (demo)', 'success');
-    document.querySelectorAll('#tab-novo-anuncio input, #tab-novo-anuncio textarea').forEach(i => i.value = '');
+    toast('Anúncio enviado para aprovação (demo)', 'success');
+    limparFormAnuncio();
     return;
   }
 
+  // Status = "pendente" para admin aprovar antes de publicar
   const { data: ad, error } = await sb.from('ads').insert({
     fornecedor_id: currentUser.id,
     category_id, titulo, descricao,
     aplicacao_veicular: aplicacao,
     motivo_excedente: motivo,
+    condicao,
     quantidade, preco_unitario,
-    cidade, regiao
+    cidade, regiao,
+    status: 'pendente'
   }).select().single();
 
   if (error) { console.error('Erro ao publicar:', error); toast('Erro: ' + error.message); return; }
 
-  if (img && ad) {
-    await sb.from('ad_images').insert({ ad_id: ad.id, url: img, principal: true });
+  // Upload das imagens (converte base64 e insere referências)
+  if (imagensAnuncio.length > 0 && ad) {
+    for (let i = 0; i < imagensAnuncio.length; i++) {
+      await sb.from('ad_images').insert({
+        ad_id: ad.id,
+        url: imagensAnuncio[i].dataUrl,
+        principal: i === 0,
+        ordem: i
+      });
+    }
   }
 
-  toast('Anúncio publicado!', 'success');
-  document.querySelectorAll('#tab-novo-anuncio input, #tab-novo-anuncio textarea').forEach(i => i.value = '');
+  toast('Anúncio enviado! Aguarde a aprovação do administrador.', 'success');
+  limparFormAnuncio();
   carregarAreaCliente();
+}
+
+function limparFormAnuncio() {
+  document.querySelectorAll('#tab-novo-anuncio input, #tab-novo-anuncio textarea').forEach(i => { if (i.type !== 'file') i.value = ''; });
+  imagensAnuncio = [];
+  renderPreviewImagens();
+  calcularValorTotal();
+  ['cc-titulo','cc-aplicacao','cc-motivo','cc-desc'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = el.textContent.split('/')[0].replace(/\d+/, '0') + '/' + el.textContent.split('/')[1];
+  });
 }
 
 // ============================================
@@ -2421,9 +2683,194 @@ function attachReveal() {
 attachReveal();
 
 // ============================================
+// SCROLL PARA "PARA QUEM SERVE"
+// ============================================
+function scrollToPublico() {
+  document.getElementById('para-quem-serve')?.scrollIntoView({ behavior: 'smooth' });
+}
+
+// ============================================
+// ABRIR CARRINHO DO TOPO
+// ============================================
+function abrirCarrinhoTopo() {
+  if (currentUser) {
+    showSection('area-cliente');
+    setTimeout(() => showClienteTab('carrinho', document.querySelector('.area-cliente-menu .menu-item:nth-child(4)')), 100);
+  } else {
+    toast('Faça login para acessar o carrinho');
+    openLoginModal();
+  }
+}
+
+// ============================================
+// CONTADORES DE CARACTERES
+// ============================================
+function updateCharCount(inputId, counterId, max) {
+  const input = document.getElementById(inputId);
+  const counter = document.getElementById(counterId);
+  const len = input.value.length;
+  counter.textContent = `${len}/${max}`;
+  counter.className = 'char-counter';
+  if (len >= max) counter.classList.add('limit');
+  else if (len >= max * 0.9) counter.classList.add('warning');
+}
+
+// ============================================
+// CÁLCULO DE VALOR TOTAL DO LOTE
+// ============================================
+function calcularValorTotal() {
+  const qtd = parseFloat(document.getElementById('ad-qtd').value) || 0;
+  const preco = parseFloat(document.getElementById('ad-preco').value) || 0;
+  const total = (qtd * preco).toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  document.getElementById('ad-valor-total').textContent = 'R$ ' + total;
+}
+
+// ============================================
+// PREVIEW DE IMAGENS (até 3)
+// ============================================
+let imagensAnuncio = [];
+function previewImagens(event) {
+  const files = Array.from(event.target.files);
+  if (files.length + imagensAnuncio.length > 3) {
+    toast('Máximo de 3 imagens por anúncio');
+    event.target.value = '';
+    return;
+  }
+  files.forEach(file => {
+    if (!file.type.startsWith('image/')) { toast('Apenas imagens são aceitas'); return; }
+    if (file.size > 5 * 1024 * 1024) { toast('Imagem muito grande (máx 5MB)'); return; }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      imagensAnuncio.push({ file, dataUrl: e.target.result });
+      renderPreviewImagens();
+    };
+    reader.readAsDataURL(file);
+  });
+  event.target.value = '';
+}
+function renderPreviewImagens() {
+  const container = document.getElementById('ad-imgs-preview');
+  container.innerHTML = imagensAnuncio.map((img, idx) => `
+    <div class="img-preview">
+      <img src="${img.dataUrl}" alt="preview">
+      <button type="button" class="btn-remove-img" onclick="removerImagem(${idx})">×</button>
+    </div>`).join('');
+}
+function removerImagem(idx) {
+  imagensAnuncio.splice(idx, 1);
+  renderPreviewImagens();
+}
+
+// ============================================
+// BUSCAR CEP (ViaCEP)
+// ============================================
+async function buscarCep() {
+  const cep = document.getElementById('cad-cep').value.replace(/\D/g, '');
+  if (cep.length !== 8) return;
+  try {
+    const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+    const data = await res.json();
+    if (data.erro) { toast('CEP não encontrado'); return; }
+    document.getElementById('cad-endereco').value = `${data.logradouro}, ${data.bairro}, ${data.localidade}/${data.uf}`;
+    toast('Endereço preenchido', 'success');
+  } catch (e) {
+    console.error('Erro CEP:', e);
+    toast('Erro ao buscar CEP');
+  }
+}
+
+// ============================================
+// BUSCAR CNPJ (BrasilAPI)
+// ============================================
+async function buscarCnpj() {
+  const pessoa = document.getElementById('pessoa-tipo').value;
+  if (pessoa !== 'pj') return;
+  const cnpj = document.getElementById('cad-doc').value.replace(/\D/g, '');
+  if (cnpj.length !== 14) return;
+  try {
+    const res = await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpj}`);
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data.razao_social) {
+      document.getElementById('cad-razao').value = data.razao_social;
+      toast('CNPJ validado', 'success');
+    }
+  } catch (e) {
+    console.log('Erro CNPJ (opcional):', e);
+  }
+}
+
+function toggleDocCampo() {
+  const tipo = document.getElementById('pessoa-tipo').value;
+  const labelDoc = document.getElementById('label-doc');
+  const labelRazao = document.getElementById('label-razao');
+  const inputDoc = document.getElementById('cad-doc');
+  const bloco = document.getElementById('cad-razao');
+
+  if (tipo === 'pf') {
+    labelDoc.textContent = 'CPF *';
+    inputDoc.placeholder = '000.000.000-00';
+    labelRazao.style.display = 'none';
+    bloco.style.display = 'none';
+  } else {
+    labelDoc.textContent = 'CNPJ *';
+    inputDoc.placeholder = '00.000.000/0000-00';
+    labelRazao.style.display = 'block';
+    bloco.style.display = 'block';
+  }
+}
+
+// ============================================
+// LISTA DE CIDADES (IBGE)
+// ============================================
+async function carregarCidadesIBGE() {
+  try {
+    const res = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados/SP/municipios');
+    const data = await res.json();
+    const datalist = document.getElementById('lista-cidades');
+    if (!datalist) return;
+    datalist.innerHTML = data.map(c => `<option value="${c.nome}">`).join('');
+  } catch (e) { console.log('Erro cidades:', e); }
+}
+
+// ============================================
+// WIZARD DE CADASTRO
+// ============================================
+function wizardNext(step) {
+  // Validação básica por etapa
+  if (step === 1) {
+    const doc = document.getElementById('cad-doc').value.trim();
+    const nome = document.getElementById('cad-nome').value.trim();
+    const cep = document.getElementById('cad-cep').value.trim();
+    const endereco = document.getElementById('cad-endereco').value.trim();
+    const numero = document.getElementById('cad-numero').value.trim();
+    if (!doc || !nome || !cep || !endereco || !numero) { toast('Preencha os campos obrigatórios'); return; }
+  }
+  if (step === 2) {
+    const tel = document.getElementById('cad-telefone').value.trim();
+    if (!tel) { toast('Informe o telefone'); return; }
+  }
+
+  document.getElementById('wcontent-' + step).style.display = 'none';
+  document.getElementById('wcontent-' + (step + 1)).style.display = 'block';
+
+  document.getElementById('wstep-' + step).classList.remove('active');
+  document.getElementById('wstep-' + step).classList.add('done');
+  document.getElementById('wstep-' + (step + 1)).classList.add('active');
+}
+function wizardBack(step) {
+  document.getElementById('wcontent-' + step).style.display = 'none';
+  document.getElementById('wcontent-' + (step - 1)).style.display = 'block';
+  document.getElementById('wstep-' + step).classList.remove('active');
+  document.getElementById('wstep-' + (step - 1)).classList.remove('done');
+  document.getElementById('wstep-' + (step - 1)).classList.add('active');
+}
+
+// ============================================
 // INICIALIZAÇÃO
 // ============================================
 (async function init() {
+  carregarCidadesIBGE();
   if (!DEMO_MODE) {
     const { data: { session } } = await sb.auth.getSession();
     if (session) {
