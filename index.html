@@ -966,8 +966,10 @@ body {
   width: 100%; height: 100%;
   background: rgba(0,0,0,0.7);
   z-index: 1000;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  overflow-y: auto;
+  padding: 40px 16px;
 }
 .modal-overlay.active { display: flex; }
 .modal {
@@ -977,6 +979,8 @@ body {
   width: 90%;
   max-width: 420px;
   position: relative;
+  max-height: none;
+  margin: auto 0;
 }
 .modal-close {
   position: absolute;
