@@ -1303,7 +1303,7 @@ footer .divider { color: var(--red); margin: 0 8px; }
     <li><a onclick="showSection('contato')" id="link-contato">Contato</a></li>
   </ul>
   <div class="navbar-right" style="display: flex; gap: 12px; align-items: center;">
-    <button class="btn-cart-icon" onclick="abrirCarrinhoTopo()" title="Meu carrinho">
+    <button class="btn-cart-icon" id="btn-cart-icon" onclick="abrirCarrinhoTopo()" title="Meu carrinho" style="display:none">
       🛒
       <span class="cart-badge" id="cart-badge" style="display:none">0</span>
     </button>
@@ -1955,6 +1955,53 @@ footer .divider { color: var(--red); margin: 0 8px; }
   </div>
 </section>
 
+<!-- MODAL DE CONFIRMAÇÃO DE TROCA DE PLANO -->
+<div class="modal-overlay" id="trocarPlanoModal">
+  <div class="modal" style="max-width: 520px;">
+    <button class="modal-close" onclick="fecharTrocarPlano()">×</button>
+    <h2 id="tp-titulo">Confirmar troca de plano</h2>
+    <p id="tp-subtitulo" style="color: var(--gray); margin-bottom: 20px;">Revise as mudanças antes de confirmar.</p>
+
+    <!-- Comparativo antes/depois -->
+    <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; background: var(--off-white); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+      <div style="text-align: center;">
+        <div style="font-size: 11px; color: var(--gray); text-transform: uppercase; font-weight: 600;">Plano atual</div>
+        <div id="tp-atual-nome" style="font-size: 18px; font-weight: 700; margin: 6px 0;">-</div>
+        <div id="tp-atual-preco" style="font-size: 14px; color: var(--gray);">R$ 0/mês</div>
+      </div>
+      <div style="font-size: 24px; color: var(--red);">→</div>
+      <div style="text-align: center;">
+        <div style="font-size: 11px; color: var(--gray); text-transform: uppercase; font-weight: 600;">Novo plano</div>
+        <div id="tp-novo-nome" style="font-size: 18px; font-weight: 700; color: var(--red); margin: 6px 0;">-</div>
+        <div id="tp-novo-preco" style="font-size: 14px; color: var(--gray);">R$ 0/mês</div>
+      </div>
+    </div>
+
+    <!-- O que muda -->
+    <div id="tp-mudancas" style="margin-bottom: 20px; padding: 16px; border-left: 4px solid var(--red); background: #FFF8F9; border-radius: 4px;">
+      <div style="font-size: 13px; font-weight: 600; margin-bottom: 8px;">O que muda:</div>
+      <ul id="tp-lista-mudancas" style="list-style: none; padding: 0; font-size: 13px;"></ul>
+    </div>
+
+    <!-- Impacto financeiro -->
+    <div id="tp-financeiro" style="margin-bottom: 20px; padding: 16px; background: var(--off-white); border-radius: 4px; font-size: 13px;">
+      <div style="font-weight: 600; margin-bottom: 6px;">Impacto financeiro:</div>
+      <div id="tp-financeiro-msg">-</div>
+    </div>
+
+    <!-- Aceite -->
+    <label style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--gray); margin-bottom: 16px;">
+      <input type="checkbox" id="tp-aceite" style="width: auto; margin: 2px 0 0;">
+      <span>Estou de acordo com a troca e ciente da alteração no valor cobrado a partir do próximo ciclo.</span>
+    </label>
+
+    <div style="display: flex; gap: 12px;">
+      <button onclick="fecharTrocarPlano()" style="flex: 1; background: var(--white); color: var(--black); border: 1px solid var(--gray-light); padding: 14px; border-radius: 4px; font-weight: 600; cursor: pointer;">Cancelar</button>
+      <button onclick="confirmarTrocarPlano()" style="flex: 1; background: var(--red); color: var(--white); border: none; padding: 14px; border-radius: 4px; font-weight: 600; cursor: pointer;">Confirmar troca</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL DE REPROVAÇÃO -->
 <div class="modal-overlay" id="reprovarModal">
   <div class="modal" style="max-width: 460px;">
@@ -2467,9 +2514,10 @@ async function carregarAdminEstatisticas() {
     <div class="stat-big"><div class="numero">${subs.count || 0}</div><div class="label">Assinaturas ativas</div></div>`;
 }
 
-function handleClienteClick() {
+async function handleClienteClick() {
   if (currentUser) {
     showSection('area-cliente');
+    await carregarProfile(); // re-lê do banco a cada abertura
     carregarAreaCliente();
   } else {
     openLoginModal();
@@ -2626,6 +2674,7 @@ async function carregarProfile() {
 // ÁREA DO CLIENTE
 // ============================================
 async function carregarAreaCliente() {
+  document.getElementById('btn-cart-icon').style.display = 'flex';
   document.getElementById('user-name').textContent = currentProfile?.nome || 'Cliente';
   document.getElementById('plano-atual-nome').textContent = currentSubscription?.plan_nome || 'Gratuito';
 
@@ -2975,17 +3024,97 @@ async function carregarPlanosCliente() {
     </div>`).join('');
 }
 
+// Guarda a troca pendente para confirmação
+let pendingPlanChange = null;
+
+// Definição dos planos (fonte única para o modal)
+const PLANOS_INFO = {
+  'Gratuito': { preco: 0, features: ['3 anúncios', '5 contatos/mês', 'Suporte por e-mail'] },
+  'Profissional': { preco: 197, features: ['Anúncios ilimitados', 'Contatos ilimitados', 'Selo verificado', 'Suporte prioritário'] },
+  'Empresarial': { preco: 497, features: ['Tudo do Profissional', 'Agente dedicado', 'Notificações de novos lotes', 'Relatórios personalizados'] }
+};
+
 async function trocarPlano(planId, nome) {
-  if (currentSubscription?.plan_nome === nome) { toast('Você já está neste plano'); return; }
+  const atual = currentSubscription?.plan_nome || 'Gratuito';
+  if (atual === nome) { toast('Você já está neste plano'); return; }
+
+  pendingPlanChange = { planId, nome };
+  abrirModalTrocarPlano(atual, nome);
+}
+
+function abrirModalTrocarPlano(atual, novo) {
+  const infoAtual = PLANOS_INFO[atual] || { preco: 0, features: [] };
+  const infoNovo = PLANOS_INFO[novo] || { preco: 0, features: [] };
+  const isUpgrade = infoNovo.preco > infoAtual.preco;
+  const isDowngrade = infoNovo.preco < infoAtual.preco;
+
+  document.getElementById('tp-titulo').textContent = isUpgrade ? '⬆️ Fazer upgrade de plano' : (isDowngrade ? '⬇️ Fazer downgrade de plano' : 'Trocar plano');
+  document.getElementById('tp-atual-nome').textContent = atual;
+  document.getElementById('tp-atual-preco').textContent = `R$ ${infoAtual.preco}/mês`;
+  document.getElementById('tp-novo-nome').textContent = novo;
+  document.getElementById('tp-novo-preco').textContent = `R$ ${infoNovo.preco}/mês`;
+
+  // Calcula o que ganha/perde comparando as features
+  const setAtual = new Set(infoAtual.features);
+  const setNovo = new Set(infoNovo.features);
+  const ganha = infoNovo.features.filter(f => !setAtual.has(f));
+  const perde = infoAtual.features.filter(f => !setNovo.has(f));
+
+  const lista = document.getElementById('tp-lista-mudancas');
+  lista.innerHTML = '';
+  ganha.forEach(f => {
+    const li = document.createElement('li');
+    li.style.padding = '4px 0';
+    li.innerHTML = `<span style="color:#2A7A2A; font-weight:700;">✓</span> Você <strong>ganha</strong>: ${f}`;
+    lista.appendChild(li);
+  });
+  perde.forEach(f => {
+    const li = document.createElement('li');
+    li.style.padding = '4px 0';
+    li.innerHTML = `<span style="color:var(--red); font-weight:700;">✗</span> Você <strong>perde</strong>: ${f}`;
+    lista.appendChild(li);
+  });
+  if (ganha.length === 0 && perde.length === 0) {
+    lista.innerHTML = '<li style="color: var(--gray);">Nenhuma mudança significativa nos recursos.</li>';
+  }
+
+  // Impacto financeiro
+  const diff = infoNovo.preco - infoAtual.preco;
+  const financeiroEl = document.getElementById('tp-financeiro-msg');
+  if (diff > 0) {
+    financeiroEl.innerHTML = `Você será cobrado <strong>R$ ${infoNovo.preco}/mês</strong> a partir do próximo ciclo — <strong style="color: var(--red);">R$ ${diff} a mais</strong> por mês do que hoje.`;
+  } else if (diff < 0) {
+    financeiroEl.innerHTML = `Você passará a pagar <strong>R$ ${infoNovo.preco}/mês</strong> — <strong style="color: #2A7A2A;">economia de R$ ${Math.abs(diff)}</strong> por mês. A cobrança do plano atual não é reembolsada.`;
+  } else {
+    financeiroEl.innerHTML = `Sem alteração no valor: <strong>R$ ${infoNovo.preco}/mês</strong>.`;
+  }
+
+  document.getElementById('tp-aceite').checked = false;
+  document.getElementById('trocarPlanoModal').classList.add('active');
+}
+
+function fecharTrocarPlano() {
+  document.getElementById('trocarPlanoModal').classList.remove('active');
+  pendingPlanChange = null;
+}
+
+async function confirmarTrocarPlano() {
+  if (!document.getElementById('tp-aceite').checked) {
+    toast('Marque que está de acordo com a troca');
+    return;
+  }
+  if (!pendingPlanChange) return;
+
+  const { planId, nome } = pendingPlanChange;
 
   if (DEMO_MODE) {
     currentSubscription = { plan_nome: nome };
     document.getElementById('plano-atual-nome').textContent = nome;
     toast(`Plano alterado para ${nome} (demo)`, 'success');
+    fecharTrocarPlano();
     return;
   }
 
-  // Cancela subscription atual e cria nova
   await sb.from('subscriptions').update({ status: 'cancelada', cancelada_em: new Date().toISOString() })
     .eq('profile_id', currentUser.id).eq('status', 'ativa');
   await sb.from('subscriptions').insert({
@@ -2994,6 +3123,8 @@ async function trocarPlano(planId, nome) {
   await carregarProfile();
   document.getElementById('plano-atual-nome').textContent = nome;
   toast(`Plano alterado para ${nome}`, 'success');
+  fecharTrocarPlano();
+  carregarPlanosCliente(); // re-renderiza a lista mostrando o novo "Plano atual"
 }
 
 // ============================================
@@ -3050,6 +3181,7 @@ async function logout() {
   if (!DEMO_MODE) await sb.auth.signOut();
   currentUser = null; currentProfile = null; currentSubscription = null;
   atualizarBadgeCarrinho(0);
+  document.getElementById('btn-cart-icon').style.display = 'none';
   showSection('home');
   toast('Você saiu');
 }
@@ -3648,6 +3780,7 @@ function wizardBack(step) {
     if (session) {
       currentUser = session.user;
       await carregarProfile();
+      document.getElementById('btn-cart-icon').style.display = 'flex';
       carregarAreaCliente();
     }
     // Carrega anúncios reais do Supabase (aba pública)
