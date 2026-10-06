@@ -1611,7 +1611,7 @@ footer .divider { color: var(--red); margin: 0 8px; }
       </div>
       <div class="plano-card destaque">
         <h3>Profissional</h3>
-        <div class="preco">R$ 299,99<small>/mês</small></div>
+        <div class="preco">R$ 299<small>/mês</small></div>
         <ul>
           <li>Anúncios ilimitados</li>
           <li>Contatos ilimitados</li>
@@ -1622,7 +1622,7 @@ footer .divider { color: var(--red); margin: 0 8px; }
       </div>
       <div class="plano-card">
         <h3>Empresarial</h3>
-        <div class="preco">R$ 499,99<small>/mês</small></div>
+        <div class="preco">R$ 499<small>/mês</small></div>
         <ul>
           <li>Tudo do Profissional</li>
           <li>Agente de sucesso dedicado</li>
@@ -1851,7 +1851,7 @@ footer .divider { color: var(--red); margin: 0 8px; }
       </div>
       <div class="plano-card destaque">
         <h3>Profissional</h3>
-        <div class="preco">R$ 299,99<small>/mês</small></div>
+        <div class="preco">R$ 299<small>/mês</small></div>
         <ul>
           <li>Anúncios ilimitados</li>
           <li>Contatos ilimitados</li>
@@ -1862,7 +1862,7 @@ footer .divider { color: var(--red); margin: 0 8px; }
       </div>
       <div class="plano-card">
         <h3>Empresarial</h3>
-        <div class="preco">R$ 499,99<small>/mês</small></div>
+        <div class="preco">R$ 499<small>/mês</small></div>
         <ul>
           <li>Tudo do Profissional</li>
           <li>Agente de sucesso dedicado</li>
@@ -3431,8 +3431,8 @@ async function carregarPlanosCliente() {
   if (DEMO_MODE) {
     plans = [
       { nome: 'Gratuito', preco: 0, features: ['3 anúncios', '5 contatos/mês', 'Suporte por e-mail'] },
-      { nome: 'Profissional', preco: 299,99, features: ['Anúncios ilimitados', 'Contatos ilimitados', 'Selo verificado', 'Suporte prioritário'], destaque: true },
-      { nome: 'Empresarial', preco: 499,99, features: ['Tudo do Profissional', 'Agente dedicado', 'Notificações', 'Relatórios'] }
+      { nome: 'Profissional', preco: 299, features: ['Anúncios ilimitados', 'Contatos ilimitados', 'Selo verificado', 'Suporte prioritário'], destaque: true },
+      { nome: 'Empresarial', preco: 499, features: ['Tudo do Profissional', 'Agente dedicado', 'Notificações', 'Relatórios'] }
     ];
   } else {
     const { data } = await sb.from('plans').select('*').eq('ativo', true).order('ordem');
@@ -3464,8 +3464,8 @@ let pendingPlanChange = null;
 // Definição dos planos (fonte única para o modal)
 const PLANOS_INFO = {
   'Gratuito': { preco: 0, features: ['3 anúncios', '5 contatos/mês', 'Suporte por e-mail'] },
-  'Profissional': { preco: 299,99, features: ['Anúncios ilimitados', 'Contatos ilimitados', 'Selo verificado', 'Suporte prioritário'] },
-  'Empresarial': { preco: 499,99, features: ['Tudo do Profissional', 'Agente dedicado', 'Notificações de novos lotes', 'Relatórios personalizados'] }
+  'Profissional': { preco: 299, features: ['Anúncios ilimitados', 'Contatos ilimitados', 'Selo verificado', 'Suporte prioritário'] },
+  'Empresarial': { preco: 499, features: ['Tudo do Profissional', 'Agente dedicado', 'Notificações de novos lotes', 'Relatórios personalizados'] }
 };
 
 async function trocarPlano(planId, nome) {
