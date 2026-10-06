@@ -4,34 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ReCircula Auto — Marketplace de excedente automotivo</title>
-
-<!-- SEO -->
-<meta name="description" content="Marketplace especializado em excedente de fábricas do setor automotivo. Conecte estamparias, injetoras e fornecedores tier-2/tier-3 com distribuidores, oficinas e exportadores. Atendemos Grande ABC e Grande SP.">
-<meta name="keywords" content="marketplace autopeças, excedente automotivo, aftermarket, peças de fábrica, estamparia, injetora, ABC Paulista, São Paulo">
-<meta name="author" content="ReCircula Auto">
-<meta name="robots" content="index, follow">
-
-<!-- Open Graph (WhatsApp / Facebook / LinkedIn) -->
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="ReCircula Auto">
-<meta property="og:title" content="ReCircula Auto — Marketplace de excedente automotivo">
-<meta property="og:description" content="Excedente de fábrica virou oportunidade. Conectamos fornecedores automotivos com compradores prontos para lote com nota fiscal.">
-<meta property="og:url" content="https://danilopires01.github.io/autociclo/">
-<meta property="og:image" content="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=1200&h=630&q=80">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:locale" content="pt_BR">
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ReCircula Auto — Marketplace de excedente automotivo">
-<meta name="twitter:description" content="Excedente de fábrica virou oportunidade. Conectamos fornecedores automotivos com compradores.">
-<meta name="twitter:image" content="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=1200&h=630&q=80">
-
-<!-- Favicon (SVG inline com R vermelho) -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23C8102E'/%3E%3Ctext x='50' y='68' font-family='Arial,sans-serif' font-size='60' font-weight='900' fill='white' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23C8102E'/%3E%3Ctext x='50' y='68' font-family='Arial,sans-serif' font-size='60' font-weight='900' fill='white' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root {
@@ -216,149 +188,6 @@ body {
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
-}
-.hero-atendimento {
-  margin-top: 20px !important;
-  padding: 10px 16px;
-  background: rgba(255,255,255,0.08);
-  border-left: 3px solid var(--red);
-  border-radius: 4px;
-  display: inline-block;
-  font-size: 14px !important;
-  color: #EEE !important;
-  opacity: 0;
-  animation: fadeInUp 0.8s ease-out 0.9s forwards;
-  position: relative;
-}
-.hero-atendimento strong { color: var(--white); }
-
-/* MEUS ANÚNCIOS - listagem visual */
-.meu-anuncio-item {
-  display: grid;
-  grid-template-columns: 80px 1fr auto;
-  gap: 16px;
-  align-items: center;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--gray-light);
-}
-.meu-anuncio-thumb {
-  width: 80px;
-  height: 80px;
-  border-radius: 6px;
-}
-.meu-anuncio-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 4px;
-}
-.meu-anuncio-header h4 { font-size: 15px; margin: 0; }
-.meu-anuncio-badge {
-  padding: 3px 10px;
-  border-radius: 4px;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-.meu-anuncio-meta { font-size: 12px; color: var(--gray); }
-.meu-anuncio-reprovacao {
-  font-size: 12px;
-  color: var(--red);
-  margin-top: 6px;
-  padding: 6px 10px;
-  background: #FDE8E8;
-  border-radius: 4px;
-}
-.meu-anuncio-actions {
-  display: flex;
-  gap: 8px;
-}
-.btn-compartilhar {
-  background: var(--white);
-  border: 1px solid var(--gray-light);
-  padding: 6px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 12px;
-}
-.btn-compartilhar:hover { background: var(--off-white); }
-.btn-excluir {
-  background: none;
-  border: none;
-  color: var(--red);
-  cursor: pointer;
-  font-size: 12px;
-}
-
-/* LGPD */
-.lgpd-preview {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  margin-bottom: 32px;
-}
-.lgpd-item {
-  background: var(--white);
-  padding: 24px;
-  border-radius: 8px;
-  border-left: 4px solid var(--red);
-}
-.lgpd-icone {
-  font-size: 28px;
-  margin-bottom: 8px;
-}
-.lgpd-item h4 {
-  font-size: 16px;
-  margin-bottom: 8px;
-  color: var(--black);
-}
-.lgpd-item p {
-  font-size: 14px;
-  color: var(--gray);
-  line-height: 1.5;
-}
-.lgpd-cta {
-  background: var(--off-white);
-  padding: 24px;
-  border-radius: 8px;
-  border: 1px dashed var(--gray-light);
-}
-.lgpd-aviso {
-  font-size: 13px;
-  color: var(--gray);
-  margin-bottom: 16px;
-  line-height: 1.6;
-}
-.lgpd-buttons {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-.btn-lgpd {
-  background: var(--red);
-  color: var(--white);
-  border: none;
-  padding: 12px 20px;
-  border-radius: 4px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 14px;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: background 0.2s;
-}
-.btn-lgpd:hover { background: var(--red-dark); }
-.btn-lgpd.secondary {
-  background: var(--white);
-  color: var(--black);
-  border: 1px solid var(--gray-light);
-}
-.btn-lgpd.secondary:hover { background: var(--gray-light); }
-@media (max-width: 768px) {
-  .lgpd-preview { grid-template-columns: 1fr; }
 }
 .btn-primary {
   background: var(--red);
@@ -623,15 +452,6 @@ body {
   font-size: 11px;
   color: #2A7A2A;
   background: #E8F5E8;
-  padding: 3px 8px;
-  border-radius: 3px;
-  margin-top: 8px;
-}
-.anuncio-nao-verificado {
-  display: inline-block;
-  font-size: 11px;
-  color: var(--gray);
-  background: var(--gray-light);
   padding: 3px 8px;
   border-radius: 3px;
   margin-top: 8px;
@@ -1465,13 +1285,51 @@ footer .divider { color: var(--red); margin: 0 8px; }
   .cart-item { grid-template-columns: 60px 1fr; grid-template-rows: auto auto; gap: 8px; }
   .cart-item-qty, .cart-item-remove { grid-column: 2; justify-self: start; }
 }
+
+/* MODAL CONTATO FORNECEDOR */
+#contatoFornecedorModal .modal { animation: slideUp 0.3s ease-out; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+/* FAVORITO CLICÁVEL */
+.favorito-item {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--gray-light);
+  cursor: pointer;
+  transition: background 0.2s;
+  border-radius: 4px;
+  padding-left: 8px;
+}
+.favorito-item:hover { background: var(--off-white); }
+.favorito-item strong { color: var(--black); font-size: 14px; }
+.favorito-item a.ver-anuncio {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--red);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* CART ITEM TÍTULO CLICÁVEL */
+.cart-item-info h4.clickable {
+  cursor: pointer;
+  color: var(--black);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: text-decoration-color 0.2s;
+}
+.cart-item-info h4.clickable:hover {
+  text-decoration-color: var(--red);
+  color: var(--red);
+}
+
 </style>
 </head>
 <body>
 
 <!-- NAVBAR -->
 <nav class="navbar">
-  <div class="logo" onclick="showSection('home')" style="cursor: pointer;" title="Voltar ao início">
+  <div class="logo">
     <div class="logo-mark">R</div>
     ReCircula<span class="dot">Auto</span>
   </div>
@@ -1503,9 +1361,6 @@ footer .divider { color: var(--red); margin: 0 8px; }
       <button class="btn-primary" onclick="scrollToPublico()">Sou fornecedor</button>
       <button class="btn-secondary" onclick="scrollToPublico()">Sou comprador</button>
     </div>
-    <p class="hero-atendimento">
-      📍 Atendemos <strong>Grande ABC</strong> e <strong>Grande São Paulo</strong> — Interior de SP em breve.
-    </p>
   </div>
 
   <div class="block reveal">
@@ -1611,7 +1466,7 @@ footer .divider { color: var(--red); margin: 0 8px; }
       </div>
       <div class="plano-card destaque">
         <h3>Profissional</h3>
-        <div class="preco">R$ 299<small>/mês</small></div>
+        <div class="preco">R$ 197<small>/mês</small></div>
         <ul>
           <li>Anúncios ilimitados</li>
           <li>Contatos ilimitados</li>
@@ -1622,7 +1477,7 @@ footer .divider { color: var(--red); margin: 0 8px; }
       </div>
       <div class="plano-card">
         <h3>Empresarial</h3>
-        <div class="preco">R$ 499<small>/mês</small></div>
+        <div class="preco">R$ 497<small>/mês</small></div>
         <ul>
           <li>Tudo do Profissional</li>
           <li>Agente de sucesso dedicado</li>
@@ -1638,14 +1493,13 @@ footer .divider { color: var(--red); margin: 0 8px; }
     <h2 class="block-title">Fale com a gente</h2>
     <p class="block-subtitle">Nossa equipe está pronta para ajudar você a começar.</p>
     <div class="contato-info">
-      <p><strong>E-mail:</strong> contato@recircula.com.br</p>
-      <p><strong>WhatsApp:</strong> (11) 9XXXX-XXXX</p>
+      <p><strong>E-mail:</strong> <a href="mailto:administracao@recirculaauto.com.br" style="color:var(--red);text-decoration:none;">administracao@recirculaauto.com.br</a></p>
+      <p><strong>Telefone / WhatsApp:</strong> <a href="https://wa.me/5511976660123?text=Olá%2C%20vim%20pelo%20site%20da%20ReCircula%20Auto!" target="_blank" style="color:var(--red);text-decoration:none;">(11) 97666-0123</a></p>
       <p><strong>Localização:</strong> Santo André, SP</p>
       <div class="redes">
-        <a href="#" class="rede-social">in</a>
-        <a href="#" class="rede-social">IG</a>
-        <a href="#" class="rede-social">f</a>
-        <a href="#" class="rede-social">TT</a>
+        <a href="https://instagram.com/recircula_auto" target="_blank" class="rede-social" title="Instagram">IG</a>
+        <a href="https://wa.me/5511976660123?text=Olá%2C%20vim%20pelo%20site%20da%20ReCircula%20Auto!" target="_blank" class="rede-social" title="WhatsApp">WA</a>
+        <a href="https://facebook.com/recircula_auto" target="_blank" class="rede-social" title="Facebook">f</a>
       </div>
     </div>
   </div>
@@ -1797,44 +1651,6 @@ footer .divider { color: var(--red); margin: 0 8px; }
   </div>
 
   <div class="block reveal" style="margin-top: 60px;">
-    <h2 class="block-title">Proteção de dados e conformidade LGPD</h2>
-    <p class="block-subtitle">A ReCircula Auto é comprometida com a privacidade de fornecedores e compradores. Um resumo do que você precisa saber:</p>
-
-    <div class="lgpd-preview">
-      <div class="lgpd-item">
-        <div class="lgpd-icone">🔒</div>
-        <h4>Dados coletados</h4>
-        <p>Coletamos apenas dados necessários: nome, e-mail, telefone, CNPJ, endereço para retirada e chave PIX (fornecedores). Nenhum dado sensível é coletado.</p>
-      </div>
-      <div class="lgpd-item">
-        <div class="lgpd-icone">⚖️</div>
-        <h4>Bases legais</h4>
-        <p>Tratamos dados com base em: execução de contrato (art. 7º, V da LGPD), cumprimento de obrigação legal e legítimo interesse para prevenção a fraudes.</p>
-      </div>
-      <div class="lgpd-item">
-        <div class="lgpd-icone">👤</div>
-        <h4>Seus direitos</h4>
-        <p>Você pode a qualquer momento acessar, corrigir, anonimizar, portabilizar ou excluir seus dados. Basta solicitar por e-mail em até 15 dias.</p>
-      </div>
-      <div class="lgpd-item">
-        <div class="lgpd-icone">🛡️</div>
-        <h4>Segurança</h4>
-        <p>Todas as comunicações são criptografadas (HTTPS). Senhas são armazenadas com hash. Acesso a dados protegido por Row Level Security no banco.</p>
-      </div>
-    </div>
-
-    <div class="lgpd-cta">
-      <p class="lgpd-aviso">
-        <strong>⚠️ Aviso importante:</strong> este é um resumo simplificado. O documento completo está sendo revisado por advogado especializado em LGPD e direito digital antes do lançamento oficial. A versão em PDF abaixo é uma prévia educativa para fase de validação.
-      </p>
-      <div class="lgpd-buttons">
-        <button class="btn-lgpd" onclick="baixarLGPDPreview()">📄 Baixar prévia da Política (PDF)</button>
-        <a href="mailto:contato@recircula.com.br?subject=D%C3%BAvida%20sobre%20LGPD" class="btn-lgpd secondary">✉️ Dúvidas sobre seus dados</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="block reveal" style="margin-top: 60px;">
     <h2 class="block-title">Nossos planos</h2>
     <p class="block-subtitle">Cadastro gratuito para todos. Assinatura libera acesso completo aos contatos e busca avançada.</p>
     <div class="planos">
@@ -1851,7 +1667,7 @@ footer .divider { color: var(--red); margin: 0 8px; }
       </div>
       <div class="plano-card destaque">
         <h3>Profissional</h3>
-        <div class="preco">R$ 299<small>/mês</small></div>
+        <div class="preco">R$ 197<small>/mês</small></div>
         <ul>
           <li>Anúncios ilimitados</li>
           <li>Contatos ilimitados</li>
@@ -1862,7 +1678,7 @@ footer .divider { color: var(--red); margin: 0 8px; }
       </div>
       <div class="plano-card">
         <h3>Empresarial</h3>
-        <div class="preco">R$ 499<small>/mês</small></div>
+        <div class="preco">R$ 497<small>/mês</small></div>
         <ul>
           <li>Tudo do Profissional</li>
           <li>Agente de sucesso dedicado</li>
@@ -1882,16 +1698,14 @@ footer .divider { color: var(--red); margin: 0 8px; }
   <div class="contato-grid">
     <div class="contato-info">
       <h3>Onde nos encontrar</h3>
-      <p><strong>E-mail:</strong> contato@recircula.com.br</p>
-      <p><strong>Comercial:</strong> comercial@recircula.com.br</p>
-      <p><strong>WhatsApp:</strong> (11) 9XXXX-XXXX</p>
+      <p><strong>E-mail:</strong> <a href="mailto:administracao@recirculaauto.com.br" style="color:var(--red);text-decoration:none;">administracao@recirculaauto.com.br</a></p>
+      <p><strong>Telefone / WhatsApp:</strong> <a href="https://wa.me/5511976660123?text=Olá%2C%20vim%20pelo%20site%20da%20ReCircula%20Auto!" target="_blank" style="color:var(--red);text-decoration:none;">(11) 97666-0123</a></p>
       <p><strong>Localização:</strong> Santo André, SP</p>
       <p><strong>Horário:</strong> Segunda a sexta, 9h às 18h</p>
       <div class="redes">
-        <a href="#" class="rede-social">in</a>
-        <a href="#" class="rede-social">IG</a>
-        <a href="#" class="rede-social">f</a>
-        <a href="#" class="rede-social">TT</a>
+        <a href="https://instagram.com/recircula_auto" target="_blank" class="rede-social" title="Instagram">IG</a>
+        <a href="https://wa.me/5511976660123?text=Olá%2C%20vim%20pelo%20site%20da%20ReCircula%20Auto!" target="_blank" class="rede-social" title="WhatsApp">WA</a>
+        <a href="https://facebook.com/recircula_auto" target="_blank" class="rede-social" title="Facebook">f</a>
       </div>
     </div>
     <form class="contato-form" onsubmit="event.preventDefault(); enviarContato();">
@@ -2418,6 +2232,46 @@ footer .divider { color: var(--red); margin: 0 8px; }
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
+
+<!-- MODAL CONTATO DO FORNECEDOR -->
+<div class="modal-overlay" id="contatoFornecedorModal">
+  <div class="modal" style="max-width: 460px;">
+    <button class="modal-close" onclick="fecharContatoFornecedor()">×</button>
+    <h2 style="margin-bottom:4px;">📞 Contato do fornecedor</h2>
+    <p style="color:var(--gray); font-size:13px; margin-bottom:20px;" id="cfm-aviso">Contato liberado. Use com responsabilidade.</p>
+    <div id="cfm-corpo">
+      <div style="background:var(--off-white); padding:16px; border-radius:8px; margin-bottom:16px;">
+        <p id="cfm-empresa" style="font-weight:700; font-size:15px; margin-bottom:4px;"></p>
+        <p id="cfm-cidade" style="font-size:13px; color:var(--gray);"></p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <a id="cfm-whatsapp" href="#" target="_blank" style="display:flex; align-items:center; gap:12px; background:#25D366; color:#fff; padding:14px 20px; border-radius:8px; text-decoration:none; font-weight:600; font-size:15px;">
+          <span style="font-size:22px;">📱</span>
+          <div>
+            <div>WhatsApp</div>
+            <div id="cfm-telefone-wa" style="font-size:13px; opacity:0.85;"></div>
+          </div>
+        </a>
+        <a id="cfm-email" href="#" style="display:flex; align-items:center; gap:12px; background:var(--black); color:#fff; padding:14px 20px; border-radius:8px; text-decoration:none; font-weight:600; font-size:15px;">
+          <span style="font-size:22px;">✉️</span>
+          <div>
+            <div>E-mail</div>
+            <div id="cfm-email-val" style="font-size:13px; opacity:0.85;"></div>
+          </div>
+        </a>
+        <div id="cfm-tel-direto" style="display:flex; align-items:center; gap:12px; background:var(--off-white); color:var(--black); padding:14px 20px; border-radius:8px; font-size:14px;">
+          <span style="font-size:22px;">📞</span>
+          <div>
+            <div style="font-weight:600;">Telefone</div>
+            <div id="cfm-tel-val" style="color:var(--gray);"></div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:11px; color:var(--gray); margin-top:16px; text-align:center;" id="cfm-restante"></p>
+    </div>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <p>© 2026 ReCircula Auto <span class="divider">|</span> Marketplace de excedente automotivo <span class="divider">|</span> Santo André, SP</p>
@@ -2427,8 +2281,8 @@ footer .divider { color: var(--red); margin: 0 8px; }
 // ============================================
 // CONFIG SUPABASE — SUBSTITUA COM SUAS CHAVES
 // ============================================
-const SUPABASE_URL = 'https://xciezpdthgexclfrqrva.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaWV6cGR0aGdleGNsZnJxcnZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUwOTEyMjQsImV4cCI6MjEwMDY2NzIyNH0.Hd44a5LEkLdkbYNOa-c5EPzDXUAblrHQD6pVOXIwPOQ';
+const SUPABASE_URL = 'https://SEU-PROJETO.supabase.co';
+const SUPABASE_ANON_KEY = 'SUA_CHAVE_ANONIMA_AQUI';
 
 // Inicializa cliente Supabase (funciona em modo demo se config vazio)
 let sb = null;
@@ -2556,7 +2410,7 @@ function renderAdminCard(a, comAcoes) {
   const status = a.status || 'pendente';
 
   const thumbs = (a.ad_images || []).slice(0, 3).map(i =>
-    `<img src="${escapeHtml(i.url)}" alt="Foto do lote ${escapeHtml(a.titulo)}" onclick="window.open('${escapeHtml(i.url)}', '_blank')">`
+    `<img src="${i.url}" alt="foto" onclick="window.open('${i.url}', '_blank')">`
   ).join('');
 
   const acoes = comAcoes ? `
@@ -2765,68 +2619,11 @@ function showClienteTab(tab, el) {
 // MODAL LOGIN/CADASTRO
 // ============================================
 function openLoginModal(tipo) {
-  // Sempre limpa o formulário de cadastro antes de abrir
-  limparFormCadastro();
   document.getElementById('loginModal').classList.add('active');
   if (tipo === 'fornecedor' || tipo === 'comprador') {
     switchTab('cadastro', document.querySelectorAll('.modal-tab')[1]);
     document.getElementById('tipo-usuario').value = tipo;
-  } else {
-    // Sem tipo específico: volta para a aba Entrar (default)
-    switchTab('login', document.querySelectorAll('.modal-tab')[0]);
   }
-}
-
-function limparFormCadastro() {
-  // Reset todos os campos do wizard de cadastro
-  const camposLimpar = [
-    'cad-doc', 'cad-razao', 'cad-nome', 'cad-cep', 'cad-endereco',
-    'cad-numero', 'cad-complemento', 'cad-telefone', 'cad-pix',
-    'cad-email', 'cad-senha', 'cad-senha2'
-  ];
-  camposLimpar.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
-  });
-  // Reset selects para o padrão
-  const tipoUser = document.getElementById('tipo-usuario');
-  if (tipoUser) tipoUser.value = 'fornecedor';
-  const pessoaTipo = document.getElementById('pessoa-tipo');
-  if (pessoaTipo) pessoaTipo.value = 'pj';
-  const pixTipo = document.getElementById('cad-pix-tipo');
-  if (pixTipo) pixTipo.value = 'cpf';
-  const banco = document.getElementById('cad-banco');
-  if (banco) banco.value = '';
-  // Reset checkbox aceite
-  const aceite = document.getElementById('cad-aceite');
-  if (aceite) aceite.checked = false;
-  // Volta para a primeira etapa
-  document.querySelectorAll('.wizard-content').forEach((el, i) => {
-    el.style.display = i === 0 ? 'block' : 'none';
-  });
-  document.querySelectorAll('.wizard-step').forEach((el, i) => {
-    el.classList.remove('active', 'done');
-    if (i === 0) el.classList.add('active');
-  });
-  // Reajusta labels dependentes do tipo pessoa
-  if (typeof toggleDocCampo === 'function') toggleDocCampo();
-  // Reset senha strength meter
-  ['senha-b1','senha-b2','senha-b3'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.style.background = 'var(--gray-light)';
-  });
-  const msg = document.getElementById('senha-msg');
-  if (msg) msg.textContent = 'Digite uma senha';
-  // Reset mensagens de erro
-  ['cad-email-erro', 'cad-pix-erro'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.style.display = 'none';
-  });
-  // Reset contadores de caractere
-  ['cc-titulo','cc-aplicacao','cc-motivo','cc-desc'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = el.textContent.split('/')[0].replace(/\d+/, '0') + '/' + (el.textContent.split('/')[1] || '');
-  });
 }
 function closeLoginModal() { document.getElementById('loginModal').classList.remove('active'); }
 function switchTab(tab, el) {
@@ -3082,177 +2879,22 @@ async function carregarMeusAnuncios() {
     return;
   }
 
-  const { data: ads } = await sb.from('ads')
-    .select('*, ad_images(url, principal, ordem)')
-    .eq('fornecedor_id', currentUser.id)
-    .order('created_at', { ascending: false });
+  const { data: ads } = await sb.from('ads').select('*').eq('fornecedor_id', currentUser.id).order('created_at', { ascending: false });
 
   if (!ads || ads.length === 0) {
     container.innerHTML = '<p style="color:var(--gray)">Você ainda não tem anúncios publicados. Clique em "+ Novo anúncio" para começar.</p>';
     return;
   }
 
-  const statusLabels = {
-    pendente: { label: 'Aguardando aprovação', bg: '#FFF0D9', color: '#7A4B00' },
-    ativo: { label: 'Publicado', bg: '#E8F5E8', color: '#2A7A2A' },
-    reprovado: { label: 'Reprovado', bg: '#FDE8E8', color: '#B02A2A' },
-    pausado: { label: 'Pausado', bg: '#EEE', color: '#555' },
-    vendido: { label: 'Vendido', bg: '#E0EDFF', color: '#1A4A9A' },
-    expirado: { label: 'Expirado', bg: '#EEE', color: '#555' }
-  };
-
-  container.innerHTML = ads.map(a => {
-    const imgPrincipal = a.ad_images?.find(i => i.principal) || a.ad_images?.[0];
-    const bg = imgPrincipal ? `background-image:url('${escapeHtml(imgPrincipal.url)}'); background-size:cover; background-position:center;` : 'background: var(--gray-light);';
-    const st = statusLabels[a.status] || { label: a.status, bg: '#EEE', color: '#555' };
-    const total = (a.preco_unitario * a.quantidade).toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    const dias = Math.floor((Date.now() - new Date(a.created_at).getTime()) / 86400000);
-
-    return `
-      <div class="meu-anuncio-item">
-        <div class="meu-anuncio-thumb" style="${bg}" role="img" aria-label="Foto do anúncio ${escapeHtml(a.titulo)}"></div>
-        <div>
-          <div class="meu-anuncio-header">
-            <h4>${escapeHtml(a.titulo)}</h4>
-            <span class="meu-anuncio-badge" style="background: ${st.bg}; color: ${st.color};">${st.label}</span>
-          </div>
-          <div class="meu-anuncio-meta">${a.quantidade.toLocaleString('pt-BR')} un · R$ ${a.preco_unitario.toFixed(2)}/un · Total R$ ${total} · há ${dias} dia${dias !== 1 ? 's' : ''}</div>
-          ${a.motivo_reprovacao ? `<div class="meu-anuncio-reprovacao"><strong>Motivo da reprovação:</strong> ${escapeHtml(a.motivo_reprovacao)}</div>` : ''}
-        </div>
-        <div class="meu-anuncio-actions">
-          ${a.status === 'ativo' ? `<button onclick="copiarLinkAnuncioPorId('${a.id}')" class="btn-compartilhar">Compartilhar</button>` : ''}
-          <button onclick="deletarAnuncio('${a.id}')" class="btn-excluir">Excluir</button>
-        </div>
-      </div>`;
-  }).join('');
-}
-
-function copiarLinkAnuncioPorId(id) {
-  const link = window.location.origin + window.location.pathname + '?ad=' + id;
-  navigator.clipboard.writeText(link).then(() => {
-    toast('Link copiado! Cole no WhatsApp para compartilhar.', 'success');
-  }).catch(() => {
-    const t = document.createElement('textarea');
-    t.value = link;
-    document.body.appendChild(t);
-    t.select();
-    document.execCommand('copy');
-    document.body.removeChild(t);
-    toast('Link copiado! Cole no WhatsApp para compartilhar.', 'success');
-  });
-}
-
-// ============================================
-// PRÉVIA LGPD (gera .txt/print)
-// ============================================
-function baixarLGPDPreview() {
-  const conteudo = `ReCircula Auto — Política de Privacidade e Proteção de Dados (PRÉVIA)
-==========================================================================
-Versão beta · Documento de referência para fase de validação
-Este documento será revisado por advogado especializado antes do lançamento oficial.
-
-
-1. CONTROLADORA DE DADOS
-A ReCircula Auto é controladora de dados pessoais nos termos do art. 5º, VI da Lei nº 13.709/2018 (LGPD).
-Contato para questões de privacidade: contato@recircula.com.br
-
-
-2. DADOS COLETADOS
-Coletamos apenas os dados necessários para o funcionamento da plataforma:
-
-Dados do responsável:
-- Nome completo
-- E-mail
-- Telefone/WhatsApp
-- Senha (armazenada com hash criptográfico)
-
-Dados da empresa:
-- Razão social
-- CNPJ
-- Endereço (rua, número, complemento, cidade, estado, CEP)
-
-Dados operacionais (fornecedores):
-- Chave PIX (para recebimento de vendas)
-- Banco/instituição financeira
-
-Dados de uso:
-- Anúncios publicados
-- Anúncios favoritados
-- Itens em carrinho
-- Contatos consumidos por mês
-- Logs de acesso (IP e user-agent, para segurança)
-
-NENHUM dado pessoal sensível é coletado (raça, religião, opinião política,
-orientação sexual, biometria etc.).
-
-
-3. BASES LEGAIS APLICADAS
-- Execução de contrato (art. 7º, V): publicar anúncios, processar transações,
-  gerenciar assinaturas, enviar notificações operacionais.
-- Cumprimento de obrigação legal (art. 7º, II): obrigações fiscais.
-- Legítimo interesse (art. 7º, IX): prevenção a fraudes e verificação de CNPJ.
-- Consentimento (art. 7º, I): comunicações de marketing (opt-in).
-
-
-4. COMPARTILHAMENTO
-Dados podem ser compartilhados com:
-- Supabase (provedor de banco de dados e autenticação) — infraestrutura
-- Mercado Pago / Stripe (quando ativado) — processamento de pagamentos
-- Autoridades públicas — apenas mediante requisição legal
-
-Não vendemos nem cedemos dados a terceiros para fins comerciais.
-
-
-5. SEUS DIREITOS (art. 18 da LGPD)
-Você pode a qualquer momento:
-- Confirmar a existência de tratamento
-- Acessar seus dados
-- Corrigir dados incompletos ou desatualizados
-- Solicitar anonimização, bloqueio ou eliminação
-- Solicitar portabilidade dos dados
-- Ser informado sobre com quem compartilhamos
-- Revogar consentimento (quando aplicável)
-
-Como exercer: envie e-mail para contato@recircula.com.br com o assunto
-"Solicitação LGPD". Prazo de resposta: 15 dias.
-
-
-6. SEGURANÇA
-- HTTPS obrigatório em todas as páginas
-- Autorização por linha do banco (Row Level Security ativo)
-- Senhas com hash gerenciado pelo Supabase
-- Backups automáticos diários
-
-
-7. RETENÇÃO
-Manteremos seus dados enquanto sua conta estiver ativa.
-Após exclusão, dados operacionais são apagados em até 30 dias
-(exceto o que a lei exigir manter, como registros fiscais por 5 anos).
-
-
-8. AVISOS IMPORTANTES
-- Este é um resumo simplificado para fins de validação.
-- Estamos em fase beta; funcionalidades e políticas podem mudar.
-- O documento oficial passará por revisão jurídica.
-
-
-==========================================================================
-Última atualização: ${new Date().toLocaleDateString('pt-BR')}
-Contato: contato@recircula.com.br
-Site: https://recircula.com.br (em breve)
-`;
-
-  // Gera arquivo .txt para download imediato (sem dependência externa)
-  const blob = new Blob([conteudo], { type: 'text/plain;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = 'ReCircula_Auto_LGPD_Previa_' + new Date().toISOString().slice(0,10) + '.txt';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
-  toast('Prévia da política baixada!', 'success');
+  container.innerHTML = ads.map(a => `
+    <div style="padding:16px; border-bottom:1px solid var(--gray-light); display:flex; justify-content:space-between; align-items:center;">
+      <div style="flex:1; cursor:pointer;" onclick="abrirDetalhePorId('${a.id}')">
+        <h4 style="font-size:15px">${escapeHtml(a.titulo)} <span style="font-size:11px; color:var(--${a.status === 'ativo' ? 'gray' : 'red'}); background:var(--off-white); padding:2px 8px; border-radius:4px;">${a.status}</span></h4>
+        <small style="color:var(--gray)">${a.quantidade.toLocaleString('pt-BR')} un · R$ ${a.preco_unitario.toFixed(2)}/un</small>
+        <br><small style="color:var(--red); font-weight:600;">→ Ver anúncio</small>
+      </div>
+      <button onclick="deletarAnuncio('${a.id}')" style="background:none; border:none; color:var(--red); cursor:pointer; margin-left:16px;">Excluir</button>
+    </div>`).join('');
 }
 
 async function deletarAnuncio(id) {
@@ -3280,9 +2922,10 @@ async function adicionarAoCarrinho() {
 
   if (DEMO_MODE) {
     const cart = getCartLocal();
-    const existe = cart.find(i => i.id === currentAdDetail.id);
+    const adKey = currentAdDetail.ad_id || currentAdDetail.id;
+    const existe = cart.find(i => (i.ad_id || i.id) === adKey);
     if (existe) { existe.quantidade += 1; }
-    else { cart.push({ ...currentAdDetail, quantidade: 1 }); }
+    else { cart.push({ ...currentAdDetail, ad_id: adKey, quantidade: 1 }); }
     setCartLocal(cart);
     toast('Adicionado ao carrinho', 'success');
     fecharDetalhe();
@@ -3315,14 +2958,14 @@ async function carregarCarrinho() {
   let items = [];
   if (DEMO_MODE) {
     items = getCartLocal().map(i => ({
-      id: i.id, titulo: i.titulo, img: i.img,
+      id: i.id, ad_id: i.ad_id || i.id, titulo: i.titulo, img: i.img,
       quantidade: i.quantidade, preco_unitario_snapshot: i.preco
     }));
   } else if (currentUser) {
     const { data } = await sb.from('cart_items')
       .select('*, ads(titulo, preco_unitario)').eq('profile_id', currentUser.id);
     items = (data || []).map(i => ({
-      id: i.id, titulo: i.ads?.titulo, quantidade: i.quantidade,
+      id: i.id, ad_id: i.ad_id, titulo: i.ads?.titulo, quantidade: i.quantidade,
       preco_unitario_snapshot: i.preco_unitario_snapshot
     }));
   }
@@ -3337,11 +2980,13 @@ async function carregarCarrinho() {
   container.innerHTML = items.map(i => {
     const subtotal = i.quantidade * i.preco_unitario_snapshot;
     total += subtotal;
+    const onclickTitulo = i.ad_id ? `onclick="abrirDetalhePorId('${i.ad_id}')"` : '';
+    const classTitulo = i.ad_id ? 'clickable' : '';
     return `
       <div class="cart-item">
-        <div class="cart-item-img" style="${i.img ? `background-image:url('${i.img}')` : ''}"></div>
+        <div class="cart-item-img" style="${i.img ? `background-image:url('${i.img}')` : ''}" ${i.ad_id ? `onclick="abrirDetalhePorId('${i.ad_id}')" style="cursor:pointer"` : ''}></div>
         <div class="cart-item-info">
-          <h4>${i.titulo || 'Anúncio'}</h4>
+          <h4 class="${classTitulo}" ${onclickTitulo} title="${i.ad_id ? 'Clique para ver o anúncio' : ''}">${i.titulo || 'Anúncio'}</h4>
           <small>R$ ${i.preco_unitario_snapshot.toFixed(2)}/un · Subtotal: R$ ${subtotal.toFixed(2)}</small>
         </div>
         <div class="cart-item-qty">
@@ -3418,7 +3063,14 @@ async function carregarFavoritos() {
     container.innerHTML = '<p style="color:var(--gray)">Você ainda não salvou nenhum anúncio.</p>';
     return;
   }
-  container.innerHTML = data.map(f => `<div style="padding:12px 0; border-bottom:1px solid var(--gray-light)"><strong>${f.ads?.titulo}</strong><br><small>R$ ${f.ads?.preco_unitario}/un</small></div>`).join('');
+  container.innerHTML = data.map((f, idx) => {
+    const adId = f.ad_id || f.ads?.id || '';
+    return `<div class="favorito-item" onclick="${adId ? `abrirDetalhePorId('${adId}')` : ''}">
+      <strong>${f.ads?.titulo || 'Anúncio'}</strong>
+      <br><small style="color:var(--gray);">R$ ${(f.ads?.preco_unitario || 0).toFixed(2)}/un · ${f.ads?.cidade || ''}</small>
+      ${adId ? '<br><span class="ver-anuncio">→ Ver anúncio completo</span>' : ''}
+    </div>`;
+  }).join('');
 }
 
 // ============================================
@@ -3431,8 +3083,8 @@ async function carregarPlanosCliente() {
   if (DEMO_MODE) {
     plans = [
       { nome: 'Gratuito', preco: 0, features: ['3 anúncios', '5 contatos/mês', 'Suporte por e-mail'] },
-      { nome: 'Profissional', preco: 299, features: ['Anúncios ilimitados', 'Contatos ilimitados', 'Selo verificado', 'Suporte prioritário'], destaque: true },
-      { nome: 'Empresarial', preco: 499, features: ['Tudo do Profissional', 'Agente dedicado', 'Notificações', 'Relatórios'] }
+      { nome: 'Profissional', preco: 197, features: ['Anúncios ilimitados', 'Contatos ilimitados', 'Selo verificado', 'Suporte prioritário'], destaque: true },
+      { nome: 'Empresarial', preco: 497, features: ['Tudo do Profissional', 'Agente dedicado', 'Notificações', 'Relatórios'] }
     ];
   } else {
     const { data } = await sb.from('plans').select('*').eq('ativo', true).order('ordem');
@@ -3464,8 +3116,8 @@ let pendingPlanChange = null;
 // Definição dos planos (fonte única para o modal)
 const PLANOS_INFO = {
   'Gratuito': { preco: 0, features: ['3 anúncios', '5 contatos/mês', 'Suporte por e-mail'] },
-  'Profissional': { preco: 299, features: ['Anúncios ilimitados', 'Contatos ilimitados', 'Selo verificado', 'Suporte prioritário'] },
-  'Empresarial': { preco: 499, features: ['Tudo do Profissional', 'Agente dedicado', 'Notificações de novos lotes', 'Relatórios personalizados'] }
+  'Profissional': { preco: 197, features: ['Anúncios ilimitados', 'Contatos ilimitados', 'Selo verificado', 'Suporte prioritário'] },
+  'Empresarial': { preco: 497, features: ['Tudo do Profissional', 'Agente dedicado', 'Notificações de novos lotes', 'Relatórios personalizados'] }
 };
 
 async function trocarPlano(planId, nome) {
@@ -3597,15 +3249,124 @@ async function salvarPerfil() {
 }
 
 // ============================================
-// CONTATO DO FORNECEDOR
+// CONTATO DO FORNECEDOR — COMPLETO
 // ============================================
-function verContatoFornecedor() {
+async function verContatoFornecedor() {
   if (!currentUser) {
     toast('Faça cadastro para ver os contatos');
     openLoginModal();
     return;
   }
-  toast('Contato liberado! Confira em Meu plano os limites mensais.', 'success');
+  if (!currentAdDetail) return;
+
+  // --- Limite do plano (verifica contatos restantes) ---
+  const planNome = currentSubscription?.plan_nome || 'Gratuito';
+  const LIMITES = { 'Gratuito': 5, 'Profissional': null, 'Empresarial': null };
+  const limiteContatos = LIMITES[planNome] ?? null;
+
+  let contatosUsados = 0;
+  if (!DEMO_MODE && limiteContatos !== null) {
+    const mesAtual = new Date().toISOString().slice(0, 7); // "2026-10"
+    const { count } = await sb.from('leads')
+      .select('*', { count: 'exact', head: true })
+      .eq('comprador_id', currentUser.id)
+      .gte('created_at', mesAtual + '-01');
+    contatosUsados = count || 0;
+
+    if (contatosUsados >= limiteContatos) {
+      toast(`Você atingiu o limite de ${limiteContatos} contatos/mês do plano ${planNome}. Faça upgrade para ver mais fornecedores.`);
+      setTimeout(() => showClienteTab('planos', null), 2000);
+      return;
+    }
+  }
+
+  // --- Busca dados do fornecedor no Supabase ---
+  let fornecedor = {
+    empresa: '',
+    cidade: '',
+    telefone: '',
+    email: ''
+  };
+
+  if (!DEMO_MODE) {
+    const adId = currentAdDetail.ad_id || currentAdDetail.id;
+    const { data: adData } = await sb.from('ads')
+      .select('fornecedor_id, profiles(nome, telefone, email), companies(razao_social, nome_fantasia, cidade)')
+      .eq('id', adId).single();
+    if (adData) {
+      fornecedor.empresa = adData.companies?.nome_fantasia || adData.companies?.razao_social || adData.profiles?.nome || 'Fornecedor';
+      fornecedor.cidade = adData.companies?.cidade || '';
+      fornecedor.telefone = adData.profiles?.telefone || '';
+      fornecedor.email = adData.profiles?.email || '';
+      fornecedor.fornecedor_id = adData.fornecedor_id;
+    }
+
+    // --- Registra o lead na tabela leads ---
+    await sb.from('leads').insert({
+      comprador_id: currentUser.id,
+      fornecedor_id: fornecedor.fornecedor_id || null,
+      ad_id: adId,
+      nome: currentProfile?.nome || 'Comprador',
+      email: currentProfile?.email || '',
+      empresa: currentSubscription?.empresa || '',
+      mensagem: `[Contato automático] Comprador acessou contato do anúncio: ${currentAdDetail.titulo || adId}`,
+      tipo: 'contato_anuncio'
+    });
+
+    // --- Notifica por e-mail via Supabase Edge Function (Resend) ---
+    enviarEmailNotificacaoContato({
+      fornecedor_email: fornecedor.email,
+      comprador_nome: currentProfile?.nome || 'Comprador',
+      comprador_email: currentProfile?.email || '',
+      ad_titulo: currentAdDetail.titulo || 'Anúncio',
+    }).catch(e => console.warn('Resend edge function error:', e));
+
+  } else {
+    // Modo demo: usa dados fictícios do anúncio atual
+    fornecedor.empresa = currentAdDetail.fornec || currentAdDetail.companies?.razao_social || 'Fornecedor Demo';
+    fornecedor.cidade = 'Santo André, SP';
+    fornecedor.telefone = '(11) 97666-0123';
+    fornecedor.email = 'administracao@recirculaauto.com.br';
+    contatosUsados = 3;
+  }
+
+  // --- Preenche e abre o modal ---
+  document.getElementById('cfm-empresa').textContent = fornecedor.empresa;
+  document.getElementById('cfm-cidade').textContent = fornecedor.cidade;
+
+  const telSomenteNums = (fornecedor.telefone || '').replace(/\D/g, '');
+  const waLink = telSomenteNums
+    ? `https://wa.me/55${telSomenteNums}?text=Olá%2C%20vi%20seu%20anúncio%20na%20ReCircula%20Auto%20e%20tenho%20interesse%20em%20${encodeURIComponent(currentAdDetail.titulo || 'seu lote')}%21`
+    : '#';
+  document.getElementById('cfm-whatsapp').href = waLink;
+  document.getElementById('cfm-telefone-wa').textContent = fornecedor.telefone || 'Não informado';
+  document.getElementById('cfm-email').href = `mailto:${fornecedor.email}?subject=Interesse%20no%20anúncio%3A%20${encodeURIComponent(currentAdDetail.titulo || '')}`;
+  document.getElementById('cfm-email-val').textContent = fornecedor.email || 'Não informado';
+  document.getElementById('cfm-tel-val').textContent = fornecedor.telefone || 'Não informado';
+
+  const restantes = limiteContatos !== null ? (limiteContatos - contatosUsados - 1) : null;
+  const msgRestante = restantes !== null
+    ? `Você usou ${contatosUsados + 1} de ${limiteContatos} contatos disponíveis neste mês.`
+    : 'Plano sem limite de contatos.';
+  document.getElementById('cfm-restante').textContent = msgRestante;
+
+  document.getElementById('contatoFornecedorModal').classList.add('active');
+}
+
+function fecharContatoFornecedor() {
+  document.getElementById('contatoFornecedorModal').classList.remove('active');
+}
+
+// Dispara Edge Function do Supabase para enviar e-mail via Resend
+async function enviarEmailNotificacaoContato({ fornecedor_email, comprador_nome, comprador_email, ad_titulo }) {
+  if (DEMO_MODE || !sb) return;
+  try {
+    await sb.functions.invoke('notify-contact', {
+      body: { fornecedor_email, comprador_nome, comprador_email, ad_titulo }
+    });
+  } catch (e) {
+    console.warn('Edge function não disponível ainda:', e.message);
+  }
 }
 
 // ============================================
@@ -3618,6 +3379,44 @@ async function logout() {
   document.getElementById('btn-cart-icon').style.display = 'none';
   showSection('home');
   toast('Você saiu');
+}
+
+
+// ============================================
+// ABRIR DETALHE POR ID (para carrinho e favoritos)
+// ============================================
+async function abrirDetalhePorId(adId) {
+  if (!adId) return;
+
+  // Verifica se já está no cache
+  if (!DEMO_MODE && anunciosCache.length > 0) {
+    const idx = anunciosCache.findIndex(a => a.id === adId);
+    if (idx !== -1) { abrirDetalhe(idx); return; }
+  }
+
+  // Busca no Supabase se não está no cache
+  if (!DEMO_MODE) {
+    const { data } = await sb.from('ads')
+      .select('*, categories(nome, slug), ad_images(url, principal, ordem), profiles(nome), companies(nome_fantasia, razao_social, cidade)')
+      .eq('id', adId).single();
+    if (data) {
+      const tempIdx = anunciosCache.length;
+      anunciosCache.push(data);
+      showSection('anuncios');
+      setTimeout(() => abrirDetalhe(tempIdx), 100);
+      return;
+    }
+  }
+
+  // Modo demo: busca nos dados fake
+  const demoAd = anunciosData.find(a => a.ad_id === adId);
+  if (demoAd) {
+    const idx = anunciosData.indexOf(demoAd);
+    showSection('anuncios');
+    setTimeout(() => abrirDetalhe(idx), 100);
+  } else {
+    toast('Anúncio não encontrado');
+  }
 }
 
 // ============================================
@@ -3640,7 +3439,7 @@ async function carregarAnunciosPublicos() {
 
   // Busca anúncios aprovados + categoria + imagem principal + fornecedor
   const { data, error } = await sb.from('ads')
-    .select('*, categories(nome, slug), ad_images(url, principal, ordem), profiles(nome), companies(nome_fantasia, razao_social, cidade, verificada)')
+    .select('*, categories(nome, slug), ad_images(url, principal, ordem), profiles(nome), companies(nome_fantasia, razao_social, cidade)')
     .eq('status', 'ativo')
     .order('created_at', { ascending: false });
 
@@ -3674,17 +3473,16 @@ function renderizarAnuncios(lista) {
     const bg = imgPrincipal ? `background-image:url('${imgPrincipal.url}'); background-size:cover; background-position:center;` : 'background: var(--gray-light);';
     const fornec = a.companies?.nome_fantasia || a.companies?.razao_social || 'Fornecedor';
     const cidade = a.cidade || a.companies?.cidade || '';
-    const isVerificado = a.companies?.verificada === true;
     return `
       <div class="anuncio-card" data-categoria="${a.categories?.slug || ''}" data-local="${a.regiao || ''}" data-preco="${a.preco_unitario}" data-qtd="${a.quantidade}" onclick="abrirDetalhe(${i})">
-        <div class="anuncio-img" style="${bg}" role="img" aria-label="Foto do anúncio ${escapeHtml(a.titulo)}">
-          <span class="anuncio-badge">${escapeHtml(a.badge || 'Novo')}</span>
+        <div class="anuncio-img" style="${bg}">
+          <span class="anuncio-badge">${a.badge || 'Novo'}</span>
         </div>
         <div class="anuncio-body">
           <h4>${escapeHtml(a.titulo)}</h4>
           <div class="anuncio-meta">${escapeHtml(fornec)} · ${escapeHtml(cidade)} · ${a.quantidade.toLocaleString('pt-BR')} unidades</div>
           <div class="anuncio-preco">R$ ${a.preco_unitario.toFixed(2).replace('.', ',')}/un</div>
-          ${isVerificado ? '<div class="anuncio-verificado">✓ Fornecedor verificado</div>' : '<div class="anuncio-nao-verificado">Fornecedor cadastrado</div>'}
+          <div class="anuncio-verificado">Fornecedor verificado</div>
         </div>
       </div>`;
   }).join('');
@@ -3772,13 +3570,6 @@ function abrirDetalhe(index) {
   if (!a) return;
   currentAdDetail = a;
 
-  // Deep link: atualiza URL para permitir compartilhamento
-  if (usaReal && a.id) {
-    const url = new URL(window.location);
-    url.searchParams.set('ad', a.id);
-    window.history.replaceState({}, '', url);
-  }
-
   const modal = document.getElementById('detalheModal');
   const img = document.getElementById('detalhe-img');
 
@@ -3836,31 +3627,7 @@ function abrirDetalhe(index) {
 
   modal.classList.add('active');
 }
-function fecharDetalhe() {
-  document.getElementById('detalheModal').classList.remove('active');
-  const url = new URL(window.location);
-  if (url.searchParams.has('ad')) {
-    url.searchParams.delete('ad');
-    window.history.replaceState({}, '', url);
-  }
-}
-
-async function abrirDetalhePorId(adId) {
-  if (DEMO_MODE) return;
-  let idx = anunciosCache.findIndex(a => a.id === adId);
-  if (idx === -1) {
-    const { data } = await sb.from('ads')
-      .select('*, categories(nome, slug), ad_images(url, principal, ordem), profiles(nome, telefone, email), companies(nome_fantasia, razao_social, cidade, verificada)')
-      .eq('id', adId)
-      .eq('status', 'ativo')
-      .maybeSingle();
-    if (!data) { toast('Anúncio não encontrado ou não está mais ativo'); return; }
-    anunciosCache.push(data);
-    idx = anunciosCache.length - 1;
-  }
-  showSection('anuncios');
-  setTimeout(() => abrirDetalhe(idx), 300);
-}
+function fecharDetalhe() { document.getElementById('detalheModal').classList.remove('active'); }
 
 // ============================================
 // SCROLL TOP SUAVE
@@ -4250,12 +4017,7 @@ function wizardBack(step) {
       carregarAreaCliente();
     }
     // Carrega anúncios reais do Supabase (aba pública)
-    await carregarAnunciosPublicos();
-
-    // Deep link: se veio de ?ad=xxx, abre direto o anúncio
-    const params = new URLSearchParams(window.location.search);
-    const adId = params.get('ad');
-    if (adId) abrirDetalhePorId(adId);
+    carregarAnunciosPublicos();
   } else {
     // Modo demo: mostra badge do carrinho local
     atualizarBadgeCarrinho(getCartLocal().length);
